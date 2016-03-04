@@ -7,211 +7,177 @@
 #include "gtl_rpg.h"
 #include "player.h"
 #include "database.h"
+
 namespace battle
 {
   using namespace gtl_rpg;
 
-  //константы вероятностей выбора различных моделей поведения при генерации моба
+  //NPC behavior template stat modifiers
 
-  const int BASE_NONDEF_PROB = 40;               //константа базовой вероятности генерации стандартного моба
-  const int BASE_TANK_PROB = 20;                 //константа базовой вероятности генерации моба-танка
-  const int BASE_SUPPORT_PROB = 20;              //константа базовой вероятности генерации моба-лекаря
-  const int BASE_DAMAGER_PROB = 20;              //константа базовой вероятности генерации моба-дамагера
+  const int BASE_NONDEF_PROB = 40;               //base chance to spawn a common mob
+  const int BASE_TANK_PROB = 20;                 //base chance to spawn a "tank" mob
+  const int BASE_SUPPORT_PROB = 20;              //base chance to spawn a healer/supporter mob
+  const int BASE_DAMAGER_PROB = 20;              //base chance to spawn a damager mob
 
-  const int BASE_LEADER_PROB = 10;               //вероятность генерации лидера
-  const int BASE_MASS_LEADER_PROB = 20;          //вероятность генерации масс-лидера
+  const int BASE_LEADER_PROB = 10;               //chance to spawn a pack leader leader
+  const int BASE_MASS_LEADER_PROB = 20;          //chance to spawn a mass-leader
 
-  const double NONDEF_HP_MODIFIER = 1.0;         //модификатор ХП стандартного моба
-  const double NONDEF_DMG_MODIFIER = 1.0;        //модификатор урона стандартного моба
-  const double NONDEF_DEF_MODIFIER = 1.0;        //модификатор защиты стандартного моба
+  const double NONDEF_HP_MODIFIER = 1.0;
+  const double NONDEF_DMG_MODIFIER = 1.0;
+  const double NONDEF_DEF_MODIFIER = 1.0;
 
-  const double GRUNT_HP_MODIFIER = 1.50;         //модификатор ХП танка
-  const double GRUNT_DMG_MODIFIER = 0.50;        //модификатор урона танка
-  const double GRUNT_DEF_MODIFIER = 2.25;        //модификатор защиты танка
+  const double GRUNT_HP_MODIFIER = 1.50;
+  const double GRUNT_DMG_MODIFIER = 0.50;
+  const double GRUNT_DEF_MODIFIER = 2.25;
 
-  const double SUPPORT_HP_MODIFIER = 0.75;       //модификатор ХП целителя
-  const double SUPPORT_DMG_MODIFIER = 1.25;      //модификатор урона целителя
-  const double SUPPORT_DEF_MODIFIER = 0.50;      //модификатор защиты целителя
+  const double SUPPORT_HP_MODIFIER = 0.75;
+  const double SUPPORT_DMG_MODIFIER = 1.25;
+  const double SUPPORT_DEF_MODIFIER = 0.50;
 
-  const double DAMAGER_HP_MODIFIER = 0.50;       //модификатор ХП дамагера
-  const double DAMAGER_DMG_MODIFIER = 2.25;      //модификатор урона дамагера
-  const double DAMAGER_DEF_MODIFIER = 0.75;      //модификатор защиты дамагера
+  const double DAMAGER_HP_MODIFIER = 0.50;
+  const double DAMAGER_DMG_MODIFIER = 2.25;
+  const double DAMAGER_DEF_MODIFIER = 0.75;
 
-  const double LEADER_HP_MODIFIER = 1.50;        //модификатор ХП лидера
-  const double LEADER_DMG_MODIFIER = 1.50;       //модификатор урона лидера
-  const double LEADER_DEF_MODIFIER = 1.50;       //модификатор защиты лидера
-  const double LEADER_EXP_MODIFIER = 1.50;       //модификатор опыта за убийство лидера
-  const double LEADER_CASH_MODIFIER = 1.50;      //модификатор денежной награды за убийство лидера
+  const double LEADER_HP_MODIFIER = 1.50;
+  const double LEADER_DMG_MODIFIER = 1.50;
+  const double LEADER_DEF_MODIFIER = 1.50;
+  const double LEADER_EXP_MODIFIER = 1.50;
+  const double LEADER_CASH_MODIFIER = 1.50;
 
-  const double MASS_LEADER_HP_MODIFIER = 1.25;   //модификатор ХП масс-лидера
-  const double MASS_LEADER_DMG_MODIFIER = 1.25;  //модификатор урона масс-лидера
-  const double MASS_LEADER_DEF_MODIFIER = 1.25;  //модификатор защиты масс-лидера
-  const double MASS_LEADER_EXP_MODIFIER = 1.25;  //модификатор опыта за убийство масс-лидера (применяется совместно с лидерским модификатором)
-  const double MASS_LEADER_CASH_MODIFIER = 1.25; //модификатор денежной награды за убийство масс-лидера (применяется совместно с лидерским модификатором)
+  const double MASS_LEADER_HP_MODIFIER = 1.25;
+  const double MASS_LEADER_DMG_MODIFIER = 1.25;
+  const double MASS_LEADER_DEF_MODIFIER = 1.25;
+  const double MASS_LEADER_EXP_MODIFIER = 1.25;
+  const double MASS_LEADER_CASH_MODIFIER = 1.25;
 
-  const double PACK_DEBUFF_MODIFIER = 0.75;      //модификатор для расчета коэффициента дебафов при смерти лидера
-
-  //=======================================================================================\\
-  //=======================================================================================\\
+  const double PACK_DEBUFF_MODIFIER = 0.75;      //pack all-stat debuff when leader dies
 
   //=======================================================================================\\
-  //<------------------------!модификаторы ценности действий для ИИ!---------------------->\\
-  //<-данный раздел содержит константы, отражающие веса различных вариантов действий для-->\\
-  //<-----------------------------разных паттернов ИИ  мобов.----------------------------->\\
   //=======================================================================================\\
+
+  //=======================================================================================\\
+  //<-----------------------------!AI action value modifiers!----------------------------->\\
+  /*=======================================================================================*/
 	
-  const double NONDEF_IDLE_MOD = 1.0; //модификатор вероятности ничего не делать для стандартного моба
-  const double NONDEF_MOVE_MOD = 1.0; //модификатор вероятности перемещения для стандартного моба
-  const double NONDEF_CAST_MOD = 1.0; //модификатор вероятности применения особой способности для стандартного моба
-  const double NONDEF_ATTACK_MOD = 1.0; //модификатор вероятности атаковать противника для стандатного моба
-  const double NONDEF_COVER_MOD = 1.0; //модификатор вероятности использовать укрытие для стандартного моба
+  const double NONDEF_IDLE_MOD = 1.0;
+  const double NONDEF_MOVE_MOD = 1.0;
+  const double NONDEF_CAST_MOD = 1.0;
+  const double NONDEF_ATTACK_MOD = 1.0;
+  const double NONDEF_COVER_MOD = 1.0;
 
-  const double GRUNT_IDLE_MOD = 1.0; //модификатор вероятности ничего не делать для моба-танка
-  const double GRUNT_MOVE_MOD = 1.0; //модификатор вероятности перемещения для моба-танка
-  const double GRUNT_CAST_MOD = 1.0; //модификатор вероятности использовать особую способность для моба-танка
-  const double GRUNT_ATTACK_MOD = 1.0; //модификатор вероятности атаковать противника для моба-танка
-  const double GRUNT_COVER_MOD = 1.0; //модификатор вероятности занять укрытие для моба-танка
+  const double GRUNT_IDLE_MOD = 1.0;
+  const double GRUNT_MOVE_MOD = 1.0;
+  const double GRUNT_CAST_MOD = 1.0;
+  const double GRUNT_ATTACK_MOD = 1.0;
+  const double GRUNT_COVER_MOD = 1.0;
 
-  const double DMG_IDLE_MOD = 1.0; //модификатор вероятности ничего не делать для моба-дд
-  const double DMG_MOVE_MOD = 1.0; //модификатор вероятности перемещения для моба-дд
-  const double DMG_CAST_MOD = 1.0; //модификатор вероятности использовать особую способности для моба-дд
-  const double DMG_ATTACK_MOD = 1.0; //модификатор вероятности атаковать противника для моба-дд
-  const double DMG_COVER_MOD = 1.0;	//модификатор вероятности занять укрытие для моба-дд
+  const double DMG_IDLE_MOD = 1.0;
+  const double DMG_MOVE_MOD = 1.0;
+  const double DMG_CAST_MOD = 1.0;
+  const double DMG_ATTACK_MOD = 1.0;
+  const double DMG_COVER_MOD = 1.0;
 
-  const double SUPPORT_IDLE_MOD = 1.0; //модификатор вероятности ничего не делать для моба-саппорта
-  const double SUPPORT_MOVE_MOD = 1.0; //модификатор вероятности перемещения для моба-саппорта
-  const double SUPPORT_CAST_MOD = 1.0; //модификатор вероятности использования особой способности для моба-саппорта
-  const double SUPPORT_ATTACK_MOD = 1.0; //модификатор вероятности атаковать противника для моба-саппорта
-  const double SUPPORT_COVER_MOD = 1.0;  //модификатор вероятности занять укрытие для моба-саппорта
+  const double SUPPORT_IDLE_MOD = 1.0;
+  const double SUPPORT_MOVE_MOD = 1.0;
+  const double SUPPORT_CAST_MOD = 1.0;
+  const double SUPPORT_ATTACK_MOD = 1.0;
+  const double SUPPORT_COVER_MOD = 1.0;
 
   //=======================================================================================\\
   //=======================================================================================\\
 
-  const int MAP_WIDTH = 128;		    //размер карты в тайлах (карта считается квадратной)
+  const int MAP_WIDTH = 128;
 	
-  enum TActionList { AL_IDLE, AL_MOVE, AL_CAST, AL_ATTACK, AL_COVER, AL_SIZE }; //тип доступных действий
-  //AL_IDLE-пропуск хода, AL_MOVE-переместиться, AL_ATTACK-атаковать, AL_CAST-применить способность, AL_COVER-занять укрытие
+  enum TActionList { AL_IDLE, AL_MOVE, AL_CAST, AL_ATTACK, AL_COVER, AL_SIZE }; //availible actions per turn
 	
-  struct TMobIgData //структура данных сгенерированного моба (реально участвует в бою)
+  struct TMobIgData //mob data (in-game generated for battle)
   {
-    int faction;            //фракция
-    int dmg[PAIR_ARR_SIZE]; //наносимый мобом урон
-    int hp[PAIR_ARR_SIZE];  //ХП моба
-    int def;                //защита моба
-    int level;              //уровень моба
-	int loot;               //индекс лут-листа моба в базе данных (типового)
-	int ini;                //инициатива моба
-	TNPCRole role;          //шаблон поведения моба
-    bool is_leader;         //является ли лидером
-    bool is_mass_leader;    //является ли масс-лидером
+    int faction;
+    int dmg[PAIR_ARR_SIZE];
+    int hp[PAIR_ARR_SIZE];
+    int def;
+    int level;
+	int loot;
+	int ini;
+	TNPCRole role;
+    bool is_leader;
+    bool is_mass_leader;
   };
 
-  struct TAction //структура данных дейсвия (для помещения в очередь хода)
+  struct TAction //action data (for turn queue)
   {
-    int sender_ids[PAIR_ARR_SIZE]; //идентификаторы совершающего действие (id пака и id внутри пака, для игрока ставить PLAYER_ID)
-    int target_ids[PAIR_ARR_SIZE]; //идентификаторы цели (id пака и id внутри пака, для игрока ставить PLAYER_ID, для перемещения - координаты тайла на карте)
-	TActionList  id;               //тип действия 
+    int sender_ids[PAIR_ARR_SIZE];
+    int target_ids[PAIR_ARR_SIZE];
+	TActionList  id;
   };
 
-  //функция копирования сгенерированного моба
   void copy_mob_data(struct TMobIgData *from, struct TMobIgData *to);
-  //функция обмена местами сгенерированных мобов в паке
   void swap_mob_data(struct TMobIgData *from, struct TMobIgData *to);
-  //функция очистки сгенерированного моба
   void clear_mob_data(struct TMobIgData *data);
-  //функция копирования данных действия
   void copy_action_data(struct TAction *from, struct TAction *to);
-  //функция обмена местами двух действий
   void swap_action_data(struct TAction *from, struct TAction *to);
-  //функция очистки данных действия
   void clear_action_data(struct TAction *data);
 
-  //класс-плодильщик мобов
-  class Mob
+  class Mob  //in-game mobs spawner class
   {
     public:
 
-      //функция генерации моба (использовать для загрузки сохраненной игры, если есть бой)
       static battle::TMobIgData spawn(TMobIgData *inp_data);
-      //функция генерации моба (использовать для генерации моба первого уровня)
       static battle::TMobIgData spawn(database::TMobStData *inp_data);
-      //функция генерации моба (использовать для генерации моба заданного уровня)
       static battle::TMobIgData spawn(database::TMobStData *inp_data, int low_level_cap, int high_level_cap);
-      //функция проверки, является ли данный моб лидером либо масс-лидером
       static void Check_Leadership(TMobIgData *mob_data, bool already_have_a_leader, bool already_have_a_mass_leader);
 
-	};
+  };
 
-	class Item //класс-плодильщик предметов
-	{
-      public:
+  class Item //in-game items spawner class
+  {
+    public:
 
-        //функция создания предмета первого уровня по заданному шаблону
-        static gtl_rpg::TItemIgData spawn(struct database::TItemStData *data);
-        //функция создания предмета определенного уровня по заданному шаблону
-        static gtl_rpg::TItemIgData spawn(struct database::TItemStData *data, int llc, int hlc);
+      static gtl_rpg::TItemIgData spawn(struct database::TItemStData *data);
+      static gtl_rpg::TItemIgData spawn(struct database::TItemStData *data, int llc, int hlc);
 
-	};
+  };
 
-	class Battlefield //класс поля боя
-	{
-	  public:
+  class Battlefield //battle class (
+  {
+    public:
 
-        //конструкторы/деструкторы
+      Battlefield();
+      ~Battlefield();
+      int spawn_prob(int spawned, int dp);
+      int total_enemies();
+      void turn_sort(player::Player *pl);
+      bool pack_has_leader(int pack_id);
+      bool have_mass_leader();
+      void spawn_new_mob(database::Database *db, int mob_id, int pack_id, int llc, int hlc);
+      void spawn_new_pack(database::Database *db, int mob_id, int llc, int hlc);
+      void clear_dead(database::Database *db, int llc, int hlc);
 
-        //базовый конструктор класса
-        Battlefield();
-        //базовый деструктор класса
-        ~Battlefield();
-
-        //методы
-
-        //функция расчета вероятности добавления нового моба в пак
-        int spawn_prob(int spawned, int dp);
-        //функция подсчета числа противников
-        int total_enemies();
-        //функция определения очередности хода
-        void turn_sort(player::Player *pl);
-        //
-        bool pack_has_leader(int pack_id);
-        //
-        bool have_mass_leader();
-        //спавн нового моба
-        void spawn_new_mob(database::Database *db, int mob_id, int pack_id, int llc, int hlc);
-        //спавн нового пака
-        void spawn_new_pack(database::Database *db, int mob_id, int llc, int hlc);
-        //функция очистки от трупов
-        void clear_dead(database::Database *db, int llc, int hlc);
-
-        std::vector<std::vector<TMobIgData> > enemies; //вектор паков противников
+      std::vector<std::vector<TMobIgData> > enemies; //spawned mob packs  vector
 
       private:
 
-        int reward_cash;                              //суммарная денежная награда за бой
-        int reward_exp;                               //суммарная награда в опыте за бой
-        std::vector<TItemIgData> loot;                //вектор выпавшего лута
-        std::vector<TBuffData> buffs;                 //вектор бафов/дотов/хотов
-        std::vector<int[PAIR_ARR_SIZE]> turn_order;   //вектор очередности хода
+        int reward_cash;
+        int reward_exp;
+        std::vector<TItemIgData> loot;                //gained loot vector
+        std::vector<TBuffData> buffs;                 //active buffs/dots/hots
+        std::vector<int[PAIR_ARR_SIZE]> turn_order;
 
 	};
 
-    //класс искусственного интеллекта
-    class AI
+    class AI //AI handler class
     {
       public:
 
-        //функция выбора действия
+        //main action selector
         static battle::TAction select(TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j);
 
       private:
 
-        //паттерн ИИ лекаря
+        //action selectors for different NPC behaviors
         static battle::TAction healer_ai(player::Player *pl, Battlefield *bf, int i, int j);
-        //паттерн ИИ дамагера
         static battle::TAction damager_ai(player::Player *pl, Battlefield *bf, int i, int j);
-        //паттерн ИИ танка
         static battle::TAction grunt_ai(player::Player *pl, Battlefield *bf, int i, int j);
-        //паттерн ИИ стандартного моба
         static battle::TAction nondef_ai(player::Player *pl, Battlefield *bf, int i, int j);
 
     };
