@@ -75,14 +75,14 @@ void battle::clear_action_data(TAction *data)
 battle::TMobIgData battle::Mob::spawn(TMobIgData *inp_data)
 {
   TMobIgData mob_data;
-  copy_mob_data(inp_data, &mob_data); //загрузка моба из сохраненных данных
+  copy_mob_data(inp_data, &mob_data);
   return mob_data;
 }
 
 battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data)
 {
   TMobIgData mob_data;
-  clear_mob_data(&mob_data); //преинициализация данных моба
+  clear_mob_data(&mob_data);
   mob_data.ini = inp_data->ini; 
   mob_data.def = inp_data->def; 
   mob_data.faction = inp_data->faction; 
@@ -93,9 +93,6 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data)
   {
       mob_data.dmg[i] = inp_data->dmg[i];
   }
-  //определение ролевой модели моба и применение соответствующих модификаторов
-  //изначально все мобы принадлежат к стандартному типу NR_NONDEF, но с вероятностью 20%
-  //могут изменить тип на танка, дамагера или лекаря
   {
     srand(static_cast<unsigned int>(time(0)));
     for (int i = NR_GRUNT; i < NR_SIZE; ++i)
@@ -131,14 +128,12 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data)
           }
         }
       }
-      //если шаблон поведения больше не стандартный, прервать цикл
       if (mob_data.role != NR_NONDEF)
       {
         break;
       }
     }
   }
-  //применение модификаторов
   switch (mob_data.role)
   {
     case NR_NONDEF:
@@ -204,7 +199,7 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data)
 battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data, int low_level_cap, int high_level_cap)
 {
   TMobIgData mob_data;
-  clear_mob_data(&mob_data); //преинициализация данных моба
+  clear_mob_data(&mob_data);
   mob_data.ini = inp_data->ini;
   mob_data.def = inp_data->def;
   mob_data.faction = inp_data->faction;
@@ -216,13 +211,10 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data, int low_le
     mob_data.dmg[i] = inp_data->dmg[i];
   }
   srand(static_cast<unsigned int>(time(0)));
-  //определение уровня генерируемого моба
   int rnd = rand() % (high_level_cap - low_level_cap) + low_level_cap;
   mob_data.level = rnd;
-  //если уровень моба выше начального
   if (mob_data.level > START_LEVEL)
   {
-    //начинаем модификацию ХП и наносимого урона
     for (int i = 0; i < (mob_data.level - START_LEVEL); ++i)
     {
       double tmp_hp, tmp_dmg, tmp_def;
@@ -237,9 +229,6 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data, int low_le
     }
     mob_data.hp[0] = mob_data.hp[1];
   }
-  //определение ролевой модели моба и применение соответствующих модификаторов
-  //изначально все мобы принадлежат к стандартному типу NR_NONDEF, но с вероятностью 20%
-  //могут изменить тип на танка, дамагера или лекаря
   {
     srand(static_cast<unsigned int>(time(0)));
     for (int i = NR_GRUNT; i < NR_SIZE; ++i)
@@ -275,14 +264,12 @@ battle::TMobIgData battle::Mob::spawn(database::TMobStData *inp_data, int low_le
           }
         }
       }
-      //если шаблон поведения больше не стандартный, прервать цикл
       if (mob_data.role != NR_NONDEF)
       {
         break;
       }
     }
   }
-  //применение модификаторов
   switch (mob_data.role)
   {
     case NR_NONDEF:
@@ -364,7 +351,7 @@ void battle::Mob::Check_Leadership(TMobIgData *mob_data, bool already_have_a_lea
     mob_data->dmg[0] = round(tmp_dmg);
     tmp_dmg = mob_data->dmg[1] * LEADER_DMG_MODIFIER;
     mob_data->dmg[1] = round(tmp_dmg);
-    //проверка на то, является ли лидер масс-лидером
+    //ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  ГІГ®, ГїГўГ«ГїГҐГІГ±Гї Г«ГЁ Г«ГЁГ¤ГҐГ° Г¬Г Г±Г±-Г«ГЁГ¤ГҐГ°Г®Г¬
     if (!already_have_a_mass_leader)
     {
       int rnd = rand();
@@ -481,7 +468,7 @@ gtl_rpg::TItemIgData battle::Item::spawn(database::TItemStData *data, int llc, i
 	item_data.hpbons = data->hpbons;
 	item_data.ifstack = data->ifstack;
 	item_data.kind = data->kind;
-	item_data.lvlreq = rand() % (hlc - llc) + llc; //уровень предмета определяется как случайное число от llс до hlc
+	item_data.lvlreq = rand() % (hlc - llc) + llc;
 	item_data.manufacturer = data->manufacturer;
 	item_data.name = data->name;
 	item_data.ntbons = data->ntbons;
@@ -512,7 +499,6 @@ gtl_rpg::TItemIgData battle::Item::spawn(database::TItemStData *data, int llc, i
 			item_data.rarity = TItemRareness(i);
 		}
 	}
-	//
 	if (item_data.lvlreq > START_LEVEL)
 	{
 		double tmp;
@@ -538,7 +524,6 @@ gtl_rpg::TItemIgData battle::Item::spawn(database::TItemStData *data, int llc, i
 			}
 		}
 	}
-	//
 	{
 		double qmod = 0.0;
 		for (int i = 0; i < IR_SIZE; ++i)
@@ -658,15 +643,12 @@ void battle::Battlefield::spawn_new_pack(database::Database *db, int mob_id, int
 void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
 {
   srand(static_cast<unsigned int>(time(0)));
-  //сканируем всех отспавненных мобов
   for (int i = 0; i < enemies.size(); ++i)
   {
-    //пустые паки пропускаем, если есть хоть один моб, сканируем пак
     if (enemies[i].size() > ZERO)
     {
       for (int j = 0; j < enemies[i].size(); ++j)
       {
-        //если текущее ХП моба равно 0, генерируем с него лут, добавляем награды в деньгах и опыте в общий пул и удаляем его из пака
         if (enemies[i][j].hp[0] == ZERO)
         {
           database::TLootList list;
@@ -674,7 +656,6 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
           list = db->get_loot_list(enemies[i][j].loot);
           double tmp_cash = list.cash;
           double tmp_exp = list.exp;
-          //если уровень моба выше первого, наращиваем награду в деньгах и опыте пропорционально уровню и помещаем ее в общий пул
           if (enemies[i][j].level > START_LEVEL)
           {
             for (int k = START_LEVEL; k < enemies[i][j].level; ++k)
@@ -683,12 +664,10 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
               tmp_exp *= (1.0 + EXP_RAISE);
             }
           }
-          //если моб был лидером, применяем лидерские модификаторы опыта и денег к награде и дебафаем пак
           if (enemies[i][j].is_leader)
           {
             tmp_cash *= LEADER_CASH_MODIFIER;
             tmp_exp *= LEADER_EXP_MODIFIER;
-            //дебафаем пак лидера за его смерть
             for (int k = 0; k < enemies[i].size(); ++k)
             {
               if (k != j)
@@ -718,18 +697,15 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
                 }
               }
             }
-            //если моб был масс-лидером, применяем масс-лидерские модификаторы опыта и денег
             if (enemies[i][j].is_mass_leader)
             {
               double tmp;
               tmp_cash *= MASS_LEADER_CASH_MODIFIER;
               tmp_exp *= MASS_LEADER_EXP_MODIFIER;
-              //запускаем дебаф всех живых мобов
               for (int k = 0; k < enemies.size(); ++k)
               {
                 for (int l = 0; l < enemies[k].size(); ++l)
                 {
-                  //модификатор 0.1 применяется, дабы избежать бафа параметров мобов - !!! ПРИ ИЗМЕНЕНИИ МАСС-ЛИДЕРСКИХ МОДИФИКАТОРОВ НЕОБХОДИМО ПЕРЕСМОТРЕТЬ НЕОБХОДИМОСТЬ ПРИМЕНЕНИЯ 0.1 !!!
                   tmp = enemies[k][l].def;
                   tmp /= (MASS_LEADER_DEF_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
                   enemies[k][l].def = round(tmp);
@@ -756,10 +732,8 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
               }
             }
           }
-          //вносим награды в деньгах и опыте в общий пул боя
           reward_cash += round(tmp_cash);
           reward_exp += round(tmp_exp);
-          //сканируем лут-лист по предметам и пытаемся генерить каждый предмет по списку в максимально возможном количестве
           for (int k = 0; k < LOOT_LIST_SIZE; ++k)
           {
             for (int l = 0; l < list.loot[k].max_quant; ++l)
@@ -783,7 +757,7 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
 
 battle::TAction battle::AI::select(TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //выбираем нужный паттерн ИИ
+  //ГўГ»ГЎГЁГ°Г ГҐГ¬ Г­ГіГ¦Г­Г»Г© ГЇГ ГІГІГҐГ°Г­ Г€Г€
   switch (role)
   {
     case NR_NONDEF:
@@ -807,12 +781,11 @@ battle::TAction battle::AI::select(TNPCRole role, player::Player *pl, Battlefiel
 
 battle::TAction battle::AI::healer_ai(player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //
   TAction res;
   res.id = AL_IDLE;
   res.sender_ids[0] = i;
   res.sender_ids[1] = j;
-  unsigned int variants[AL_SIZE] = { ZERO }; //массив значений полезности вариантов действий
+  unsigned int variants[AL_SIZE] = { ZERO };
   for (int k = 0; k < bf->enemies.size(); ++k)
   {
     for (int l = 0; l < bf->enemies[k].size(); ++l)
@@ -828,12 +801,11 @@ battle::TAction battle::AI::healer_ai(player::Player *pl, Battlefield *bf, int i
 
 battle::TAction battle::AI::damager_ai(player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //
   TAction res;
   res.id = AL_IDLE;
   res.sender_ids[0] = i;
   res.sender_ids[1] = j;
-  unsigned int variants[AL_SIZE] = { ZERO }; //массив значений полезности вариантов действий
+  unsigned int variants[AL_SIZE] = { ZERO };
   for (int k = 0; k < bf->enemies.size(); ++k)
   {
     for (int l = 0; l < bf->enemies[k].size(); ++l)
@@ -849,13 +821,11 @@ battle::TAction battle::AI::damager_ai(player::Player *pl, Battlefield *bf, int 
 
 battle::TAction battle::AI::grunt_ai(player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //
   TAction res;
   res.id = AL_IDLE;
   res.sender_ids[0] = i;
   res.sender_ids[1] = j;
-  unsigned int variants[AL_SIZE] = { ZERO }; //массив значений полезности вариантов действий
-  //
+  unsigned int variants[AL_SIZE] = { ZERO };
   for (int k = 0; k < bf->enemies.size(); ++k)
   {
     for (int l = 0; l < bf->enemies[k].size(); ++l)
@@ -871,12 +841,11 @@ battle::TAction battle::AI::grunt_ai(player::Player *pl, Battlefield *bf, int i,
 
 battle::TAction battle::AI::nondef_ai(player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //
   TAction res;
   res.id = AL_IDLE;
   res.sender_ids[0] = i;
   res.sender_ids[1] = j;
-  unsigned int variants[AL_SIZE] = { ZERO }; //массив значений полезности вариантов действий
+  unsigned int variants[AL_SIZE] = { ZERO };
   for (int k = 0; k < bf->enemies.size(); ++k)
   {
     for (int l = 0; l < bf->enemies[k].size(); ++l)
