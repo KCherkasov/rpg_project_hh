@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>16</x>
+      <y>16</y>
+      <w>1032</w>
+      <h>800</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+bg=yellow
+fg=black
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>72</x>
+      <y>56</y>
+      <w>96</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
++TPlayerData
+--
++name: std::string
++level: integer
++nutrition: int
++exp: int[2]
++hp: int[2]
++sp: int;
++stats: int[8]
+
+fg=black
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>856</x>
+      <y>56</y>
+      <w>176</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
++TInventoryData
+--
++equipped: gtl_rpg::TItemIgData[]
++backpack: gtl_rpg::TItemIgData[]
++bank: gtl_rpg::TItemIgData[]
++storage: gtl_rpg::TItemIgData[]
+
+fg=black
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>56</y>
+      <w>576</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;C++ class&gt;&gt;
++Player
+--
+-char_data: TPlayerData
+-items: TInventoryData
+--
++Player()
++Player(inp_char: TPlayerData, inp_items: TInventoryData)
++~Player()
++get_stat(ind: int): int
++get_exp(ind: int): int
++get_hp(ind: int): int
++get_nutrition(): int
++get_name(): std::string
++get_item(section: TInventorySections, ind: int): gtl_rpd::TItemIgData
++set_stat(ind: int, value: int, kind: gtl_rpg::TFieldEditorKind)
++set_level(value: int, kind: gtl_rpg::TFieldEditorKind)
++set_sp(value: int, kind: gtl_rpg::TFieldEditorKind)
++set_nutrition(value: int, kind: gtl_rpg::TFieldEditorKind)
++set_name(value: std::string)
++set_exp(ind: int, value: int, kind: gtl_rpg::TFieldEditorKind)
++set_hp(ind: int, value: int, kind: gtl_rpg::TFieldEditorKind)
++eject_pdata(): TPlayerData
++eject_idata(): TInventoryData
++stat_up(ind: int)
++level_up()
++add_item(item: gtl_rpg::TItemIgData*)
++remove_item(section: TInventorySections, slot: int)
++swap_items(from_section:  TInventorySections, from_slot: int, to_section: TInventorySections, to_slot: int)
+fg=black
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>56</y>
+      <w>80</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>56</y>
+      <w>80</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>280</y>
+      <w>200</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TInventorySections
+--
+IS_NONDEF = gtl_rpg::FREE_INDEX
+IS_EQUIPPED
+IS_BACKPACK
+IS_BANK
+IS_STORAGE
+IS_SIZE
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>288</y>
+      <w>56</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>448</y>
+      <w>176</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;constants&gt;&gt;
+--
+STATS_COUNT: int = 8
+BACKPACK_SIZE: int = 36
+BANK_SIZE: int = 154
+STORAGE_SIZE: int = 72
+FIRST_LEVELUP_CAP: int = 100
+INITIAL_STATS_VALUE: int = 10
+LEVELUP_SP_GRANT: int = 5
+HP_PER_STAT_POINT: int = 10
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>448</y>
+      <w>368</w>
+      <h>344</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;functions&gt;&gt;
+--
+copy_inventory_equipped(from: TInventoryData*, to: TInventoryData*)
+copy_inventory_backpack(from: TInventoryData*, to: TInventoryData*)
+copy_inventory_bank(from: TInventoryData*, to: TInventoryData*)
+copy_inventory_storage(from: TInventoryData*, to: TInventoryData*)
+copy_inventory_all(from: TInventoryData*, to: TInventoryData*)
+swap_inventory_equipped(from: TInventoryData*, to: TInventoryData*)
+swap_inventory_backpack(from: TInventoryData*, to: TInventoryData*)
+swap_inventory_bank(from: TInventoryData*, to: TInventoryData*)
+swap_inventory_storage(from: TInventoryData*, to: TInventoryData*)
+swap_inventory_all(from: TInventoryData*, to: TInventoryData*)
+clear_inventory_equipped(inv: TInventoryData*)
+clear_inventory_backpack(inv: TInventoryData*)
+clear_inventory_bank(inv: TInventoryData*)
+clear_inventory_storage(inv: TInventoryData*)
+clear_inventory_all(inv: TInventoryData*)
+inventory_slot_is_free(slot: gtl_rpg::TItemIgData*): bool
+inventory_first_free_backpack(data: TInventoryData*): int
+inventory_first_free_bank(data: TInventoryData*): int
+inventory_first_free_storage(data: TInventoryData*): int
+inventory_count_free_slots_backpack(data: TInventoryData*): int
+inventory_count_free_slots_bank(data: TInventoryData*): int
+inventory_count_free_slots_storage(data: TInventoryData*): int
+copy_player_data(from: TPlayerData*, to: TPlayerData*)
+swap_player_data(from: TPlayerData*, to: TPlayerData*)
+clear_player_data(data: TPlayerData*)
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
