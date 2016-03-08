@@ -1,5 +1,6 @@
 #pragma once
 #include "gtl_rpg.h"
+#include "spawners.h"
 
 namespace player
 {
@@ -19,10 +20,10 @@ namespace player
 
   struct TInventoryData
   {
-	  TItemIgData equipped[ES_SIZE];
-	  TItemIgData backpack[BACKPACK_SIZE];
-	  TItemIgData bank[BANK_SIZE];
-	  TItemIgData storage[STORAGE_SIZE];
+	  spawners::TItemIgData equipped[ES_SIZE];
+	  spawners::TItemIgData backpack[BACKPACK_SIZE];
+	  spawners::TItemIgData bank[BANK_SIZE];
+	  spawners::TItemIgData storage[STORAGE_SIZE];
 	  int cash;
   };
 
@@ -74,7 +75,7 @@ namespace player
     void stat_up(int stat_index);
     void level_up();
 
-    bool add_item(struct TItemIgData *item);
+    bool add_item(struct spawners::TItemIgData *item);
     void remove_item(TInventorySections section, int slot);
     bool swap_items(TInventorySections from_section, int from_slot, TInventorySections to_section, int to_slot);
 
@@ -86,7 +87,7 @@ namespace player
     int get_hp(int ind);
     int get_nutrition();
     std::string get_name();
-    gtl_rpg::TItemIgData get_item(TInventorySections section, int ind);
+    spawners::TItemIgData get_item(TInventorySections section, int ind);
     void set_stat(int ind, int value, TFieldEditorKind kind);
     void set_level(int value, TFieldEditorKind kind);
     void set_sp(int value, TFieldEditorKind kind);

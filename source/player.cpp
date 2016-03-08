@@ -6,7 +6,7 @@ void player::copy_inventory_equipped(TInventoryData *from, TInventoryData *to)
 {
   for (int i = 0; i < ES_SIZE; ++i)
   {
-    copy_item(&(from->equipped[i]), &(to->equipped[i]));
+    spawners::copy_item(&(from->equipped[i]), &(to->equipped[i]));
   }
 }
 
@@ -14,7 +14,7 @@ void player::copy_inventory_storage(TInventoryData *from, TInventoryData *to)
 {
   for (int i = 0; i < STORAGE_SIZE; ++i)
   {
-    copy_item(&(from->storage[i]), &(to->storage[i]));
+	spawners::copy_item(&(from->storage[i]), &(to->storage[i]));
   }
 }
 
@@ -22,7 +22,7 @@ void player::copy_inventory_bank(TInventoryData *from, TInventoryData *to)
 {
   for (int i = 0; i < BANK_SIZE; ++i)
   {
-    copy_item(&(from->bank[i]), &(to->bank[i]));
+	spawners::copy_item(&(from->bank[i]), &(to->bank[i]));
   }
 }
 
@@ -30,7 +30,7 @@ void player::copy_inventory_backpack(TInventoryData *from, TInventoryData *to)
 {
   for (int i = 0; i < BACKPACK_SIZE; ++i)
   {
-    copy_item(&(from->backpack[i]), &(to->backpack[i]));
+	spawners::copy_item(&(from->backpack[i]), &(to->backpack[i]));
   }
 }
 
@@ -86,7 +86,7 @@ void player::clear_inventory_equipped(TInventoryData *inv)
 {
   for (int i = 0; i < ES_SIZE; ++i)
   {
-    clear_item(&(inv->equipped[i]));
+    spawners::clear_item(&(inv->equipped[i]));
   }
 }
 
@@ -94,7 +94,7 @@ void player::clear_inventory_storage(TInventoryData *inv)
 {
   for (int i = 0; i < STORAGE_SIZE; ++i)
   {
-    clear_item(&(inv->storage[i]));
+    spawners::clear_item(&(inv->storage[i]));
   }
 }
 
@@ -102,7 +102,7 @@ void player::clear_inventory_bank(TInventoryData *inv)
 {
   for (int i = 0; i < BANK_SIZE; ++i)
   {
-    clear_item(&(inv->bank[i]));
+    spawners::clear_item(&(inv->bank[i]));
   }
 }
 
@@ -110,7 +110,7 @@ void player::clear_inventory_backpack(TInventoryData *inv)
 {
   for (int i = 0; i < BACKPACK_SIZE; ++i)
   {
-    clear_item(&(inv->backpack[i]));
+    spawners::clear_item(&(inv->backpack[i]));
   }
 }
 
@@ -122,11 +122,11 @@ void player::clear_inventory_all(TInventoryData *inv)
   clear_inventory_storage(inv);
 }
 
-bool player::inventory_slot_is_free(gtl_rpg::TItemIgData *slot)
+bool player::inventory_slot_is_free(spawners::TItemIgData *slot)
 {
   bool res = true;
-  gtl_rpg::TItemIgData checker;
-  clear_item(&checker);
+  spawners::TItemIgData checker;
+  spawners::clear_item(&checker);
   res &= (slot->cost == checker.cost);
   res &= (slot->def == checker.def);
   res &= (slot->disposable == checker.disposable);
@@ -348,12 +348,12 @@ void player::Player::level_up()
     char_data.exp[1] = round(new_exp_cap);
   }
 }
-bool player::Player::add_item(struct TItemIgData *item)
+bool player::Player::add_item(spawners::TItemIgData *item)
 {
   bool res = false; //по умолчанию считаем, что не удалось добавить предмет
   if (inventory_count_free_slots_backpack(&items) > ZERO)
   {
-    copy_item(item, &(items.backpack[inventory_first_free_backpack(&items)]));
+    spawners::copy_item(item, &(items.backpack[inventory_first_free_backpack(&items)]));
     res = true;
   }
   return res;
@@ -369,7 +369,7 @@ void player::Player::remove_item(TInventorySections section, int slot)
       size = ES_SIZE;
       if (slot < size)
       {
-        clear_item(&(items.equipped[slot]));
+        spawners::clear_item(&(items.equipped[slot]));
       }
       break;
     }
@@ -378,7 +378,7 @@ void player::Player::remove_item(TInventorySections section, int slot)
       size = BACKPACK_SIZE;
       if (slot < size)
       {
-        clear_item(&(items.backpack[slot]));
+        spawners::clear_item(&(items.backpack[slot]));
       }
       break;
     }
@@ -387,7 +387,7 @@ void player::Player::remove_item(TInventorySections section, int slot)
       size = BANK_SIZE;
       if (slot < size)
       {
-        clear_item(&(items.bank[slot]));
+        spawners::clear_item(&(items.bank[slot]));
       }
       break;
     }
@@ -396,7 +396,7 @@ void player::Player::remove_item(TInventorySections section, int slot)
       size = STORAGE_SIZE;
       if (slot < size)
       {
-        clear_item(&(items.storage[slot]));
+        spawners::clear_item(&(items.storage[slot]));
       }
       break;
     }
@@ -419,7 +419,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
             if (items.equipped[from_slot].slots[to_slot] && items.equipped[to_slot].slots[from_slot])
             {
               res = true;
-              swap_item(&(items.equipped[from_slot]), &(items.equipped[to_slot]));
+              spawners::swap_item(&(items.equipped[from_slot]), &(items.equipped[to_slot]));
             }
           }
           break;
@@ -441,7 +441,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[from_slot].statbons[i];
                 char_data.stats[i] += items.backpack[to_slot].statbons[i];
               }
-              swap_item(&(items.equipped[from_slot]), &(items.backpack[to_slot]));
+              spawners::swap_item(&(items.equipped[from_slot]), &(items.backpack[to_slot]));
             }
           }
           break;
@@ -463,7 +463,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[from_slot].statbons[i];
                 char_data.stats[i] += items.bank[to_slot].statbons[i];
               }
-              swap_item(&(items.equipped[from_slot]), &(items.bank[to_slot]));
+              spawners::swap_item(&(items.equipped[from_slot]), &(items.bank[to_slot]));
             }
           }
           break;
@@ -485,7 +485,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[from_slot].statbons[i];
                 char_data.stats[i] += items.storage[to_slot].statbons[i];
               }
-              swap_item(&(items.equipped[from_slot]), &(items.storage[to_slot]));
+              spawners::swap_item(&(items.equipped[from_slot]), &(items.storage[to_slot]));
             }
           }
           break;
@@ -514,7 +514,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[to_slot].statbons[i];
                 char_data.stats[i] += items.backpack[from_slot].statbons[i];
               }
-              swap_item(&(items.equipped[to_slot]), &(items.backpack[from_slot]));
+              spawners::swap_item(&(items.equipped[to_slot]), &(items.backpack[from_slot]));
             }
           }
           break;
@@ -524,7 +524,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BACKPACK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BACKPACK_SIZE))
           {
             res = true;
-            swap_item(&(items.backpack[from_slot]), &(items.backpack[to_slot]));
+            spawners::swap_item(&(items.backpack[from_slot]), &(items.backpack[to_slot]));
           }
           break;
         }
@@ -533,7 +533,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BACKPACK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BANK_SIZE))
           {
             res = true;
-            swap_item(&(items.backpack[from_slot]), &(items.bank[to_slot]));
+            spawners::swap_item(&(items.backpack[from_slot]), &(items.bank[to_slot]));
           }
           break;
         }
@@ -542,7 +542,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BACKPACK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < STORAGE_SIZE))
           {
             res = true;
-            swap_item(&(items.backpack[from_slot]), &(items.storage[to_slot]));
+            spawners::swap_item(&(items.backpack[from_slot]), &(items.storage[to_slot]));
           }
           break;
         }
@@ -570,7 +570,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[to_slot].statbons[i];
                 char_data.stats[i] += items.bank[from_slot].statbons[i];
               }
-              swap_item(&(items.equipped[to_slot]), &(items.bank[from_slot]));
+              spawners::swap_item(&(items.equipped[to_slot]), &(items.bank[from_slot]));
             }
           }
           break;
@@ -580,7 +580,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BANK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BACKPACK_SIZE))
           {
             res = true;
-            swap_item(&(items.bank[from_slot]), &(items.backpack[to_slot]));
+            spawners::swap_item(&(items.bank[from_slot]), &(items.backpack[to_slot]));
           }
           break;
         }
@@ -589,7 +589,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BANK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BANK_SIZE))
           {
             res = true;
-            swap_item(&(items.bank[from_slot]), &(items.bank[to_slot]));
+            spawners::swap_item(&(items.bank[from_slot]), &(items.bank[to_slot]));
           }
           break;
         }
@@ -598,7 +598,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < BANK_SIZE) && (to_slot > FREE_INDEX) && (to_slot < STORAGE_SIZE))
           {
             res = true;
-            swap_item(&(items.bank[from_slot]), &(items.storage[to_slot]));
+            spawners::swap_item(&(items.bank[from_slot]), &(items.storage[to_slot]));
           }
           break;
         }
@@ -626,7 +626,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
                 char_data.stats[i] -= items.equipped[to_slot].statbons[i];
                 char_data.stats[i] += items.storage[from_slot].statbons[i];
               }
-              swap_item(&(items.equipped[to_slot]), &(items.storage[from_slot]));
+              spawners::swap_item(&(items.equipped[to_slot]), &(items.storage[from_slot]));
             }
           }
           break;
@@ -636,7 +636,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < STORAGE_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BACKPACK_SIZE))
           {
             res = true;
-            swap_item(&(items.storage[from_slot]), &(items.backpack[to_slot]));
+            spawners::swap_item(&(items.storage[from_slot]), &(items.backpack[to_slot]));
           }
           break;
         }
@@ -645,7 +645,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < STORAGE_SIZE) && (to_slot > FREE_INDEX) && (to_slot < BANK_SIZE))
           {
             res = true;
-            swap_item(&(items.backpack[from_slot]), &(items.bank[to_slot]));
+            spawners::swap_item(&(items.backpack[from_slot]), &(items.bank[to_slot]));
           }
           break;
         }
@@ -654,7 +654,7 @@ bool player::Player::swap_items(TInventorySections from_section, int from_slot, 
           if ((from_slot > FREE_INDEX) && (from_slot < STORAGE_SIZE) && (to_slot > FREE_INDEX) && (to_slot < STORAGE_SIZE))
           {
             res = true;
-            swap_item(&(items.storage[from_slot]), &(items.storage[to_slot]));
+            spawners::swap_item(&(items.storage[from_slot]), &(items.storage[to_slot]));
           }
           break;
         }
@@ -721,17 +721,17 @@ std::string player::Player::get_name()
   return char_data.name;
 }
 
-gtl_rpg::TItemIgData player::Player::get_item(TInventorySections section, int ind)
+spawners::TItemIgData player::Player::get_item(TInventorySections section, int ind)
 {
-  TItemIgData res;
-  clear_item(&res);
+  spawners::TItemIgData res;
+  spawners::clear_item(&res);
   switch (section)
   {
     case IS_EQUIPPED:
     {
       if ((ind >= ZERO) && (ind < ES_SIZE))
       {
-        copy_item(&(items.equipped[ind]), &res);
+        spawners::copy_item(&(items.equipped[ind]), &res);
       }
       break;
     }
@@ -739,7 +739,7 @@ gtl_rpg::TItemIgData player::Player::get_item(TInventorySections section, int in
     {
       if ((ind >= ZERO) && (ind < BACKPACK_SIZE))
       {
-        copy_item(&(items.backpack[ind]), &res);
+        spawners::copy_item(&(items.backpack[ind]), &res);
       }
       break;
     }
@@ -747,7 +747,7 @@ gtl_rpg::TItemIgData player::Player::get_item(TInventorySections section, int in
     {
       if ((ind >= ZERO) && (ind < BANK_SIZE))
       {
-        copy_item(&(items.bank[ind]), &res);
+        spawners::copy_item(&(items.bank[ind]), &res);
       }
       break;
     }
@@ -755,7 +755,7 @@ gtl_rpg::TItemIgData player::Player::get_item(TInventorySections section, int in
     {
       if ((ind >= ZERO) && (ind < STORAGE_SIZE))
       {
-        copy_item(&(items.storage[ind]), &res);
+        spawners::copy_item(&(items.storage[ind]), &res);
       }
       break;
     }
