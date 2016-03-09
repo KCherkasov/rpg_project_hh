@@ -12,7 +12,7 @@ void spawners::copy_item(TItemIgData *from, TItemIgData *to)
 	to->dist = from->dist;
 	to->lvlreq = from->lvlreq;
 	to->manufacturer = from->manufacturer;
-	for (int i = 0; i < STATS_COUNT; ++i)
+	for (int i = 0; i < database::STATS_COUNT; ++i)
 	{
 		to->statreq[i] = from->statreq[i];
 		to->statbons[i] = from->statbons[i];
@@ -45,7 +45,7 @@ void spawners::swap_item(TItemIgData *from, TItemIgData *to)
 void spawners::clear_item(TItemIgData *item)
 {
 	//очистка бонусов и требований к характеристикам
-	for (int i = 0; i < STATS_COUNT; ++i)
+	for (int i = 0; i < database::STATS_COUNT; ++i)
 	{
 		item->statbons[i] = FREE_INDEX;
 		item->statreq[i] = FREE_INDEX;
@@ -54,7 +54,7 @@ void spawners::clear_item(TItemIgData *item)
 	item->hpbons = FREE_INDEX; //очистка восполняемого ХП
 	item->ntbons = FREE_INDEX; //очистка восполняемой сытости
 	item->dist = FREE_INDEX;   //очистка дальнобойности
-	item->kind = FREE_INDEX;   //очистка очистка вида предмета
+	item->kind = TEquipmentKind(FREE_INDEX);   //очистка очистка вида предмета
 	item->name = FREE_INDEX;   //очистка названия
 	item->description = FREE_INDEX; //очистка описания
 	item->manufacturer = FREE_INDEX; //очистка индекса производителя
@@ -111,7 +111,7 @@ void spawners::clear_mob_data(TMobIgData *data)
 		data->dmg[i] = FREE_INDEX;
 	}
 	data->def = FREE_INDEX;
-	data->role = NR_NONDEF;
+	data->role = database::NR_NONDEF;
 	data->loot = FREE_INDEX;
 	data->ini = FREE_INDEX;
 }
