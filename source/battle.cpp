@@ -93,7 +93,7 @@ void battle::Battlefield::spawn_new_mob(database::Database *db, int mob_id, int 
   database::TMobStData mob_tmp = db->get_mob(mob_id);
   spawners::TMobIgData spawned = spawners::Mob::spawn(&mob_tmp, llc, hlc);
   spawners::copy_mob_data(&spawned, &(enemies[pack_id][enemies[pack_id].size() - 1]));
-  Mob::Check_Leadership(&(enemies[pack_id][enemies[pack_id].size() - 1]), pack_has_leader(pack_id), have_mass_leader());
+  spawners::Mob::Check_Leadership(&(enemies[pack_id][enemies[pack_id].size() - 1]), pack_has_leader(pack_id), have_mass_leader());
 }
 
 void battle::Battlefield::spawn_new_pack(database::Database *db, int mob_id, int llc, int hlc)
@@ -135,14 +135,14 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
           {
             for (int k = START_LEVEL; k < enemies[i][j].level; ++k)
             {
-              tmp_cash *= (1.0 + CASH_RAISE);
-              tmp_exp *= (1.0 + EXP_RAISE);
+              tmp_cash *= (1.0 + spawners::CASH_RAISE);
+              tmp_exp *= (1.0 + spawners::EXP_RAISE);
             }
           }
           if (enemies[i][j].is_leader)
           {
-            tmp_cash *= LEADER_CASH_MODIFIER;
-            tmp_exp *= LEADER_EXP_MODIFIER;
+            tmp_cash *= spawners::LEADER_CASH_MODIFIER;
+            tmp_exp *= spawners::LEADER_EXP_MODIFIER;
             for (int k = 0; k < enemies[i].size(); ++k)
             {
               if (k != j)
@@ -151,14 +151,14 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
                 for (int l = 0; l < PAIR_ARR_SIZE; ++l)
                 {
                   tmp = enemies[i][k].dmg[l];
-                  tmp /= (LEADER_DMG_MODIFIER * PACK_DEBUFF_MODIFIER);
+                  tmp /= (spawners::LEADER_DMG_MODIFIER * PACK_DEBUFF_MODIFIER);
                   enemies[i][k].dmg[l] = round(tmp);
                 }
                 tmp = enemies[i][k].def;
-                tmp /= (LEADER_DEF_MODIFIER * PACK_DEBUFF_MODIFIER);
+                tmp /= (spawners::LEADER_DEF_MODIFIER * PACK_DEBUFF_MODIFIER);
                 enemies[i][k].def = round(tmp);
                 tmp = enemies[i][k].hp[1];
-                tmp /= (LEADER_HP_MODIFIER * PACK_DEBUFF_MODIFIER);
+                tmp /= (spawners::LEADER_HP_MODIFIER * PACK_DEBUFF_MODIFIER);
                 enemies[i][k].hp[1] = round(tmp);
                 if (enemies[i][k].hp[0] > enemies[i][k].hp[1])
                 {
@@ -167,7 +167,7 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
                 else
                 {
                   tmp = enemies[i][k].hp[0];
-                  tmp /= (LEADER_HP_MODIFIER * PACK_DEBUFF_MODIFIER);
+                  tmp /= (spawners::LEADER_HP_MODIFIER * PACK_DEBUFF_MODIFIER);
                   enemies[i][k].hp[0] = round(tmp);
                 }
               }
@@ -175,17 +175,17 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
             if (enemies[i][j].is_mass_leader)
             {
               double tmp;
-              tmp_cash *= MASS_LEADER_CASH_MODIFIER;
-              tmp_exp *= MASS_LEADER_EXP_MODIFIER;
+              tmp_cash *= spawners::MASS_LEADER_CASH_MODIFIER;
+              tmp_exp *= spawners::MASS_LEADER_EXP_MODIFIER;
               for (int k = 0; k < enemies.size(); ++k)
               {
                 for (int l = 0; l < enemies[k].size(); ++l)
                 {
                   tmp = enemies[k][l].def;
-                  tmp /= (MASS_LEADER_DEF_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
+                  tmp /= (spawners::MASS_LEADER_DEF_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
                   enemies[k][l].def = round(tmp);
                   tmp = enemies[k][l].hp[1];
-                  tmp /= (MASS_LEADER_HP_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
+                  tmp /= (spawners::MASS_LEADER_HP_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
                   enemies[k][l].hp[1] = round(tmp);
                   if (enemies[k][l].hp[0]>enemies[k][l].hp[1])
                   {
@@ -194,13 +194,13 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
                   else
                   {
                     tmp = enemies[k][l].hp[0];
-                    tmp /= (MASS_LEADER_HP_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
+                    tmp /= (spawners::MASS_LEADER_HP_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
                     enemies[k][l].hp[0] = round(tmp);
                   }
                   for (int m = 0; m < PAIR_ARR_SIZE; ++m)
                   {
                     tmp = enemies[k][l].dmg[m];
-                    tmp /= (MASS_LEADER_DMG_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
+                    tmp /= (spawners::MASS_LEADER_DMG_MODIFIER * (0.1 + PACK_DEBUFF_MODIFIER));
                     enemies[k][l].dmg[m] = round(tmp);
                   }
                 }
@@ -230,24 +230,23 @@ void battle::Battlefield::clear_dead(database::Database *db, int llc, int hlc)
   }
 }
 
-battle::TAction battle::AI::select(TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j)
+battle::TAction battle::AI::select(database::TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j)
 {
-  //âûáèðàåì íóæíûé ïàòòåðí ÈÈ
   switch (role)
   {
-    case NR_NONDEF:
+    case database::NR_NONDEF:
     {
       return AI::nondef_ai(pl, bf, i, j);
     }
-    case NR_GRUNT:
+    case database::NR_GRUNT:
     {
       return AI::grunt_ai(pl, bf, i, j);
     }
-    case NR_DMG:
+    case database::NR_DMG:
     {
       return AI::damager_ai(pl, bf, i, j);
     }
-    case NR_SUPPORT:
+    case database::NR_SUPPORT:
     {
       return AI::healer_ai(pl, bf, i, j);
     }

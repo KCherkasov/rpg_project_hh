@@ -5,9 +5,9 @@
 namespace player
 {
   using namespace gtl_rpg;
+  using namespace spawners;
 
-  const int STATS_COUNT = 8;
-  сonst int BACKPACK_SIZE = 36;
+  const int BACKPACK_SIZE = 36;
   const int BANK_SIZE = 154;
   const int STORAGE_SIZE = 72;
   const int FIRST_LEVELUP_CAP = 100;
@@ -20,10 +20,10 @@ namespace player
 
   struct TInventoryData
   {
-	  spawners::TItemIgData equipped[ES_SIZE];
-	  spawners::TItemIgData backpack[BACKPACK_SIZE];
-	  spawners::TItemIgData bank[BANK_SIZE];
-	  spawners::TItemIgData storage[STORAGE_SIZE];
+	  TItemIgData equipped[ES_SIZE];
+	  TItemIgData backpack[BACKPACK_SIZE];
+	  TItemIgData bank[BANK_SIZE];
+	  TItemIgData storage[STORAGE_SIZE];
 	  int cash;
   };
 
@@ -35,7 +35,7 @@ namespace player
     int exp[PAIR_ARR_SIZE];
     int hp[PAIR_ARR_SIZE];
     int sp;
-    int stats[STATS_COUNT];
+    int stats[database::STATS_COUNT];
   };
 
   void copy_inventory_equipped(struct TInventoryData *from, struct TInventoryData *to);
@@ -53,7 +53,7 @@ namespace player
   void clear_inventory_bank(struct TInventoryData *inv);
   void clear_inventory_storage(struct TInventoryData *inv);
   void clear_inventory_all(struct TInventoryData *inv);
-  bool inventory_slot_is_free(struct gtl_rpg::TItemIgData *slot);
+  bool inventory_slot_is_free(struct TItemIgData *slot);
   int inventory_first_free_backpack(struct TInventoryData *data);
   int inventory_first_free_bank(struct TInventoryData *data);
   int inventory_first_free_storage(struct TInventoryData *data);

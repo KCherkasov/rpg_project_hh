@@ -61,7 +61,7 @@ namespace battle
   void swap_action_data(struct TAction *from, struct TAction *to);
   void clear_action_data(struct TAction *data);
 
-  class Battlefield //battle class (
+  class Battlefield //battle class
   {
     public:
 
@@ -93,7 +93,7 @@ namespace battle
       public:
 
         //main action selector
-        static battle::TAction select(TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j);
+        static battle::TAction select(database::TNPCRole role, player::Player *pl, Battlefield *bf, int i, int j);
 
       private:
 

@@ -1,8 +1,15 @@
 #pragma once
+
+#include <ctime>
+#include <cmath>
+#include <cstdlib>
+
 #include "gtl_rpg.h"
 #include "database.h"
 
 namespace spawners {
+
+  using namespace gtl_rpg;
 
   //NPC behavior template stat modifiers
 
@@ -49,7 +56,7 @@ namespace spawners {
   //---предмета, зависящих от степени его редкости (качества). Константа TRASH < 1, т.к.---\\
   //----шаблоны базы данных соответствуют редкости IR_COMMON = 1.0, а IR_TRASH хуже, чем---\\
   //----------------------------------------IR_COMMON.-------------------------------------\\
-  //=======================================================================================\\
+  /*=======================================================================================*/
 
   const double TRASH_MODIFIER = 0.75;    //модификатор "серых" предметов (хлама)
   const double COMMON_MODIFIER = 1.0;    //модфикатор "белых" предметов (обычных)
@@ -92,10 +99,7 @@ namespace spawners {
   const double EXP_RAISE = 0.10;     //повышение награды в опыте
 
   //=======================================================================================\\
-  //=======================================================================================\\
-
-  enum TNPCRole { NR_NONDEF, NR_GRUNT, NR_DMG, NR_SUPPORT, NR_SIZE }; //тип моделей поведения НИП в бою
-  //nr_nondef-стандартный моб, nr_grunt-громила, nr_dmg-дамагер, nr_support-поддержка
+  /*=======================================================================================*/
 
   struct TItemIgData //структура внутриигровых параметров предмета
   {
@@ -104,8 +108,8 @@ namespace spawners {
     int manufacturer;              //индекс фирмы-производителя в базе данных
     int cost;                      //стоимость предмета
     int lvlreq;                    //требования к уровню носителя для использования
-    int statreq[STATS_COUNT];      //требования к характеристикам носителя для использования
-    int statbons[STATS_COUNT];     //бонус к характеристикам носителя при экипировании
+    int statreq[database::STATS_COUNT];      //требования к характеристикам носителя для использования
+    int statbons[database::STATS_COUNT];     //бонус к характеристикам носителя при экипировании
     int hpbons;                    //восполнение ХП при использовании
     int ntbons;                    //восполнение сытости при использовании
     bool slots[ES_SIZE];           //слоты, куда можно экипировать предмет
@@ -130,7 +134,7 @@ namespace spawners {
     int level;
     int loot;
     int ini;
-    TNPCRole role;
+    database::TNPCRole role;
     bool is_leader;
     bool is_mass_leader;
   };
