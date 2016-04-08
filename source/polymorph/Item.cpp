@@ -11,6 +11,6 @@
     return _cost;
   } 
   
-  bool get_in_bag() {
+  bool Item::get_in_bag() {
     return _in_bag;
   }

@@ -11,6 +11,7 @@ using namespace prototypes;
       virtual ~Item();
       int get_cost();
       bool get_in_bag();
+      virtual int use() { return 0; }
     protected:
       int _cost;
       bool _in_bag;

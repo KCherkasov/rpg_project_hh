@@ -11,7 +11,6 @@ class GameObject {
       GameObject();
       GameObject(int level);
       virtual ~GameObject();
-      int get_id();
       int get_own_id();
       int get_level();
       unsigned char* get_name();

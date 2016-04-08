@@ -11,6 +11,10 @@ namespace prototypes {
   
   const double ITEM_RARITY_MODIFIER = 0.25;
   const double ITEM_DAMAGE_MINMAX_RATIO = 1.25;
+  
+  const double DAMDEF_LEVEL_MODIFIER = 1.18;
+  const double COST_LEVEL_MODIFIER = 1.15;
+  const double STATS_LEVEL_MODIFIER = 1.15;
 
   enum TItemRareness { IR_TRASH, IR_COMMON, IR_GOOD, IR_RARE, IR_EPIC, IR_LEGENDARY };
 
@@ -37,7 +41,7 @@ namespace prototypes {
     int _distance;
     int _stat_reqs[STATS_COUNT];
     int _stat_bons[STATS_COUNT];
-    int* _slots[ES_SIZE];
+    int _slots[ES_SIZE];
     int kind;
   };
 

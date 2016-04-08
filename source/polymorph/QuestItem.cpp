@@ -1,8 +1,8 @@
 #include "QuestItem.h"
 
   QuestItem::QuestItem(TCollectablePrototype &prototype): CollectableItem() {
-    _name = new char[NAMESTRING_SIZE];
-    _description = new char[DESCRSTRING_SIZE];
+    _name = new unsigned char[NAMESTRING_SIZE];
+    _description = new unsigned char[DESCRSTRING_SIZE];
     for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
       _name[i] = prototype._name[i];
 	}

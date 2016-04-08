@@ -6,7 +6,7 @@
   EquipableItem::EquipableItem(): UsableItem() {
     _stat_bons = new int[prototypes::STATS_COUNT];
     _stat_reqs = new int[prototypes::STATS_COUNT];
-    _manufacturer_id = new char[NAMESTRING_SIZE];
+    _manufacturer_id = new unsigned char[NAMESTRING_SIZE];
     _slots = new int[ES_SIZE];
   }
 

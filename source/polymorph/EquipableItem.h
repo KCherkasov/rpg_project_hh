@@ -1,4 +1,6 @@
 #include "UsableItem.h"
+#include <cstdlib>
+#include <cmath>
 
 #pragma once
 
@@ -9,14 +11,14 @@ using namespace prototypes;
     public:
       EquipableItem();
       virtual ~EquipableItem();
-      int* get_req_stats();
-      int* get_bon_stats();
+      int* get_stat_reqs();
+      int* get_stat_bons();
       char* get_manufacturer_id();
       int* get_slots();
     protected:
       int* _stat_reqs;
       int* _stat_bons;
-      char* _manufacturer_id;
+      unsigned char* _manufacturer_id;
       int* _slots;
   };
   

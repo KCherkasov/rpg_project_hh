@@ -1,6 +1,6 @@
 #include "CollectableItem.h"
 
-CollectableItem::CollectableItem(): UsableItem() {
+CollectableItem::CollectableItem(): Item() {
     _stack = MIN_COLLECTABLE_STACK;
   }
 
@@ -18,14 +18,14 @@ CollectableItem::CollectableItem(): UsableItem() {
       if (_stack > MAX_COLLECTABLE_STACK) {
         value = _stack - MAX_COLLECTABLE_STACK;
         _stack = MAX_COLLECTABLE_STACK;
-        return_code = MAKE_NEW_STACK_CODE;
+        return_code = OK_CODE;
 	  } 
 	} else {
       _stack -= value;
-      if (_stack < MIN_COLLECTABLE_SIZE) {
-        value = abs(_stack) - MIN_COLLECTABLE_SIZE;
+      if (_stack < MIN_COLLECTABLE_STACK) {
+        value = abs(_stack) - MIN_COLLECTABLE_STACK;
         if (value > EMPTY_STACK) {
-          return_code = SEEK_ANOTHER_STACK;
+          return_code = OK_CODE;
         }
         _stack = EMPTY_STACK;
       }

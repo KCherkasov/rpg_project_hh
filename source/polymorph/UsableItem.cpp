@@ -8,7 +8,7 @@
   UsableItem::~UsableItem() {
   }
 
-  TItemRareness UsableItem::get_rarity {
+  TItemRareness UsableItem::get_rarity() {
     return _rarity;
   }
 

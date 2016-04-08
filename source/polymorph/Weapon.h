@@ -8,7 +8,7 @@ using namespace prototypes;
   class Weapon: public EquipableItem {
     public:
       Weapon();
-      Weapon(TEquipablePrototype &prototype, char*name, char* manufacturer, int level);
+      Weapon(TEquipablePrototype &prototype, unsigned char*name, unsigned char* manufacturer, int level);
       virtual ~Weapon();
       int* get_damage();
       bool get_one_handed();

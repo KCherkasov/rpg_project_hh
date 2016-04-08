@@ -7,7 +7,6 @@
       UsableItem();
       virtual ~UsableItem();
       TItemRareness get_rarity();
-      virtual int use() = 0;
     protected:
       TItemRareness _rarity;
   };

@@ -1,17 +1,17 @@
 # Project: Проект8
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = main.o Forge.o
-LINKOBJ  = main.o Forge.o
-LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Dev-Cpp/MinGW64/lib" -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static -Wall -O2 -lm -m32
-INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+OBJ      = main.o Forge.o AliveGameObject.o Armour.o Boots.o Chest.o CollectableItem.o ConsumableItem.o db_test.o EquipableItem.o Food.o GameObject.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o MeleeWeapon.o QuestItem.o RangedWeapon.o ResourceItem.o StaticGameObject.o Trinket.o UsableItem.o Weapon.o sqlite3.o
+LINKOBJ  = main.o Forge.o AliveGameObject.o Armour.o Boots.o Chest.o CollectableItem.o ConsumableItem.o db_test.o EquipableItem.o Food.o GameObject.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o MeleeWeapon.o QuestItem.o RangedWeapon.o ResourceItem.o StaticGameObject.o Trinket.o UsableItem.o Weapon.o sqlite3.o
+LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32 -g3
+INCS     = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = test_db.exe
-CXXFLAGS = $(CXXINCS) -m32 -std=gnu++11 -Wall
-CFLAGS   = $(INCS) -m32 -std=gnu++11 -Wall
+CXXFLAGS = $(CXXINCS) -m32 -g3
+CFLAGS   = $(INCS) -m32 -g3
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -29,3 +29,78 @@ main.o: main.cpp
 
 Forge.o: Forge.cpp
 	$(CPP) -c Forge.cpp -o Forge.o $(CXXFLAGS)
+
+AliveGameObject.o: AliveGameObject.cpp
+	$(CPP) -c AliveGameObject.cpp -o AliveGameObject.o $(CXXFLAGS)
+
+Armour.o: Armour.cpp
+	$(CPP) -c Armour.cpp -o Armour.o $(CXXFLAGS)
+
+Boots.o: Boots.cpp
+	$(CPP) -c Boots.cpp -o Boots.o $(CXXFLAGS)
+
+Chest.o: Chest.cpp
+	$(CPP) -c Chest.cpp -o Chest.o $(CXXFLAGS)
+
+CollectableItem.o: CollectableItem.cpp
+	$(CPP) -c CollectableItem.cpp -o CollectableItem.o $(CXXFLAGS)
+
+ConsumableItem.o: ConsumableItem.cpp
+	$(CPP) -c ConsumableItem.cpp -o ConsumableItem.o $(CXXFLAGS)
+
+db_test.o: db_test.cpp
+	$(CPP) -c db_test.cpp -o db_test.o $(CXXFLAGS)
+
+EquipableItem.o: EquipableItem.cpp
+	$(CPP) -c EquipableItem.cpp -o EquipableItem.o $(CXXFLAGS)
+
+Food.o: Food.cpp
+	$(CPP) -c Food.cpp -o Food.o $(CXXFLAGS)
+
+GameObject.o: GameObject.cpp
+	$(CPP) -c GameObject.cpp -o GameObject.o $(CXXFLAGS)
+
+Hands.o: Hands.cpp
+	$(CPP) -c Hands.cpp -o Hands.o $(CXXFLAGS)
+
+Head.o: Head.cpp
+	$(CPP) -c Head.cpp -o Head.o $(CXXFLAGS)
+
+HealingItem.o: HealingItem.cpp
+	$(CPP) -c HealingItem.cpp -o HealingItem.o $(CXXFLAGS)
+
+in_game_objects.o: in_game_objects.cpp
+	$(CPP) -c in_game_objects.cpp -o in_game_objects.o $(CXXFLAGS)
+
+Item.o: Item.cpp
+	$(CPP) -c Item.cpp -o Item.o $(CXXFLAGS)
+
+Legs.o: Legs.cpp
+	$(CPP) -c Legs.cpp -o Legs.o $(CXXFLAGS)
+
+MeleeWeapon.o: MeleeWeapon.cpp
+	$(CPP) -c MeleeWeapon.cpp -o MeleeWeapon.o $(CXXFLAGS)
+
+QuestItem.o: QuestItem.cpp
+	$(CPP) -c QuestItem.cpp -o QuestItem.o $(CXXFLAGS)
+
+RangedWeapon.o: RangedWeapon.cpp
+	$(CPP) -c RangedWeapon.cpp -o RangedWeapon.o $(CXXFLAGS)
+
+ResourceItem.o: ResourceItem.cpp
+	$(CPP) -c ResourceItem.cpp -o ResourceItem.o $(CXXFLAGS)
+
+StaticGameObject.o: StaticGameObject.cpp
+	$(CPP) -c StaticGameObject.cpp -o StaticGameObject.o $(CXXFLAGS)
+
+Trinket.o: Trinket.cpp
+	$(CPP) -c Trinket.cpp -o Trinket.o $(CXXFLAGS)
+
+UsableItem.o: UsableItem.cpp
+	$(CPP) -c UsableItem.cpp -o UsableItem.o $(CXXFLAGS)
+
+Weapon.o: Weapon.cpp
+	$(CPP) -c Weapon.cpp -o Weapon.o $(CXXFLAGS)
+
+sqlite3.o: sqlite3.c
+	$(CPP) -c sqlite3.c -o sqlite3.o $(CXXFLAGS)

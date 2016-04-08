@@ -12,7 +12,7 @@
     if (_description == NULL) {
       return _description;
 	} else {
-      unsigned char* res = new char[DESCRSTRING_SIZE];
+      unsigned char* res = new unsigned char[DESCRSTRING_SIZE];
       for (int i = 0; i < DESCRSTRING_SIZE; ++i) {
         res[i] = _description[i];
 	  }

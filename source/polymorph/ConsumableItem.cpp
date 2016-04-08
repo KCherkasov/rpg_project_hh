@@ -18,14 +18,14 @@
       if (_stack > MAX_CONSUMABLE_STACK) {
         value = _stack - MAX_CONSUMABLE_STACK;
         _stack = MAX_CONSUMABLE_STACK;
-        return_code = MAKE_NEW_STACK_CODE;
+        return_code = OK_CODE;
 	  } 
 	} else {
       _stack -= value;
-      if (_stack < MIN_CONSUMABLE_SIZE) {
-        value = abs(_stack) - MIN_CONSUMABLE_SIZE;
+      if (_stack < MIN_CONSUMABLE_STACK) {
+        value = abs(_stack) - MIN_CONSUMABLE_STACK;
         if (value > EMPTY_STACK) {
-          return_code = SEEK_ANOTHER_STACK;
+          return_code = OK_CODE;
         }
         _stack = EMPTY_STACK;
       }
