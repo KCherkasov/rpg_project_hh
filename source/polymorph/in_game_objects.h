@@ -16,6 +16,7 @@ namespace generic_consts {
   const int SOME_ERROR_CODE = 1;
 
   const int START_LEVEL = 1;
+  const int MAX_LEVEL = 70;
 
   const int NAMESTRING_SIZE = 30;
   const int DESCRSTRING_SIZE = 300;

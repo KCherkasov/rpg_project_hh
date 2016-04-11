@@ -40,9 +40,9 @@ struct sqlite3_api_routines {
   int  (*bind_int64)(sqlite3_stmt*,int,sqlite_int64);
   int  (*bind_null)(sqlite3_stmt*,int);
   int  (*bind_parameter_count)(sqlite3_stmt*);
-  int  (*bind_parameter_index)(sqlite3_stmt*,const char*zName);
+  int  (*bind_parameter_index)(sqlite3_stmt*,const wchar_t*zName);
   const char * (*bind_parameter_name)(sqlite3_stmt*,int);
-  int  (*bind_text)(sqlite3_stmt*,int,const char*,int n,void(*)(void*));
+  int  (*bind_text)(sqlite3_stmt*,int,const wchar_t*,int n,void(*)(void*));
   int  (*bind_text16)(sqlite3_stmt*,int,const void*,int,void(*)(void*));
   int  (*bind_value)(sqlite3_stmt*,int,const sqlite3_value*);
   int  (*busy_handler)(sqlite3*,int(*)(void*,int),void*);
@@ -50,7 +50,7 @@ struct sqlite3_api_routines {
   int  (*changes)(sqlite3*);
   int  (*close)(sqlite3*);
   int  (*collation_needed)(sqlite3*,void*,void(*)(void*,sqlite3*,
-                           int eTextRep,const char*));
+                           int eTextRep,const wchar_t*));
   int  (*collation_needed16)(sqlite3*,void*,void(*)(void*,sqlite3*,
                              int eTextRep,const void*));
   const void * (*column_blob)(sqlite3_stmt*,int iCol);
@@ -75,13 +75,13 @@ struct sqlite3_api_routines {
   int  (*column_type)(sqlite3_stmt*,int iCol);
   sqlite3_value* (*column_value)(sqlite3_stmt*,int iCol);
   void * (*commit_hook)(sqlite3*,int(*)(void*),void*);
-  int  (*complete)(const char*sql);
+  int  (*complete)(const wchar_t*sql);
   int  (*complete16)(const void*sql);
-  int  (*create_collation)(sqlite3*,const char*,int,void*,
+  int  (*create_collation)(sqlite3*,const wchar_t*,int,void*,
                            int(*)(void*,int,const void*,int,const void*));
   int  (*create_collation16)(sqlite3*,const void*,int,void*,
                              int(*)(void*,int,const void*,int,const void*));
-  int  (*create_function)(sqlite3*,const char*,int,int,void*,
+  int  (*create_function)(sqlite3*,const wchar_t*,int,int,void*,
                           void (*xFunc)(sqlite3_context*,int,sqlite3_value**),
                           void (*xStep)(sqlite3_context*,int,sqlite3_value**),
                           void (*xFinal)(sqlite3_context*));
@@ -89,60 +89,60 @@ struct sqlite3_api_routines {
                             void (*xFunc)(sqlite3_context*,int,sqlite3_value**),
                             void (*xStep)(sqlite3_context*,int,sqlite3_value**),
                             void (*xFinal)(sqlite3_context*));
-  int (*create_module)(sqlite3*,const char*,const sqlite3_module*,void*);
+  int (*create_module)(sqlite3*,const wchar_t*,const sqlite3_module*,void*);
   int  (*data_count)(sqlite3_stmt*pStmt);
   sqlite3 * (*db_handle)(sqlite3_stmt*);
-  int (*declare_vtab)(sqlite3*,const char*);
+  int (*declare_vtab)(sqlite3*,const wchar_t*);
   int  (*enable_shared_cache)(int);
   int  (*errcode)(sqlite3*db);
   const char * (*errmsg)(sqlite3*);
   const void * (*errmsg16)(sqlite3*);
-  int  (*exec)(sqlite3*,const char*,sqlite3_callback,void*,char**);
+  int  (*exec)(sqlite3*,const wchar_t*,sqlite3_callback,void*,wchar_t**);
   int  (*expired)(sqlite3_stmt*);
   int  (*finalize)(sqlite3_stmt*pStmt);
   void  (*free)(void*);
-  void  (*free_table)(char**result);
+  void  (*free_table)(wchar_t**result);
   int  (*get_autocommit)(sqlite3*);
   void * (*get_auxdata)(sqlite3_context*,int);
-  int  (*get_table)(sqlite3*,const char*,char***,int*,int*,char**);
+  int  (*get_table)(sqlite3*,const wchar_t*,wchar_t***,int*,int*,wchar_t**);
   int  (*global_recover)(void);
   void  (*interruptx)(sqlite3*);
   sqlite_int64  (*last_insert_rowid)(sqlite3*);
   const char * (*libversion)(void);
   int  (*libversion_number)(void);
   void *(*malloc)(int);
-  char * (*mprintf)(const char*,...);
-  int  (*open)(const char*,sqlite3**);
+  char * (*mprintf)(const wchar_t*,...);
+  int  (*open)(const wchar_t*,sqlite3**);
   int  (*open16)(const void*,sqlite3**);
-  int  (*prepare)(sqlite3*,const char*,int,sqlite3_stmt**,const char**);
+  int  (*prepare)(sqlite3*,const wchar_t*,int,sqlite3_stmt**,const wchar_t**);
   int  (*prepare16)(sqlite3*,const void*,int,sqlite3_stmt**,const void**);
-  void * (*profile)(sqlite3*,void(*)(void*,const char*,sqlite_uint64),void*);
+  void * (*profile)(sqlite3*,void(*)(void*,const wchar_t*,sqlite_uint64),void*);
   void  (*progress_handler)(sqlite3*,int,int(*)(void*),void*);
   void *(*realloc)(void*,int);
   int  (*reset)(sqlite3_stmt*pStmt);
   void  (*result_blob)(sqlite3_context*,const void*,int,void(*)(void*));
   void  (*result_double)(sqlite3_context*,double);
-  void  (*result_error)(sqlite3_context*,const char*,int);
+  void  (*result_error)(sqlite3_context*,const wchar_t*,int);
   void  (*result_error16)(sqlite3_context*,const void*,int);
   void  (*result_int)(sqlite3_context*,int);
   void  (*result_int64)(sqlite3_context*,sqlite_int64);
   void  (*result_null)(sqlite3_context*);
-  void  (*result_text)(sqlite3_context*,const char*,int,void(*)(void*));
+  void  (*result_text)(sqlite3_context*,const wchar_t*,int,void(*)(void*));
   void  (*result_text16)(sqlite3_context*,const void*,int,void(*)(void*));
   void  (*result_text16be)(sqlite3_context*,const void*,int,void(*)(void*));
   void  (*result_text16le)(sqlite3_context*,const void*,int,void(*)(void*));
   void  (*result_value)(sqlite3_context*,sqlite3_value*);
   void * (*rollback_hook)(sqlite3*,void(*)(void*),void*);
-  int  (*set_authorizer)(sqlite3*,int(*)(void*,int,const char*,const char*,
-                         const char*,const char*),void*);
+  int  (*set_authorizer)(sqlite3*,int(*)(void*,int,const wchar_t*,const wchar_t*,
+                         const wchar_t*,const wchar_t*),void*);
   void  (*set_auxdata)(sqlite3_context*,int,void*,void (*)(void*));
-  char * (*snprintf)(int,char*,const char*,...);
+  char * (*snprintf)(int,wchar_t*,const wchar_t*,...);
   int  (*step)(sqlite3_stmt*);
-  int  (*table_column_metadata)(sqlite3*,const char*,const char*,const char*,
+  int  (*table_column_metadata)(sqlite3*,const wchar_t*,const wchar_t*,const wchar_t*,
                                 char const**,char const**,int*,int*,int*);
   void  (*thread_cleanup)(void);
   int  (*total_changes)(sqlite3*);
-  void * (*trace)(sqlite3*,void(*xTrace)(void*,const char*),void*);
+  void * (*trace)(sqlite3*,void(*xTrace)(void*,const wchar_t*),void*);
   int  (*transfer_bindings)(sqlite3_stmt*,sqlite3_stmt*);
   void * (*update_hook)(sqlite3*,void(*)(void*,int ,char const*,char const*,
                                          sqlite_int64),void*);
@@ -159,28 +159,28 @@ struct sqlite3_api_routines {
   const void * (*value_text16be)(sqlite3_value*);
   const void * (*value_text16le)(sqlite3_value*);
   int  (*value_type)(sqlite3_value*);
-  char *(*vmprintf)(const char*,va_list);
+  char *(*vmprintf)(const wchar_t*,va_list);
   /* Added ??? */
   int (*overload_function)(sqlite3*, const char *zFuncName, int nArg);
   /* Added by 3.3.13 */
-  int (*prepare_v2)(sqlite3*,const char*,int,sqlite3_stmt**,const char**);
+  int (*prepare_v2)(sqlite3*,const wchar_t*,int,sqlite3_stmt**,const wchar_t**);
   int (*prepare16_v2)(sqlite3*,const void*,int,sqlite3_stmt**,const void**);
   int (*clear_bindings)(sqlite3_stmt*);
   /* Added by 3.4.1 */
-  int (*create_module_v2)(sqlite3*,const char*,const sqlite3_module*,void*,
+  int (*create_module_v2)(sqlite3*,const wchar_t*,const sqlite3_module*,void*,
                           void (*xDestroy)(void *));
   /* Added by 3.5.0 */
   int (*bind_zeroblob)(sqlite3_stmt*,int,int);
   int (*blob_bytes)(sqlite3_blob*);
   int (*blob_close)(sqlite3_blob*);
-  int (*blob_open)(sqlite3*,const char*,const char*,const char*,sqlite3_int64,
+  int (*blob_open)(sqlite3*,const wchar_t*,const wchar_t*,const wchar_t*,sqlite3_int64,
                    int,sqlite3_blob**);
   int (*blob_read)(sqlite3_blob*,void*,int,int);
   int (*blob_write)(sqlite3_blob*,const void*,int,int);
-  int (*create_collation_v2)(sqlite3*,const char*,int,void*,
+  int (*create_collation_v2)(sqlite3*,const wchar_t*,int,void*,
                              int(*)(void*,int,const void*,int,const void*),
                              void(*)(void*));
-  int (*file_control)(sqlite3*,const char*,int,void*);
+  int (*file_control)(sqlite3*,const wchar_t*,int,void*);
   sqlite3_int64 (*memory_highwater)(int);
   sqlite3_int64 (*memory_used)(void);
   sqlite3_mutex *(*mutex_alloc)(int);
@@ -188,13 +188,13 @@ struct sqlite3_api_routines {
   void (*mutex_free)(sqlite3_mutex*);
   void (*mutex_leave)(sqlite3_mutex*);
   int (*mutex_try)(sqlite3_mutex*);
-  int (*open_v2)(const char*,sqlite3**,int,const char*);
+  int (*open_v2)(const wchar_t*,sqlite3**,int,const wchar_t*);
   int (*release_memory)(int);
   void (*result_error_nomem)(sqlite3_context*);
   void (*result_error_toobig)(sqlite3_context*);
   int (*sleep)(int);
   void (*soft_heap_limit)(int);
-  sqlite3_vfs *(*vfs_find)(const char*);
+  sqlite3_vfs *(*vfs_find)(const wchar_t*);
   int (*vfs_register)(sqlite3_vfs*,int);
   int (*vfs_unregister)(sqlite3_vfs*);
   int (*xthreadsafe)(void);
@@ -209,13 +209,13 @@ struct sqlite3_api_routines {
   const char *(*sql)(sqlite3_stmt*);
   int (*status)(int,int*,int*,int);
   int (*backup_finish)(sqlite3_backup*);
-  sqlite3_backup *(*backup_init)(sqlite3*,const char*,sqlite3*,const char*);
+  sqlite3_backup *(*backup_init)(sqlite3*,const wchar_t*,sqlite3*,const wchar_t*);
   int (*backup_pagecount)(sqlite3_backup*);
   int (*backup_remaining)(sqlite3_backup*);
   int (*backup_step)(sqlite3_backup*,int);
   const char *(*compileoption_get)(int);
-  int (*compileoption_used)(const char*);
-  int (*create_function_v2)(sqlite3*,const char*,int,int,void*,
+  int (*compileoption_used)(const wchar_t*);
+  int (*create_function_v2)(sqlite3*,const wchar_t*,int,int,void*,
                             void (*xFunc)(sqlite3_context*,int,sqlite3_value**),
                             void (*xStep)(sqlite3_context*,int,sqlite3_value**),
                             void (*xFinal)(sqlite3_context*),
@@ -224,49 +224,49 @@ struct sqlite3_api_routines {
   sqlite3_mutex *(*db_mutex)(sqlite3*);
   int (*db_status)(sqlite3*,int,int*,int*,int);
   int (*extended_errcode)(sqlite3*);
-  void (*log)(int,const char*,...);
+  void (*log)(int,const wchar_t*,...);
   sqlite3_int64 (*soft_heap_limit64)(sqlite3_int64);
   const char *(*sourceid)(void);
   int (*stmt_status)(sqlite3_stmt*,int,int);
-  int (*strnicmp)(const char*,const char*,int);
+  int (*strnicmp)(const wchar_t*,const wchar_t*,int);
   int (*unlock_notify)(sqlite3*,void(*)(void**,int),void*);
   int (*wal_autocheckpoint)(sqlite3*,int);
-  int (*wal_checkpoint)(sqlite3*,const char*);
-  void *(*wal_hook)(sqlite3*,int(*)(void*,sqlite3*,const char*,int),void*);
+  int (*wal_checkpoint)(sqlite3*,const wchar_t*);
+  void *(*wal_hook)(sqlite3*,int(*)(void*,sqlite3*,const wchar_t*,int),void*);
   int (*blob_reopen)(sqlite3_blob*,sqlite3_int64);
   int (*vtab_config)(sqlite3*,int op,...);
   int (*vtab_on_conflict)(sqlite3*);
   /* Version 3.7.16 and later */
   int (*close_v2)(sqlite3*);
-  const char *(*db_filename)(sqlite3*,const char*);
-  int (*db_readonly)(sqlite3*,const char*);
+  const char *(*db_filename)(sqlite3*,const wchar_t*);
+  int (*db_readonly)(sqlite3*,const wchar_t*);
   int (*db_release_memory)(sqlite3*);
   const char *(*errstr)(int);
   int (*stmt_busy)(sqlite3_stmt*);
   int (*stmt_readonly)(sqlite3_stmt*);
-  int (*stricmp)(const char*,const char*);
-  int (*uri_boolean)(const char*,const char*,int);
-  sqlite3_int64 (*uri_int64)(const char*,const char*,sqlite3_int64);
-  const char *(*uri_parameter)(const char*,const char*);
-  char *(*vsnprintf)(int,char*,const char*,va_list);
-  int (*wal_checkpoint_v2)(sqlite3*,const char*,int,int*,int*);
+  int (*stricmp)(const wchar_t*,const wchar_t*);
+  int (*uri_boolean)(const wchar_t*,const wchar_t*,int);
+  sqlite3_int64 (*uri_int64)(const wchar_t*,const wchar_t*,sqlite3_int64);
+  const char *(*uri_parameter)(const wchar_t*,const wchar_t*);
+  char *(*vsnprintf)(int,wchar_t*,const wchar_t*,va_list);
+  int (*wal_checkpoint_v2)(sqlite3*,const wchar_t*,int,int*,int*);
   /* Version 3.8.7 and later */
   int (*auto_extension)(void(*)(void));
   int (*bind_blob64)(sqlite3_stmt*,int,const void*,sqlite3_uint64,
                      void(*)(void*));
-  int (*bind_text64)(sqlite3_stmt*,int,const char*,sqlite3_uint64,
+  int (*bind_text64)(sqlite3_stmt*,int,const wchar_t*,sqlite3_uint64,
                       void(*)(void*),unsigned char);
   int (*cancel_auto_extension)(void(*)(void));
-  int (*load_extension)(sqlite3*,const char*,const char*,char**);
+  int (*load_extension)(sqlite3*,const wchar_t*,const wchar_t*,wchar_t**);
   void *(*malloc64)(sqlite3_uint64);
   sqlite3_uint64 (*msize)(void*);
   void *(*realloc64)(void*,sqlite3_uint64);
   void (*reset_auto_extension)(void);
   void (*result_blob64)(sqlite3_context*,const void*,sqlite3_uint64,
                         void(*)(void*));
-  void (*result_text64)(sqlite3_context*,const char*,sqlite3_uint64,
+  void (*result_text64)(sqlite3_context*,const wchar_t*,sqlite3_uint64,
                          void(*)(void*), unsigned char);
-  int (*strglob)(const char*,const char*);
+  int (*strglob)(const wchar_t*,const wchar_t*);
   /* Version 3.8.11 and later */
   sqlite3_value *(*value_dup)(const sqlite3_value*);
   void (*value_free)(sqlite3_value*);
@@ -277,7 +277,7 @@ struct sqlite3_api_routines {
   void (*result_subtype)(sqlite3_context*,unsigned int);
   /* Version 3.10.0 and later */
   int (*status64)(int,sqlite3_int64*,sqlite3_int64*,int);
-  int (*strlike)(const char*,const char*,unsigned int);
+  int (*strlike)(const wchar_t*,const wchar_t*,unsigned int);
   int (*db_cacheflush)(sqlite3*);
 };
 

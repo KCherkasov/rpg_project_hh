@@ -14,7 +14,7 @@ class GameObject {
       int get_own_id();
       int get_level();
       unsigned char* get_name();
-      virtual char* what() = 0;
+      virtual int what(std::string &out) = 0;
 
     protected:
       int _own_id;

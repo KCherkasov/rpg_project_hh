@@ -1,4 +1,5 @@
 #include "EquipableItem.h"
+#include <string>
 
 #pragma once
 
@@ -13,11 +14,12 @@ using namespace prototypes;
       int* get_damage();
       bool get_one_handed();
       TEquipmentKind get_kind();
-      char* what();
+      int what(std::string &out);
       int use() { return 0; }
     protected:
     	int* _damage;
     	bool _one_handed;
     	TEquipmentKind _kind;
+    	int level_up();
   };
 

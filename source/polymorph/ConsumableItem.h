@@ -1,4 +1,5 @@
 #include "UsableItem.h"
+#include <cmath>
 
 #pragma once
 
@@ -8,7 +9,7 @@
       virtual ~ConsumableItem();
       int get_stack();
       int change_stack(int &value, bool increase);
-      virtual int use() {}
+      virtual int use() { return 0; }
     protected:
       int _stack;
   };

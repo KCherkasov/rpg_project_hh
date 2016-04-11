@@ -1,4 +1,5 @@
 #include "EquipableItem.h" 
+#include <string>
 
 #pragma once   
 
@@ -9,9 +10,11 @@
       virtual ~Armour();
       int get_defense();
       TEquipmentKind get_kind();
-      char* what();
+      
+      int what(std::string &out);
       int use() { return 0; }
     protected:
       int _defense;
       TEquipmentKind _kind;
+      int level_up();
   };

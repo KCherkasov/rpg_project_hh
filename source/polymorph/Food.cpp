@@ -17,6 +17,3 @@
 	}
 	_nutricity = prototype._effect;
   }
-  
-  Food::~Food() {
-  }

@@ -5,19 +5,24 @@
   
   Armour::Armour(TEquipablePrototype &prototype, unsigned char*name, unsigned char* manufacturer, int level): EquipableItem() {
     _defense = prototype._damdef;
+    delete[] _name;
+    delete[] _manufacturer_id;
+    _name = new unsigned char[NAMESTRING_SIZE];
+    _manufacturer_id = new unsigned char[NAMESTRING_SIZE];
 	for (size_t i = 0; i < STATS_COUNT; ++i) {
 	  _stat_bons[i] = prototype._stat_bons[i];
 	  _stat_reqs[i] = prototype._stat_reqs[i];
 	}
 	for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
-      _name[i] = name[i];
-      _manufacturer_id[i] = manufacturer[i];
+      _name[i] = prototype._name[i];
+      _manufacturer_id[i] = prototype._manufacturer[i];
 	}
 	for(size_t i = 0; i < DESCRSTRING_SIZE; ++i) {
 	  _description[i] = prototype._description[i];
 	}
 	_kind = TEquipmentKind(prototype.kind);
 	_level = level;
+	_cost = prototype._cost;
 	//armour rarity setting code here
 	if (_level > START_LEVEL) {
       //armour stats increasement code here
@@ -41,8 +46,7 @@
 	}
   }
   
-  Armour::~Armour() {
-  }
+  Armour::~Armour() {}
   
   int Armour::get_defense() {
     return _defense;
@@ -52,7 +56,7 @@
     return _kind;
   }
   
-  char* Armour::what() {
+  int Armour::what(std::string &out) {
   	std::string stat_names[CS_SIZE] {"accuracy:","reaction:","strength:","toughness:","awareness:","intelligence","persuasion","speed"};
     std::string kind_names[EK_SIZE] {"pistol","smg","assault rifle","sniper rifle","melee","light armour","medium armour","heavy armour", "trinket"};
 	std::string slot_names[ES_SIZE] {"helmet","chest","gloves","boots","leg armour","trinket ","trinket ","trinket ","trinket ","main hand ","off-hand"};
@@ -110,6 +114,17 @@
 	  }
 	}
 	str.append("\n");
+	str.append("''");
+	str.append((char*) _description);
+	str.append("''");
+	str.append("\n\n");
 	delete[] digit;
-    return const_cast<char*>(str.data());
+	out.clear();
+	out += str;
+    return OK_CODE;
+  }
+  
+  int Armour::level_up() {
+    
+    return 0;
   }

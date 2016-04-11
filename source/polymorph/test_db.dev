@@ -1,12 +1,12 @@
 [Project]
 FileName=test_db.dev
-Name=Проект8
+Name=test_db for Merc Days game
 Type=1
 Ver=2
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=
+PrivateResource=test_db_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=
@@ -19,35 +19,35 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=
+OverrideOutputName=test_db.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
 Folders=
-IncludeVersionInfo=0
+IncludeVersionInfo=1
 SupportXPThemes=0
-CompilerSet=4
-CompilerSettings=0000000100000000001000000
+CompilerSet=3
+CompilerSettings=00000001g0100000001000000
 UnitCount=55
 
 [VersionInfo]
 Major=1
 Minor=0
 Release=0
-Build=0
+Build=174
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=
+FileVersion=1.0.0.174
 FileDescription=Developed using the Dev-C++ IDE
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=
 ProductName=
-ProductVersion=
-AutoIncBuildNr=0
+ProductVersion=1.0.0.174
+AutoIncBuildNr=1
 SyncProduct=1
 
 [Unit1]
@@ -602,11 +602,11 @@ BuildCmd=
 
 [Unit55]
 FileName=sqlite3.c
-CompileCpp=1
+CompileCpp=0
 Folder=
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c sqlite3.c -o sqlite3.o $(CFLAGS)
 

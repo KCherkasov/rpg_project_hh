@@ -5,9 +5,9 @@
   class Food: public ConsumableItem {
     public:
       Food(prototypes::TConsumablePrototype &prototype, int level);
-      virtual ~Food();
+      virtual ~Food() {}
       int get_nutricity();
-      int use();
+      int use() { return 0; }
     protected:
       int _nutricity;
   };

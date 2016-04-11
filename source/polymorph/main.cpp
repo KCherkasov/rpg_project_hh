@@ -3,24 +3,27 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
+#include <locale.h>
+#include <windows.h>
 
-int main(int argc, char** argv) {
+int main() {
+ // setlocale(LC_ALL,"UTF-8");
   srand(static_cast<unsigned int>(time(0)));
-  int rnd = rand() % 10 + 1;
-  Item* item = NULL;
+  unsigned int rnd = rand() % 10 + 5;
   std::string db_name;
-  db_name = "classic.db";
-  Forge* forge = new Forge((char*)db_name.c_str());
+  db_name = "classic2.db";
+  Forge* forge = new Forge("classic2.db");
   for (size_t i = 0; i < rnd; ++i) {
-    int code = forge->MakeItem(1, rand() % 40 + START_LEVEL, item);
-    char* response;
-    response = item->what();
-    printf(response);
-    delete response;
-    delete item;
+  	Item* created = NULL;
+  	int item_lvl = rand() % MAX_LEVEL + START_LEVEL;
+    int code = forge->MakeItem(1, item_lvl , &created);
+    std::string response;
+    code = created->what(response);
+    printf(response.data());
+    delete created;
+    Sleep(1000);
   }
   delete forge;
-  int key;
-  scanf("%d", &key);
+  system("pause");
   return 0;
 }

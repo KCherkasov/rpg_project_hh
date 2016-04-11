@@ -13,8 +13,8 @@ namespace prototypes {
   const double ITEM_DAMAGE_MINMAX_RATIO = 1.25;
   
   const double DAMDEF_LEVEL_MODIFIER = 1.18;
-  const double COST_LEVEL_MODIFIER = 1.15;
-  const double STATS_LEVEL_MODIFIER = 1.15;
+  const double COST_LEVEL_MODIFIER = 1.03;
+  const double STATS_LEVEL_MODIFIER = 1.14;
 
   enum TItemRareness { IR_TRASH, IR_COMMON, IR_GOOD, IR_RARE, IR_EPIC, IR_LEGENDARY };
 
@@ -36,6 +36,8 @@ namespace prototypes {
   	int _name_id; // set -1 if generated in-situ
   	int _manufacturer_id; // set -1 if generated in-situ
   	unsigned char* _description;
+  	unsigned char* _name;
+  	unsigned char* _manufacturer;
   	int _cost;
     int _damdef;
     int _distance;
