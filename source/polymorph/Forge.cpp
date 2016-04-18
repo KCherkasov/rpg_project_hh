@@ -110,7 +110,7 @@ int Forge::get_stat_bons(int query_id, int* &bons) {
 int Forge::get_manufacturer_data(int query_id, int kind, unsigned char* &manufacturer_name, double* bonus) {
   sqlite3_stmt *statement;
   delete[] manufacturer_name;
-  manufacturer_name = new unsigned char[NAMESTRING_SIZE];
+  manufacturer_name = new unsigned char[NAMESTRING_SIZE] {};
   int response;
   response = sqlite3_prepare(_database,"select id, name, pistol_bonus, smg_bonus, assault_bonus, sniper_bonus, melee_bonus, light_bonus, medium_bonus, heavy_bonus, trinket_bonus from 'manufacturers' where id=?", -1, &statement, 0);
   if (query_id != FREE_INDEX) {
@@ -142,7 +142,7 @@ int Forge::get_manufacturer_data(int query_id, int kind, unsigned char* &manufac
 int Forge::get_item_name(int query_id, int item_kind, unsigned char* &item_name) {
   sqlite3_stmt *statement;
   delete[] item_name;
-  item_name = new unsigned char[NAMESTRING_SIZE];
+  item_name = new unsigned char[NAMESTRING_SIZE] {};
   int response;
   response = sqlite3_prepare(_database, "select id, item_name from 'item_names' where id=?", -1, &statement, 0);
   if (query_id != FREE_INDEX) {
@@ -177,9 +177,9 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
   prototype->kind = sqlite3_column_int(statement, 7);
   prototype->_cost = sqlite3_column_int(statement, 3);
   prototype->_damdef = sqlite3_column_int(statement, 4);
-  unsigned char* tmp_description = new unsigned char[DESCRSTRING_SIZE];
+  unsigned char* tmp_description = new unsigned char[DESCRSTRING_SIZE] {};
   delete[] prototype->_description;
-  prototype->_description = new unsigned char[DESCRSTRING_SIZE];
+  prototype->_description = new unsigned char[DESCRSTRING_SIZE] {};
   tmp_description = const_cast<unsigned char*>(static_cast<const unsigned char*>(sqlite3_column_blob(statement, 5)));
   for (size_t i = 0; i < DESCRSTRING_SIZE && tmp_description[i] != '\0'; ++i) {
     prototype->_description[i] = tmp_description[i];
@@ -214,8 +214,8 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
   
   delete[] prototype->_name;
   delete[] prototype->_manufacturer;
-  prototype->_name = new unsigned char[NAMESTRING_SIZE];
-  prototype->_manufacturer = new unsigned char[NAMESTRING_SIZE];
+  prototype->_name = new unsigned char[NAMESTRING_SIZE] {};
+  prototype->_manufacturer = new unsigned char[NAMESTRING_SIZE] {};
   unsigned char* item_name = NULL;
   unsigned char* manufacturer = NULL;
   double bonus = 0;  
@@ -235,7 +235,7 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
 
 int Forge::MakeEquipableItem(int query_id, int level, EquipableItem** spawned) {
   TEquipablePrototype prototype;
-  int return_code = get_equipable_prototype(query_id, &prototype);  
+  int return_code = get_equipable_prototype(query_id, &prototype);
   EquipableItem* item = NULL;
   if (prototype._slots[ES_WEAPON1] || prototype._slots[ES_WEAPON2]) {
     if (prototype._distance > 0) {

@@ -15,7 +15,9 @@
 	}
 	for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
       _name[i] = prototype._name[i];
-      _manufacturer_id[i] = prototype._manufacturer[i];
+	}
+	for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
+	  _manufacturer_id[i] = prototype._manufacturer[i];
 	}
 	for(size_t i = 0; i < DESCRSTRING_SIZE; ++i) {
 	  _description[i] = prototype._description[i];

@@ -16,8 +16,10 @@
 	  _stat_bons[i] = prototype._stat_bons[i];
 	  _stat_reqs[i] = prototype._stat_reqs[i];
 	}
-	for (size_t i = 0; i < NAMESTRING_SIZE && name[i] == '\0'; ++i) {
+	for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
       _name[i] = prototype._name[i];
+	}
+	for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
       _manufacturer_id[i] = prototype._manufacturer[i];
 	}
 	for(size_t i = 0; i < DESCRSTRING_SIZE; ++i) {
