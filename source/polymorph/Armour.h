@@ -1,5 +1,7 @@
 #include "EquipableItem.h" 
 #include <string>
+#include <ctime>
+#include <cstdlib>
 
 #pragma once   
 
@@ -16,5 +18,4 @@
     protected:
       int _defense;
       TEquipmentKind _kind;
-      int level_up();
   };

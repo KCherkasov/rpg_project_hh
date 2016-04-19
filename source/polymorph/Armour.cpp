@@ -31,20 +31,36 @@
       for (size_t i = 0; i < _level; ++i) {
       	double tmp = _cost;
       	tmp *= COST_LEVEL_MODIFIER;
+      	int old_value = _cost;
       	_cost = round(tmp);
+      	if (_cost = old_value) {
+          _cost += COST_RAISE_PER_LEVEL;
+		}
       	for (size_t j = 0; j < CS_SIZE; ++j){
           tmp =  _stat_reqs[j];
           tmp *= STATS_LEVEL_MODIFIER;
+          old_value = _stat_reqs[j];
+          if (_stat_reqs[j] == old_value && _stat_reqs[j] != 0) {
+            _stat_reqs[j] += STAT_RAISE_PER_LEVEL;
+		  }
           _stat_reqs[j] = round(tmp);
           tmp = _stat_bons[j];
+          old_value = _stat_bons[j];
           tmp *= STATS_LEVEL_MODIFIER;
-          _stat_reqs[j] = round(tmp);
+          _stat_bons[j] = round(tmp);
+          if (_stat_bons[j] == old_value && _stat_bons[j] != 0) {
+            _stat_bons[j] += STAT_RAISE_PER_LEVEL;
+		  }
         }
 	  }
 	  
         double tmp = _defense;
+        old_value = _defense;
         tmp *= DAMDEF_LEVEL_MODIFIER;
         _defense = tmp;
+        if (_defense == old_value && _defense != 0) {
+          _defense += DAMDEF_RAISE_PER_LEVEL;
+		}
 	}
   }
   
@@ -126,7 +142,3 @@
     return OK_CODE;
   }
   
-  int Armour::level_up() {
-    
-    return 0;
-  }

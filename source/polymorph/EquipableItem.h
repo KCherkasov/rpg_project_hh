@@ -20,6 +20,5 @@ using namespace prototypes;
       int* _stat_bons;
       unsigned char* _manufacturer_id;
       int* _slots;
-      virtual int level_up() = 0;
   };
   

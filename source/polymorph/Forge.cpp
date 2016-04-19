@@ -229,6 +229,11 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
     prototype->_manufacturer[i] = manufacturer[i];
   }
   delete[] manufacturer;
+  for (size_t i = 0; i < STATS_COUNT; ++i) {
+    prototype->_stat_bons[i] *= bonus;
+  }
+  prototype->_damdef *= bonus;
+  prototype->_cost *= bonus;
   return_code = response;
   return return_code;
 }

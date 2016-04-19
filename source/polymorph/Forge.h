@@ -1,3 +1,4 @@
+#include "prototypes.h"
 #include "RangedWeapon.h"
 #include "MeleeWeapon.h"
 #include "Head.h"

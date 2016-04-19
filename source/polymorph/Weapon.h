@@ -1,5 +1,7 @@
 #include "EquipableItem.h"
 #include <string>
+#include <ctime>
+#include <cstdlib>
 
 #pragma once
 
@@ -20,6 +22,5 @@ using namespace prototypes;
     	int* _damage;
     	bool _one_handed;
     	TEquipmentKind _kind;
-    	int level_up();
   };
 

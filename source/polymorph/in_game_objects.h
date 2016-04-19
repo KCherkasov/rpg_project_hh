@@ -17,6 +17,12 @@ namespace generic_consts {
 
   const int START_LEVEL = 1;
   const int MAX_LEVEL = 70;
+  const int POINTS_PER_LEVEL = 5;
+  
+  const int STAT_RAISE_PER_LEVEL = 1;
+  const int DAMDEF_RAISE_PER_LEVEL = 5;
+  const int HP_RAISE_PER_LEVEL = 8;
+  const int COST_RAISE_PER_LEVEL = 5;
 
   const int NAMESTRING_SIZE = 31;
   const int DESCRSTRING_SIZE = 301;
@@ -24,6 +30,8 @@ namespace generic_consts {
   const double MANUFACTURER_BONUS = 1.15;
   const int MANUFACTURERS_COUNT = 10;
   const int NAMES_COUNT = 10;
+  
+  const int PERCENT_CAP = 100;
 
   enum TCharStats { CS_ACCURACY, CS_REACTION, CS_STRENGTH, CS_TOUGHNESS, CS_AWARENESS, CS_INTELLIGENCE, CS_PERSUASION, CS_SPEED, CS_SIZE };
   enum TEquipmentSlot { ES_HEAD, ES_CHEST, ES_HANDS, ES_BOOTS, ES_LEGS, ES_TRINKET1, ES_TRINKET2, ES_TRINKET3, ES_TRINKET4, ES_WEAPON1, ES_WEAPON2, ES_SIZE };

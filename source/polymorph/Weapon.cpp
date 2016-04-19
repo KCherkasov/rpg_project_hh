@@ -34,20 +34,37 @@
       for (size_t i = 0; i < _level; ++i) {
       	double tmp = _cost;
       	tmp *= COST_LEVEL_MODIFIER;
+      	int old_value = _cost;
       	_cost = round(tmp);
+      	if (_cost = old_value) {
+          _cost += COST_RAISE_PER_LEVEL;
+		}
       	for (size_t j = 0; j < CS_SIZE; ++j){
+      	  old_value = _stat_reqs[j];
           tmp =  _stat_reqs[j];
           tmp *= STATS_LEVEL_MODIFIER;
           _stat_reqs[j] = round(tmp);
+          if (_stat_reqs[j] == old_value && _stat_reqs[j] != 0) {
+            _stat_reqs[j] += STAT_RAISE_PER_LEVEL;
+		  }
           tmp = _stat_bons[j];
+          old_value = _stat_bons[j];
           tmp *= STATS_LEVEL_MODIFIER;
           _stat_bons[j] = round(tmp);
+          if(_stat_bons[j] == old_value && _stat_bons[j] != 0) {
+            _stat_bons[j] += STAT_RAISE_PER_LEVEL;
+		  }
         }
+        int old_value = _damage[0];
 	    for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
-          double tmp = _damage[i];
+          tmp = _damage[i];
           tmp *= DAMDEF_LEVEL_MODIFIER;
           _damage[i] = tmp;
 	    }
+	    if (_damage [0] == old_value && _damage[0] != 0) {
+          _damage[0] += DAMDEF_RAISE_PER_LEVEL;
+          _damage[1] = _damage[0] * ITEM_DAMAGE_MINMAX_RATIO;
+		}
 	  }
 	}
   }
@@ -134,8 +151,4 @@
 	out += str;
     return OK_CODE;
   }
-  
-  int Weapon::level_up() {
-    //double stat_weights[CS_SIZE] {};
-    return 0;
-  }
+
