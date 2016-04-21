@@ -191,14 +191,14 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
   prototype->_distance = sqlite3_column_int(statement, 6);
 
   int* tmp_reqs = NULL;
-  int query = get_stat_reqs(query_id, tmp_reqs);
+  int query = get_stat_reqs(prototype->kind + 1, tmp_reqs);
   for (size_t i = 0; i < CS_SIZE; ++i) {
     prototype->_stat_reqs[i] = tmp_reqs[i];
   }
   delete[] tmp_reqs;
 
   int* tmp_bons = NULL;
-  query = get_stat_bons(query_id, tmp_bons);
+  query = get_stat_bons(prototype->kind + 1, tmp_bons);
   for(size_t i = 0; i < CS_SIZE; ++i) {
     prototype->_stat_bons[i] = tmp_bons[i];
   }
