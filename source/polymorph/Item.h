@@ -1,6 +1,9 @@
-#include "StaticGameObject.h"
-
 #pragma once
+
+#ifndef ITEM_H
+#define ITEM_H
+
+#include "StaticGameObject.h"
 
 using namespace generic_consts;
 using namespace prototypes;
@@ -17,3 +20,4 @@ using namespace prototypes;
       bool _in_bag;
   };
 
+#endif

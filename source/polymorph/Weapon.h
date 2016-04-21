@@ -1,12 +1,16 @@
+#pragma once
+
+#ifndef WEAPON_H
+#define WEAPON_H
+
 #include "EquipableItem.h"
 #include <string>
 #include <ctime>
 #include <cstdlib>
 
-#pragma once
-
 using namespace generic_consts;
 using namespace prototypes;
+
 
   class Weapon: public EquipableItem {
     public:
@@ -24,3 +28,4 @@ using namespace prototypes;
     	TEquipmentKind _kind;
   };
 
+#endif

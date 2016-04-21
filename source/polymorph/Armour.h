@@ -1,9 +1,12 @@
+#pragma once
+
+#ifndef ARMOUR_H
+#define ARMOUR_H
+
 #include "EquipableItem.h" 
 #include <string>
 #include <ctime>
 #include <cstdlib>
-
-#pragma once   
 
   class Armour: public EquipableItem {
     public:
@@ -19,3 +22,5 @@
       int _defense;
       TEquipmentKind _kind;
   };
+  
+#endif

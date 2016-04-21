@@ -1,6 +1,9 @@
-#include "Weapon.h"
-
 #pragma once
+
+#ifndef RANGEDWEAPON_H
+#define RANGEDWEAPON_H
+
+#include "Weapon.h"
 
 using namespace generic_consts;
 using namespace prototypes;
@@ -15,3 +18,5 @@ using namespace prototypes;
     protected:
       int _distance;
   };
+  
+#endif

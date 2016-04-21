@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef FORGE_H
+#define FORGE_H
+
 #include "prototypes.h"
 #include "RangedWeapon.h"
 #include "MeleeWeapon.h"
@@ -7,6 +12,12 @@
 #include "Boots.h"
 #include "Legs.h"
 #include "Trinket.h"
+#include "LocalMapObject.h"
+#include "QuestGiver.h"
+#include "ArmourTrader.h"
+#include "WeaponTrader.h"
+#include "MunitionsTrader.h"
+#include "BlackMarket.h"
 #include <wchar.h>
 #include <cstdlib>
 #include <ctime>
@@ -14,8 +25,6 @@
 #include <locale.h>
 
 #include "sqlite3.h"
-
-#pragma once
 
 class Forge {
   public:
@@ -26,6 +35,9 @@ class Forge {
   	int ConnectDatabase(const char* db_name);
   	int CloseDatabase();
   	int MakeItem(int query_id, int level, Item** spawned);
+  	int MakeTile(int query_id, LocalMapObject** spawned);
+  	int MakeNPC(int query_id, int level, NPC** spawned);
+  	 
   private:
   	sqlite3* _database;
   	
@@ -40,7 +52,13 @@ class Forge {
   	//int get_collectable_prototype(int query_id, TCollectablePrototype* prototype); //in development
   	//int get_consumable_prototype(int query_id, TConsumablePrototype* prototype);   //in development
   	
+  	int get_tile_prototype(int query_id, TTilePrototype* prototype);
+  	
+  	int get_npc_prototype(int query_id, TNPCPrototype* prototype);
+  	
     int MakeEquipableItem(int query_id, int level, EquipableItem** spawned);
     //int MakeCollectableItem(int query_id, CoollectableItem* spawned); //in development
     //int MakeConsumableItem(int query_id, ConsumableItem* spawned);    //in development
 };
+
+#endif

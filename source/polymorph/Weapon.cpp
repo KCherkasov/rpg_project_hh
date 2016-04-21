@@ -55,7 +55,7 @@
             _stat_bons[j] += STAT_RAISE_PER_LEVEL;
 		  }
         }
-        int old_value = _damage[0];
+        old_value = _damage[0];
 	    for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
           tmp = _damage[i];
           tmp *= DAMDEF_LEVEL_MODIFIER;

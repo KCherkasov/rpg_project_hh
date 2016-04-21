@@ -1,7 +1,10 @@
+#pragma once
+
+#ifndef CONSUMABLEITEM_H
+#define CONSUMABLEITEM_H
+
 #include "UsableItem.h"
 #include <cmath>
-
-#pragma once
 
   class ConsumableItem: public UsableItem {
     public:
@@ -13,3 +16,5 @@
     protected:
       int _stack;
   };
+  
+#endif

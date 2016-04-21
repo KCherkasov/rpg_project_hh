@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef INGAMEOBJECTS_H
+#define INGAMEOBJECTS_H
+
 namespace generic_consts {
 
   const int  EMPTY_STACK = 0;
@@ -39,3 +42,4 @@ namespace generic_consts {
 
 }
 
+#endif

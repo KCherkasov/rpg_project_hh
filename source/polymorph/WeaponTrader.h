@@ -1,14 +1,24 @@
-#include "Trader.h"
-#include "Weapon.h"
+#pragma once
 
-class WeaponTrader {
+#ifndef WEAPONTRADER_H
+#define WEAPONTRADER_H
+
+#include "Trader.h"
+#include "Item.h"
+#include "Forge.h"
+#include <cstdlib>
+#include <ctime>
+
+class WeaponTrader: Trader {
   public:
-    WeaponTrader()
+    WeaponTrader(): Trader() {}
     WeaponTrader(TNPCPrototype &prototype, int level);
     virtual ~WeaponTrader();
     
-    Weapon** _assortment;
+    Item** _assortment;
     
   protected:
     int form_assortment(TNPCPrototype &prototype, int level);
 };
+
+#endif

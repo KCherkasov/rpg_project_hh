@@ -1,8 +1,11 @@
+#pragma once
+
+#ifndef EQUIPABLEITEM_H
+#define EQUIPABLEITEM_H
+
 #include "UsableItem.h"
 #include <cstdlib>
 #include <cmath>
-
-#pragma once
 
 using namespace generic_consts;
 using namespace prototypes;
@@ -21,4 +24,5 @@ using namespace prototypes;
       unsigned char* _manufacturer_id;
       int* _slots;
   };
-  
+
+#endif

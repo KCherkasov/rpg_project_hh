@@ -52,15 +52,14 @@
             _stat_bons[j] += STAT_RAISE_PER_LEVEL;
 		  }
         }
-	  }
-	  
-        double tmp = _defense;
+        tmp = _defense;
         old_value = _defense;
         tmp *= DAMDEF_LEVEL_MODIFIER;
         _defense = tmp;
         if (_defense == old_value && _defense != 0) {
           _defense += DAMDEF_RAISE_PER_LEVEL;
 		}
+	  }
 	}
   }
   

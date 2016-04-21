@@ -1,6 +1,9 @@
-#include "ConsumableItem.h"
-
 #pragma once
+
+#ifndef FOOD_H
+#define FOOD_H
+
+#include "ConsumableItem.h"
 
   class Food: public ConsumableItem {
     public:
@@ -12,3 +15,4 @@
       int _nutricity;
   };
 
+#endif

@@ -1,5 +1,13 @@
+#pragma once
+
+#ifndef ARMOURTRADER_H
+#define ARMOURTRADER_H
+
 #include "Trader.h"
-#include "Armour.h"
+#include "Item.h"
+#include "Forge.h"
+#include <cstdlib>
+#include <ctime>
 
 class ArmourTrader: Trader {
   public:
@@ -7,8 +15,10 @@ class ArmourTrader: Trader {
     ArmourTrader(TNPCPrototype &prototype, int level);
     virtual ~ArmourTrader();
     
-    Armour** _assortment;
+    Item** _assortment;
 
   protected:
   	int form_assortment(TNPCPrototype &prototype, int level);
 };
+
+#endif

@@ -1,6 +1,9 @@
-#include "Armour.h"
-
 #pragma once
+
+#ifndef LEGS_H
+#define LEGS_H
+
+#include "Armour.h"
 
 class Legs: public Armour {
   public:
@@ -8,3 +11,4 @@ class Legs: public Armour {
     ~Legs() {}
 };  
 
+#endif

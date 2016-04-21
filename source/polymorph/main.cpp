@@ -16,7 +16,8 @@ int main() {
   for (size_t i = 0; i < rnd; ++i) {
   	Item* created = NULL;
   	int item_lvl = rand() % MAX_LEVEL + START_LEVEL;
-    int code = forge->MakeItem(1, item_lvl , &created);
+  	int key = rand() % EK_LIGHT + 1;
+    int code = forge->MakeItem(key, item_lvl , &created);
     std::string response;
     code = created->what(response);
     printf(response.data());

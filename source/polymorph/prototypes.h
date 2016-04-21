@@ -1,6 +1,9 @@
-#include "in_game_objects.h"
-
 #pragma once
+
+#ifndef PROTOTYPES_H
+#define PROTOTYPES_H
+
+#include "in_game_objects.h"
 
 using namespace generic_consts;
 
@@ -9,11 +12,14 @@ namespace prototypes {
   const int PAIR_ARR_SIZE = 2;
   const int STATS_COUNT = 8;
   
+  const int CONSUMABLES_COUNT = 6;
+  
   const int BACKPACK_SIZE = 36;
   const int STORAGE_SIZE = 72;
   const int BANK_SIZE = 154;
   
   const int VENDOR_CAPACITY = 154;
+  const int BASIC_VENDOR_CHARGE = 10;
   
   const double ITEM_RARITY_MODIFIER = 0.25;
   const double ITEM_DAMAGE_MINMAX_RATIO = 1.25;
@@ -68,6 +74,9 @@ namespace prototypes {
     int _charge; //set -1 for not traders
     unsigned char* _speech;
     unsigned char* _name;
+    unsigned char* _description;
   };
 
 }
+
+#endif

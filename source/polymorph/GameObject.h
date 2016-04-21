@@ -3,6 +3,9 @@
 
 #pragma once
 
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
+
 using namespace generic_consts;
 using namespace prototypes;
 
@@ -21,3 +24,5 @@ class GameObject {
       int _level;
       unsigned char* _name;
 };
+
+#endif

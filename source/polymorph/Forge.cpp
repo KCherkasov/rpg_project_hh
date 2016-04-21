@@ -238,6 +238,70 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
   return return_code;
 }
 
+int Forge::get_tile_prototype(int query_id, TTilePrototype* prototype) {
+  int return_code = OK_CODE;
+  sqlite3_stmt* statement;
+  int response = sqlite3_prepare(_database, "select id, defense, passable, texture_id, name, description from 'Tiles' where id = ?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  if(response != SQLITE_OK) {
+    printf("Error: %s\n", sqlite3_errmsg(_database));
+  }
+  const unsigned char* tmp_name = new unsigned char[NAMESTRING_SIZE] {};
+  const unsigned char* tmp_description = new unsigned char[DESCRSTRING_SIZE] {};
+  prototype->_defense = sqlite3_column_int(statement, 1);
+  prototype->_is_passable = (sqlite3_column_int(statement, 2) == 1);
+  prototype->_texture = sqlite3_column_int(statement, 3);
+  tmp_name = sqlite3_column_text(statement, 4);
+  tmp_description = sqlite3_column_text(statement, 5);
+  prototype->_name = new unsigned char[NAMESTRING_SIZE] {};
+  for (size_t i = 0; i < NAMESTRING_SIZE && tmp_name[i] != '\0'; ++i) {
+    prototype->_name[i] = tmp_name[i];
+  }
+  prototype->_description = new unsigned char[DESCRSTRING_SIZE] {};
+  for (size_t i = 0; i < DESCRSTRING_SIZE && tmp_description[i] != '\0'; ++i) {
+    prototype->_description[i] = tmp_description[i];
+  }
+  delete[] tmp_name;
+  delete[] tmp_description;
+  sqlite3_finalize(statement);
+  
+  return return_code;
+}
+
+int Forge::get_npc_prototype(int query_id, TNPCPrototype* prototype) {
+  int return_code;
+  sqlite3_stmt* statement;
+  int response = sqlite3_prepare(_database, "select id, content_id, charge, name, description, speech from 'NPCs' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  const unsigned char* tmp_name = new unsigned char[NAMESTRING_SIZE] {};
+  const unsigned char* tmp_description = new unsigned char[DESCRSTRING_SIZE] {};
+  const unsigned char* tmp_speech = new unsigned char[DESCRSTRING_SIZE] {};
+  prototype->_name = new unsigned char[NAMESTRING_SIZE] {};
+  prototype->_description = new unsigned char[DESCRSTRING_SIZE] {};
+  prototype->_speech = new unsigned char[DESCRSTRING_SIZE] {};
+  prototype->_content_id = sqlite3_column_int(statement, 1);
+  prototype->_charge = sqlite3_column_int(statement, 2);
+  tmp_name = sqlite3_column_text(statement, 3);
+  for (size_t i = 0; i < NAMESTRING_SIZE && tmp_name[i] != '\0'; ++i) {
+    prototype->_name[i] = tmp_name[i];
+  }
+  tmp_description = sqlite3_column_text(statement, 4);
+  for(size_t i = 0; i < DESCRSTRING_SIZE && tmp_description[i] != '\0'; ++i) {
+    prototype->_description[i] = tmp_description[i];
+  }
+  tmp_speech = sqlite3_column_text(statement, 5);
+  for (size_t i = 0; i < DESCRSTRING_SIZE && tmp_speech[i] != '\0'; ++i) {
+    prototype->_speech[i] = tmp_speech[i];
+  }  
+  delete[] tmp_name;
+  delete[] tmp_description;
+  delete[] tmp_speech;
+  sqlite3_finalize(statement);
+  return return_code;
+}
+
 int Forge::MakeEquipableItem(int query_id, int level, EquipableItem** spawned) {
   TEquipablePrototype prototype;
   int return_code = get_equipable_prototype(query_id, &prototype);
@@ -278,6 +342,46 @@ int Forge::MakeItem(int query_id, int level, Item** spawned) {
   EquipableItem* item = NULL;
   int response = MakeEquipableItem(query_id, level, &item);
   *spawned = item;
+  return response;
+}
+
+int Forge::MakeTile(int query_id, LocalMapObject** spawned) {
+  int response;
+  LocalMapObject* tile = NULL;
+  TTilePrototype prototype;
+  response = get_tile_prototype(query_id, &prototype);
+//  tile = new LocalMapObject(prototype);
+  *spawned = tile;
+  delete[] prototype._name;
+  delete[] prototype._description;
+  return response;
+}
+
+int Forge::MakeNPC(int query_id, int level, NPC** spawned) {
+  int response;
+  NPC* npc = NULL;
+  TNPCPrototype prototype;
+  response = get_npc_prototype(query_id, &prototype);
+  if (prototype._charge != FREE_INDEX) {
+    //npc = new QuestGiver(prototype, level);
+  } else {
+    if (prototype._charge == 3) {
+      //npc = new BlackMarket(prototype, level);
+	} else {
+      if (prototype._content_id == 0) {
+      //  npc = new WeaponTrader(prototype, level);
+	  }
+	  if (prototype._content_id == 5) {
+        //npc = new ArmourTrader(prototype, level);
+	  } else {
+       // npc = new MunitionsTrader(prototype, level);
+	  }
+	}
+  }
+  *spawned = npc;
+  delete[] prototype._name;
+  delete[] prototype._description;
+  delete[] prototype._speech;
   return response;
 }
 
