@@ -1,3 +1,6 @@
+#ifndef INVENTORY_H
+#define INVENTORY_H
+
 #include "Item.h"
 
   class Inventory {
@@ -8,5 +11,7 @@
       virtual int swap_items(Item* from, Item* to);
       virtual int use_item(Item* to_use) { return to_use->use(); }
       virtual void render() = 0;
-      virtual Item* get_item() = 0;
+      virtual Item* get_item(int index) = 0;
   };
+  
+#endif

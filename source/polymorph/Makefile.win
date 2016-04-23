@@ -7,9 +7,9 @@ WINDRES  = windres.exe
 RES      = test_db_private.res
 OBJ      = main.o Forge.o AliveGameObject.o Armour.o Boots.o Chest.o CollectableItem.o ConsumableItem.o db_test.o EquipableItem.o Food.o GameObject.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o MeleeWeapon.o QuestItem.o RangedWeapon.o ResourceItem.o StaticGameObject.o Trinket.o UsableItem.o Weapon.o sqlite3.o $(RES)
 LINKOBJ  = main.o Forge.o AliveGameObject.o Armour.o Boots.o Chest.o CollectableItem.o ConsumableItem.o db_test.o EquipableItem.o Food.o GameObject.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o MeleeWeapon.o QuestItem.o RangedWeapon.o ResourceItem.o StaticGameObject.o Trinket.o UsableItem.o Weapon.o sqlite3.o $(RES)
-LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Dev-Cpp/MinGW64/lib" -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -O2 -lm -std=c++11 -m32 -g3
-INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32 -g3
+INCS     = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = test_db.exe
 CXXFLAGS = $(CXXINCS) -m32 -std=gnu++11 -Wall -g3
 CFLAGS   = $(INCS) -m32 -std=gnu++11 -Wall -g3
