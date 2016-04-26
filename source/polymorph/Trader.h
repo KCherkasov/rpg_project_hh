@@ -6,7 +6,7 @@
 #include "NPC.h"
 #include "prototypes.h"
 
-class Trader: NPC {
+class Trader: public NPC {
   public:
     Trader(): NPC() {}
     virtual ~Trader() {}

@@ -1,7 +1,7 @@
 #include "Location.h"
 #include "CollectableItem.h"
 
-class Wildlands: Location {
+class Wildlands: public Location {
   public:
   	Wildlands();
   	virtual ~Wildlands();

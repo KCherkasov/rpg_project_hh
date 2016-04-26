@@ -17,7 +17,6 @@
       TEquipmentKind get_kind();
       
       int what(std::string &out);
-      int use() { return 0; }
     protected:
       int _defense;
       TEquipmentKind _kind;

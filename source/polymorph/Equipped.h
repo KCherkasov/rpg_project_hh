@@ -1,12 +1,13 @@
-#ifndef STORAGE_H
-#define STORAGE_H
+#ifndef EQUIPPED_H
+#define EQUIPPED_H
 
 #include "Inventory.h"
+#include "prototypes.h"
 
-class Storage: public Inventory {
+class Equipped: public Inventory {
   public:
-    Storage(int storage_size): _size(storage_size) { new Item*[_size] {NULL}; }
-	virtual ~Storage();
+    Equipped(): _size(ES_SIZE) { new Item*[ES_SIZE] {NULL}; }
+	virtual ~Equipped();
     int first_free_slot(int &result);
     int count_free_slots(int &result);	
     int add_item(Item* &new_item);

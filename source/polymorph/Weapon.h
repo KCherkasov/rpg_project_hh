@@ -21,7 +21,6 @@ using namespace prototypes;
       bool get_one_handed();
       TEquipmentKind get_kind();
       int what(std::string &out);
-      int use() { return 0; }
     protected:
     	int* _damage;
     	bool _one_handed;

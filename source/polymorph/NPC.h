@@ -5,7 +5,7 @@
 
 #include "StaticGameObject.h"
 
-class NPC: StaticGameObject {
+class NPC: public StaticGameObject {
   public:
     NPC(): StaticGameObject() { speech = NULL; }
     virtual ~NPC() { delete[] speech; }

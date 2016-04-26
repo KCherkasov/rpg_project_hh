@@ -6,7 +6,7 @@
 #include "NPC.h"
 #include "prototypes.h"
 
-class QuestGiver : NPC {
+class QuestGiver : public NPC {
   public:
     QuestGiver();
     QuestGiver(TNPCPrototype &prototype, int level);

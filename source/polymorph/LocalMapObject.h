@@ -6,7 +6,7 @@
 
 #pragma once
 
-class LocalMapObject: StaticGameObject {
+class LocalMapObject: public StaticGameObject {
   public:
   	LocalMapObject();
   	LocalMapObject(TTilePrototype &prototype);

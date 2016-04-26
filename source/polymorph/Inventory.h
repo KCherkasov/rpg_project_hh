@@ -2,16 +2,24 @@
 #define INVENTORY_H
 
 #include "Item.h"
+#include "AliveGameObject.h"
 
   class Inventory {
     public:
-      virtual int add_item(Item* new_item) = 0;
-      virtual int remove_item(Item* to_delete) { delete to_delete; return 0; }
-      virtual int swap_items(int from_slot, Inventory* to_bag, int to_slot) = 0;
-      virtual int swap_items(Item* from, Item* to);
-      virtual int use_item(Item* to_use) { return to_use->use(); }
+      Inventory {}
+      virtual ~Inventory {}
+      virtual int first_free_slot() = 0;
+      virtual int count_free_slots() = 0;
+      virtual int add_item(Item* &new_item) = 0;
+      virtual int add_item(Item* &new_item, int index) = 0;
+      virtual int get_item(int index, Item* &result) = 0;
+      virtual int get_index(Item* &address) = 0;
+      virtual int remove_item(int to_delete) = 0;
+      virtual int swap_items(int from_slot, Inventory* &to_bag, int to_slot) = 0;
+      virtual int swap_items(int from_index, int to_index) = 0;
+      virtual int use_item(int index, AliveGameObject* &user) = 0;
+      virtual int get_size(int &result) = 0;
       virtual void render() = 0;
-      virtual Item* get_item(int index) = 0;
   };
   
 #endif

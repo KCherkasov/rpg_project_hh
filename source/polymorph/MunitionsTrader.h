@@ -6,7 +6,7 @@
 
 #pragma once
 
-class MunitionsTrader: Trader {
+class MunitionsTrader: public Trader {
   public:
     MunitionsTrader(): Trader() {}
     MunitionsTrader(TNPCPrototype &prototype, int level);

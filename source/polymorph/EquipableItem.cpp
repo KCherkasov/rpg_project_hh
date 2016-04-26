@@ -8,6 +8,7 @@
     _stat_reqs = new int[prototypes::STATS_COUNT];
     _manufacturer_id = new unsigned char[NAMESTRING_SIZE];
     _slots = new int[ES_SIZE];
+    _in_bag = true;
   }
 
   EquipableItem::~EquipableItem() {
@@ -47,4 +48,48 @@
       res[i] = _slots[i];
 	}
 	return res;
+  }
+  
+  bool EquipableItem::meets_stat_reqs(AliveGameObject* &user){
+    int* stats = NULL;
+    bool result = true;
+    stats = user->get_stats();
+    for (size_t i = 0; i < CS_SIZE; ++i) {
+      result = result && (_stat_reqs[i] <= stats[i]);
+	}
+	return result;
+  }
+  
+  int EquipableItem::use(AliveGameObject* &user) {
+    if (_in_bag) {
+      if (meets_stat_reqs(user)) {
+      	int equipped_slot = FREE_INDEX;
+      	for (size_t i = 0; i < ES_SIZE; ++i) {
+      	  if (_slots[i] == 1 && equipped[i] == NULL) {
+      	    equipped_slot = i;
+      	    break;
+		  }
+		}
+		if (equipped_slot == FREE_INDEX) {
+          for (size_t i =0; i < ES_SIZE; ++i) {
+            if (_slots[i] == 1) {
+              equipped_slot = i;
+              break;
+			}
+		  }
+		}
+        user->_bag->swap_items(user->_bag->get_index(this), user->_equipped, equipped_slot);
+        _in_bag = !_in_bag;
+	  }
+	} else {
+	  int free_slots;
+	  user->_bag->count_free_slots(free_slots);
+      if (free_slots > 0) {
+      	int first_free = FREE_INDEX;
+      	user->_bag->first_free_slot(first_free);
+        user->_equipped->swap_items(user->_equipped->get_index(this), user->_bag, first_free);
+        _in_bag = !_in_bag;
+	  }
+	}
+	return 0;  
   }

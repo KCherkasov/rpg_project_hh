@@ -6,7 +6,7 @@
 
 #pragma once
 
-class BlackMarket: Trader {
+class BlackMarket: public Trader {
   public:
     BlackMarket();
     BlackMarket(TNPCPrototype &prototype, int level);

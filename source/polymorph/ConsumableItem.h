@@ -12,7 +12,6 @@
       virtual ~ConsumableItem();
       int get_stack();
       int change_stack(int &value, bool increase);
-      virtual int use() { return 0; }
     protected:
       int _stack;
   };

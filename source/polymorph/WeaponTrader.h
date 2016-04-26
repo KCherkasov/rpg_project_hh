@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <ctime>
 
-class WeaponTrader: Trader {
+class WeaponTrader: public Trader {
   public:
     WeaponTrader(): Trader() {}
     WeaponTrader(TNPCPrototype &prototype, int level);

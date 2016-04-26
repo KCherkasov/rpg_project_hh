@@ -350,7 +350,7 @@ int Forge::MakeTile(int query_id, LocalMapObject** spawned) {
   LocalMapObject* tile = NULL;
   TTilePrototype prototype;
   response = get_tile_prototype(query_id, &prototype);
-//  tile = new LocalMapObject(prototype);
+  tile = new LocalMapObject(prototype);
   *spawned = tile;
   delete[] prototype._name;
   delete[] prototype._description;
@@ -363,18 +363,18 @@ int Forge::MakeNPC(int query_id, int level, NPC** spawned) {
   TNPCPrototype prototype;
   response = get_npc_prototype(query_id, &prototype);
   if (prototype._charge != FREE_INDEX) {
-    //npc = new QuestGiver(prototype, level);
+    npc = new QuestGiver(prototype, level);
   } else {
     if (prototype._charge == 3) {
-      //npc = new BlackMarket(prototype, level);
+      npc = new BlackMarket(prototype, level);
 	} else {
       if (prototype._content_id == 0) {
-      //  npc = new WeaponTrader(prototype, level);
+        npc = new WeaponTrader(prototype, level);
 	  }
 	  if (prototype._content_id == 5) {
-        //npc = new ArmourTrader(prototype, level);
+        npc = new ArmourTrader(prototype, level);
 	  } else {
-       // npc = new MunitionsTrader(prototype, level);
+        npc = new MunitionsTrader(prototype, level);
 	  }
 	}
   }
