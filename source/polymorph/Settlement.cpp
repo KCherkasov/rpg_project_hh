@@ -1,12 +1,21 @@
-#include "Location.h"
+#include "Settlement.h"
 
-class Settlement: Location {
-  public:
-  	Settlement();
-  	virtual ~Settlement();
-  	
-  	int entrance();
-  	
-  	Trader** _traders;
-  	Henchman** _mercs;
-};
+Settlement::Settlement(): Location() {
+  
+}
+
+Settlement::~Settlement() {
+  
+}
+
+int Settlement::entrance() {
+  
+}
+
+int Settlement::generate_traders() {
+
+}
+
+int Settlement::generate_mercenaries() {
+  
+}

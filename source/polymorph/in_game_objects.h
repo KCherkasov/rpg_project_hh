@@ -17,6 +17,22 @@ namespace generic_consts {
 
   const int OK_CODE = 0;
   const int SOME_ERROR_CODE = 1;
+  
+  const int TRADERS_COUNT = 4;
+  const int MAX_MERCENARIES = 8;
+  
+  const int LOCAL_MAP_WIDTH = 64;
+  const int LOCAL_MAP_HEIGHT = 64;
+  const int LOCAL_MAP_STEP = 8;
+  const int LOCAL_MASKS_COUNT = 26;
+  
+  const int GLOBAL_MAP_WIDTH = 320;
+  const int GLOBAL_MAP_HEIGHT = 320;
+  const int GLOBAL_MAP_STEP = 32;
+  const int GLOBAL_MASKS_COUNT = 26;
+  
+  const int MAX_LOCAL_TEXTURES_COUNT = 4;
+  const int MAX_GLOBAL_TEXTURES_COUNT = 10;
 
   const int START_LEVEL = 1;
   const int MAX_LEVEL = 70;

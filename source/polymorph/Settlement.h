@@ -9,4 +9,8 @@ class Settlement: Location {
   	
   	Trader** _traders;
   	Henchman** _mercs;
+  	
+  protected:
+    int generate_traders();
+    int generate_mercenaries();
 };

@@ -238,6 +238,108 @@ int Forge::get_equipable_prototype(int query_id, TEquipablePrototype* prototype)
   return return_code;
 }
 
+int Forge::get_local_map_mask(int query_id, int** &mask) {
+  srand(static_cast<unsigned int>(time(0)));
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, rows01_08, rows09_16, rows17_24, rows25_32, rows32_40, rows41_48, rows49_56, rows57_64 from 'LocalByteMask' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  int* prototype = new int[LOCAL_MAP_HEIGHT / LOCAL_MAP_STEP];
+  for (size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
+    delete[] mask[i];
+  }
+  delete[] mask;
+  int** tmp_mask;
+  mask = new int*[LOCAL_MAP_HEIGHT] {NULL};
+  tmp_mask = new int*[LOCAL_MAP_HEIGHT] {NULL};
+  for(size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
+    mask[i] = new int[LOCAL_MAP_WIDTH] {0};
+    tmp_mask[i] = new int[LOCAL_MAP_WIDTH] {0};
+  } 
+  for(size_t i = 0; i < (LOCAL_MAP_HEIGHT / LOCAL_MAP_STEP); ++i) {
+    prototype[i] = sqlite3_column_int(statement, i + 1);
+  }
+  size_t mask_index = 0;
+  for (size_t i = 0; i < LOCAL_MAP_HEIGHT; i += LOCAL_MAP_STEP) {
+    for (size_t j = i; j < i + LOCAL_MAP_STEP; ++j) {
+      int ones = 0;
+      while(ones < prototype[mask_index]) {
+      	while(true) {
+          int rnd = rand() % LOCAL_MAP_WIDTH;
+          if (tmp_mask[j][rnd] != 1) {
+            ++ones;
+            tmp_mask[j][rnd] = 1;
+            break;
+		  }
+		}
+	  }
+	}
+    ++mask_index;
+  } 
+  sqlite3_finalize(statement);
+  delete[] prototype;
+  for (size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
+  	for (size_t j = 0; j < LOCAL_MAP_WIDTH; ++i) {
+      mask[i][j] = tmp_mask[i][j];
+    }
+    delete[] tmp_mask[i];
+  }
+  delete[] tmp_mask;
+  return response;
+}
+
+int Forge::get_global_map_mask(int query_id, int** &mask) {
+  srand(static_cast<unsigned int>(time(0)));
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, rows001_032, rows033_064, rows065_096, rows097_128, rows129_160, rows161_192, rows193_224, rows225_256, rows257_288, rows289_320 from 'GlobalByteMask' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  int* prototype = new int[GLOBAL_MAP_HEIGHT / GLOBAL_MAP_STEP];
+  for (size_t i = 0; i < GLOBAL_MAP_HEIGHT; ++i) {
+    delete[] mask[i];
+  }
+  delete[] mask;
+  int** tmp_mask;
+  mask = new int*[GLOBAL_MAP_HEIGHT] {NULL};
+  tmp_mask = new int*[GLOBAL_MAP_HEIGHT] {NULL};
+  for(size_t i = 0; i < GLOBAL_MAP_HEIGHT; ++i) {
+    mask[i] = new int[GLOBAL_MAP_WIDTH] {0};
+    tmp_mask[i] = new int[GLOBAL_MAP_WIDTH] {0};
+  } 
+  for(size_t i = 0; i < (GLOBAL_MAP_HEIGHT / GLOBAL_MAP_STEP); ++i) {
+    prototype[i] = sqlite3_column_int(statement, i + 1);
+  }
+  size_t mask_index = 0;
+  for (size_t i = 0; i < GLOBAL_MAP_HEIGHT; i += GLOBAL_MAP_STEP) {
+    for (size_t j = i; j < i + GLOBAL_MAP_STEP; ++j) {
+      int ones = 0;
+      while(ones < prototype[mask_index]) {
+      	while(true) {
+          int rnd = rand() % GLOBAL_MAP_WIDTH;
+          if (tmp_mask[j][rnd] != 1) {
+            ++ones;
+            tmp_mask[j][rnd] = 1;
+            break;
+		  }
+		}
+	  }
+	}
+    ++mask_index;
+  } 
+  sqlite3_finalize(statement);
+  delete[] prototype;
+  for (size_t i = 0; i < GLOBAL_MAP_HEIGHT; ++i) {
+  	for (size_t j = 0; j < GLOBAL_MAP_WIDTH; ++i) {
+      mask[i][j] = tmp_mask[i][j];
+    }
+    delete[] tmp_mask[i];
+  }
+  delete[] tmp_mask;
+  return response;
+}
+
 int Forge::get_tile_prototype(int query_id, TTilePrototype* prototype) {
   int return_code = OK_CODE;
   sqlite3_stmt* statement;
@@ -385,4 +487,44 @@ int Forge::MakeNPC(int query_id, int level, NPC** spawned) {
   return response;
 }
 
+int Forge::MakeMask(int query_id, bool is_local, int** &spawned) {
+  int** tmp_mask;
+  int response;
+  if (is_local) {
+  	tmp_mask = new int*[LOCAL_MAP_HEIGHT] {NULL};
+  	for (size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
+      tmp_mask[i] = new int[LOCAL_MAP_WIDTH] {FREE_INDEX};
+      delete spawned[i];
+	}
+	delete[] spawned;
+	spawned = new int*[LOCAL_MAP_HEIGHT] {NULL};
+    response = get_local_map_mask(query_id, tmp_mask);
+    for (size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
+      spawned[i] = new int[LOCAL_MAP_WIDTH] {FREE_INDEX};
+      for (size_t j = 0; j < LOCAL_MAP_WIDTH; ++j) {
+        spawned[i][j] = tmp_mask[i][j];
+	  }
+	  delete[] tmp_mask[i];
+	}
+	delete[] tmp_mask;
+  } else {
+  	tmp_mask = new int*[GLOBAL_MAP_HEIGHT] {NULL};
+  	for (size_t i = 0; i < GLOBAL_MAP_HEIGHT; ++i) {
+      tmp_mask[i] = new int[GLOBAL_MAP_WIDTH] {FREE_INDEX};
+      delete spawned[i];
+	}
+	delete[] spawned;
+	spawned = new int*[GLOBAL_MAP_HEIGHT] {NULL};
+    response = get_global_map_mask(query_id, tmp_mask);
+    for(size_t i = 0; i < GLOBAL_MAP_HEIGHT; ++i) {
+      spawned[i] = new int[GLOBAL_MAP_WIDTH];
+      for(size_t j = 0; j < GLOBAL_MAP_WIDTH; ++j) {
+        spawned[i][j] = tmp_mask[i][j];
+	  }
+	  delete[] tmp_mask[i];
+	}
+	delete[] tmp_mask;
+  }
+  return response;
+}
 

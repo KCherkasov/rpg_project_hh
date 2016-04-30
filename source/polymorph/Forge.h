@@ -37,6 +37,7 @@ class Forge {
   	int MakeItem(int query_id, int level, Item** spawned);
   	int MakeTile(int query_id, LocalMapObject** spawned);
   	int MakeNPC(int query_id, int level, NPC** spawned);
+  	int MakeMask(int query_id, bool is_local, int** &spawned);
   	 
   private:
   	sqlite3* _database;
@@ -51,6 +52,9 @@ class Forge {
   	int get_equipable_prototype(int query_id, TEquipablePrototype* prototype);
   	//int get_collectable_prototype(int query_id, TCollectablePrototype* prototype); //in development
   	//int get_consumable_prototype(int query_id, TConsumablePrototype* prototype);   //in development
+  	
+  	int get_local_map_mask(int query_id, int** &mask);
+  	int get_global_map_mask(int query_id, int** &mask);
   	
   	int get_tile_prototype(int query_id, TTilePrototype* prototype);
   	
