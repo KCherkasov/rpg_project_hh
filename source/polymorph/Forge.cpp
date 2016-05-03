@@ -371,6 +371,23 @@ int Forge::get_tile_prototype(int query_id, TTilePrototype* prototype) {
   return return_code;
 }
 
+int Forge::get_loot(int query_id, TLoot* loot) {
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, max_quant, chance, id from 'Loots' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  TLoot tmp;
+  tmp._max_quant = sqlite3_column_int(statement, 1);
+  tmp._chance = sqlite3_column_int(statement, 2);
+  tmp._id = sqlite3_column_int(statement, 3);
+  sqlite3_finalize(statement);
+  loot->_max_quant = tmp._max_quant;
+  loot->_chance = tmp._chance;
+  loot->_id = tmp._id;
+  return response;
+}
+
 int Forge::get_npc_prototype(int query_id, TNPCPrototype* prototype) {
   int return_code;
   sqlite3_stmt* statement;
@@ -402,6 +419,33 @@ int Forge::get_npc_prototype(int query_id, TNPCPrototype* prototype) {
   delete[] tmp_speech;
   sqlite3_finalize(statement);
   return return_code;
+}
+
+int Forge::get_monster_prototype(int query_id, TMonsterPrototype* prototype) {
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, name_id, faction_id, hp, damage, defense, loot_list_id, decrement, initiative from 'Monsters' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  TMonsterPrototype preset;
+  preset._name_id = sqlite3_column_int(statement, 1);
+  preset._faction_id = sqlite3_column_int(statement, 2);
+  preset._hp = sqlite3_column_int(statement, 3);
+  preset._damage = sqlite3_column_int(statement, 4);
+  preset._defense = sqlite3_column_int(statement, 5);
+  preset._loot_list_id = sqlite3_column_int(statement, 6);
+  preset._decrement = sqlite3_column_int(statement,7);
+  preset._initiative = sqlite3_column_int(statement, 8);
+  prototype->_name_id = preset._name_id;
+  prototype->_faction_id = preset._faction_id;
+  prototype->_hp = preset._hp;
+  prototype->_damage = preset._damage;
+  prototype->_defense = preset._defense;
+  prototype->_loot_list_id = preset._loot_list_id;
+  prototype->_decrement = preset._decrement;
+  prototype->_initiative = preset._initiative;
+  sqlite3_finalize(statement);
+  return response;
 }
 
 int Forge::MakeEquipableItem(int query_id, int level, EquipableItem** spawned) {
@@ -527,4 +571,46 @@ int Forge::MakeMask(int query_id, bool is_local, int** &spawned) {
   }
   return response;
 }
+
+int Forge::MakeMonster(int query_id, int level, AliveGameObject** spawned) {
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);  
+  return response;
+}
+
+int Forge::MakeLootList(int query_id, TLootList* prototype) {
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, loot1, loot2, loot3, loot4, loot5, loot6, loot7, loot8, loot9, loot10, loot11, loot12, loot13, loot14, loot15, loot16, cash, exp from 'LootLists' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  TLootListPrototype preset;
+  TLootList tmp;
+  preset._loot_ids = new int[LOOT_LIST_SIZE];
+  tmp._loot = new TLoot[LOOT_LIST_SIZE];
+  for (size_t i = 0; i < LOOT_LIST_SIZE; ++i) {
+    preset._loot_ids[i] = sqlite3_column_int(statement, i + 1);
+  }
+  preset._cash = sqlite3_column_int(statement, 17);
+  preset._exp = sqlite3_column_int(statement, 18);
+  sqlite3_finalize(statement);
+  tmp._cash = preset._cash;
+  tmp._exp = preset._cash;
+  for(size_t i = 0; i < LOOT_LIST_SIZE; ++i) {
+    response = get_loot(preset._loot_ids[i], &tmp._loot[i]);
+  }
+  prototype->_loot = new TLoot[LOOT_LIST_SIZE];
+  prototype->_cash = tmp._cash;
+  prototype->_exp = tmp._exp;
+  for(size_t i = 0; i < LOOT_LIST_SIZE; ++i) {
+    prototype->_loot[i] = tmp._loot[i];
+  }
+  delete[] preset._loot_ids;
+  delete[] tmp._loot;
+  return response;
+}
+
 

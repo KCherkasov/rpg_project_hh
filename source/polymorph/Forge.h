@@ -18,6 +18,12 @@
 #include "WeaponTrader.h"
 #include "MunitionsTrader.h"
 #include "BlackMarket.h"
+#include "GruntMonster.h"
+#include "DamagerMonster.h"
+#include "SupportMonster.h"
+#include "CommonMonster.h"
+#include "QuestMonster.h"
+
 #include <wchar.h>
 #include <cstdlib>
 #include <ctime>
@@ -38,7 +44,8 @@ class Forge {
   	int MakeTile(int query_id, LocalMapObject** spawned);
   	int MakeNPC(int query_id, int level, NPC** spawned);
   	int MakeMask(int query_id, bool is_local, int** &spawned);
-  	 
+  	int MakeMonster(int query_id, int level, AliveGameObject** spawned);
+  	int MakeLootList(int query_id, TLootList* prototype); 
   private:
   	sqlite3* _database;
   	
@@ -58,7 +65,13 @@ class Forge {
   	
   	int get_tile_prototype(int query_id, TTilePrototype* prototype);
   	
+  	int get_loot(int query_id, TLoot* loot);
+  	
   	int get_npc_prototype(int query_id, TNPCPrototype* prototype);
+  	int get_monster_prototype(int query_id, TMonsterPrototype* prototype);
+  	
+  	int get_pack_info(int query_id, int* &data);
+  	int get_location_prototype(int query_id, TLocationPrototype* prototype);
   	
     int MakeEquipableItem(int query_id, int level, EquipableItem** spawned);
     //int MakeCollectableItem(int query_id, CoollectableItem* spawned); //in development

@@ -5,9 +5,17 @@
 
 namespace generic_consts {
 
-  const int  EMPTY_STACK = 0;
+  const int EMPTY_STACK = 0;
   
   const int FREE_INDEX = -1;
+  const int CURRENT_VALUE_INDEX = 0;
+  const int MAXIMAL_VALUE_INDEX = 1;
+  
+  const int PLAYER_SQUAD_ID = 0;
+  
+  const int PLAYER_SQUAD_SIZE = 5;
+  const int MONSTER_SQUAD_SIZE =  10;
+  const int MAX_MONSTER_SQUADS = 5;
 
   const int MIN_COLLECTABLE_STACK = 1;
   const int MAX_COLLECTABLE_STACK = 200;
@@ -36,7 +44,12 @@ namespace generic_consts {
 
   const int START_LEVEL = 1;
   const int MAX_LEVEL = 70;
+  const int LEVEL_RANGE = 3;
+  
   const int POINTS_PER_LEVEL = 5;
+  
+  const int BASIC_SPEED = 5;
+  const int BASIC_SIGHT_DISTANCE = 40;
   
   const int STAT_RAISE_PER_LEVEL = 1;
   const int DAMDEF_RAISE_PER_LEVEL = 5;

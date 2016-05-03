@@ -4,16 +4,12 @@ AliveGameObject::AliveGameObject(): GameObject() {
   _health = new int[PAIR_ARR_SIZE];
   _exp = new int[PAIR_ARR_SIZE];
   _stats = new int [CS_SIZE];
-  _bag = new Storage(BACKPACK_SIZE);
-  _equipped = new Equipped();
 }
 
 AliveGameObject::~AliveGameObject() {
   delete[] _health;
   delete[] _exp;
   delete[] _stats;
-  delete _bag;
-  delete _equipped;
 }
 
 int* AliveGameObject::get_health() {
@@ -22,6 +18,18 @@ int* AliveGameObject::get_health() {
     result[i] = _health[i];
   }
   return result;
+}
+
+int AliveGameObject::set_health(int change) {
+  _hp[CURRENT_VALUE_INDEX] += change;
+  if (_hp[CURRENT_VALUE_INDEX] < 0) {
+    _hp[CURRENT_VALUE_INDEX] = 0;
+  } else {
+    if (_hp[CURRENT_VALUE_INDEX] > _hp[MAXIMAL_VALUE_INDEX]) {
+      _hp[CURRENT_VALUE_INDEX] = _hp[MAXIMAL_VALUE_INDEX]
+	}
+  }
+  return 0;
 }
 
 int* AliveGameObject::get_exp() {

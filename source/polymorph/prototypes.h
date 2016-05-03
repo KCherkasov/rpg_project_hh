@@ -17,6 +17,7 @@ namespace prototypes {
   const int BACKPACK_SIZE = 36;
   const int STORAGE_SIZE = 72;
   const int BANK_SIZE = 154;
+  const int LOOT_LIST_SIZE = 16;
   
   const int VENDOR_CAPACITY = 154;
   const int BASIC_VENDOR_CHARGE = 10;
@@ -28,6 +29,45 @@ namespace prototypes {
   const double COST_LEVEL_MODIFIER = 1.03;
   const double STATS_LEVEL_MODIFIER = 1.0625;
   
+  const double CASH_RAISE = 1.10;
+  const double EXP_RAISE = 1.10;
+  
+  const int BASE_NONDEF_PROB = 40;
+  const int BASE_TANK_PROB = 20;
+  const int BASE_SUPPORT_PROB = 20;
+  const int BASE_DAMAGER_PROB = 20;
+
+  const int BASE_LEADER_PROB = 10;
+  const int BASE_MASS_LEADER_PROB = 20;
+
+  const double NONDEF_HP_MODIFIER = 1.0;
+  const double NONDEF_DMG_MODIFIER = 1.0;
+  const double NONDEF_DEF_MODIFIER = 1.0;
+
+  const double GRUNT_HP_MODIFIER = 1.50;
+  const double GRUNT_DMG_MODIFIER = 0.50;
+  const double GRUNT_DEF_MODIFIER = 2.25;
+
+  const double SUPPORT_HP_MODIFIER = 0.75;
+  const double SUPPORT_DMG_MODIFIER = 1.25;
+  const double SUPPORT_DEF_MODIFIER = 0.50;
+
+  const double DAMAGER_HP_MODIFIER = 0.50;
+  const double DAMAGER_DMG_MODIFIER = 2.25;
+  const double DAMAGER_DEF_MODIFIER = 0.75;
+ 
+  const double LEADER_HP_MODIFIER = 1.50;
+  const double LEADER_DMG_MODIFIER = 1.50;
+  const double LEADER_DEF_MODIFIER = 1.50;
+  const double LEADER_EXP_MODIFIER = 1.50;
+  const double LEADER_CASH_MODIFIER = 1.50;
+
+  const double MASS_LEADER_HP_MODIFIER = 1.25;
+  const double MASS_LEADER_DMG_MODIFIER = 1.25;
+  const double MASS_LEADER_DEF_MODIFIER = 1.25;
+  const double MASS_LEADER_EXP_MODIFIER = 1.25;
+  const double MASS_LEADER_CASH_MODIFIER = 1.25;
+
 //  const double MANUFACTURER_BONUS = 1.13;
 
   enum TItemRareness { IR_TRASH, IR_COMMON, IR_GOOD, IR_RARE, IR_EPIC, IR_LEGENDARY };
@@ -60,6 +100,30 @@ namespace prototypes {
     int _slots[ES_SIZE];
     int kind;
   };
+  
+  struct TLoot {
+    int _max_quant;
+    int _chance;
+    int _id;
+  };
+
+  struct TLootList {
+    TLoot* _loot;
+    int _cash;
+    int _exp;
+  };
+  
+  struct TLootListPrototype {
+    int* _loot_ids;
+    int _cash;
+    int _exp;
+  };
+  
+  struct TLocationPrototype {
+    int** _packs;
+    int* _trader_chances;
+    int _fight_chance;
+  };
 
   struct TTilePrototype {
     int _texture;
@@ -75,6 +139,17 @@ namespace prototypes {
     unsigned char* _speech;
     unsigned char* _name;
     unsigned char* _description;
+  };
+  
+  struct TMonsterPrototype {
+  	int _name_id; // set -1 if generated in-situ
+    int _faction_id; // set -1 if generated in-situ
+    int _hp;
+    int _damage;
+    int _defense;
+    int _loot_list_id;
+    int _decrement;
+    int _initiative;
   };
 
 }
