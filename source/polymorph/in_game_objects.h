@@ -22,6 +22,8 @@ namespace generic_consts {
 
   const int MIN_CONSUMABLE_STACK = 1;
   const int MAX_CONSUMABLE_STACK = 200;
+  
+  const int MAX_MORALE_VALUE = 100;
 
   const int OK_CODE = 0;
   const int SOME_ERROR_CODE = 1;
@@ -50,11 +52,6 @@ namespace generic_consts {
   
   const int BASIC_SPEED = 5;
   const int BASIC_SIGHT_DISTANCE = 40;
-  
-  const int STAT_RAISE_PER_LEVEL = 1;
-  const int DAMDEF_RAISE_PER_LEVEL = 5;
-  const int HP_RAISE_PER_LEVEL = 8;
-  const int COST_RAISE_PER_LEVEL = 5;
 
   const int NAMESTRING_SIZE = 31;
   const int DESCRSTRING_SIZE = 301;

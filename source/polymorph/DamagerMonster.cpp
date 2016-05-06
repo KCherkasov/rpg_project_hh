@@ -1,21 +1,21 @@
-#ifndef DAMAGERMONSTER_H
-#define DAMAGERMONSTER_H
+#include "DamagerMonster.h"
 
-#include "Monster.h"
-
-class DamagerMonster: public Monster {
-  public:
-  	DamagerMonster();
-  	virtual ~DamagerMonster();
-    int decision();
-  protected:
-    int where_am_i(LocalMap* &map);
-    int look_around(LocalMap* &map, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords);
-    int get_closest(AliveGameObject* &result);
-    int get_weakest(AliveGameObject* &result);
-    int get_distance(int to_x, int to_y);
-    int evaluate(AliveGameObject* &target, int &points);
-    int evaluate(int to_x, int to_y, int &points);
-};
-
-#endif
+DamagerMonster::DamagerMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level): Monster(prototype, name, faction, level) {
+  const unsigned char* role = "Damager\0";
+  for (size_t i = 0; i < NAMESTRING_SIZE && role[i] != '\0'; ++i) {
+    _role[i] = role[i];
+  }
+  double tmp;
+  for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
+    tmp = _damage[i];
+    tmp *= DAMAGER_DMG_MODIFIER;
+    _damage[i] = round(tmp);
+    tmp = _health[i];
+    tmp *= DAMAGER_HP_MODIFIER;
+    _health[i] = round(tmp);
+  }
+  tmp = _defense;
+  tmp *= DAMAGER_DEF_MODIFIER;
+  _defense = round(tmp);
+  delete[] role;
+}

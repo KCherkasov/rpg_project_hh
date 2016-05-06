@@ -424,7 +424,7 @@ int Forge::get_npc_prototype(int query_id, TNPCPrototype* prototype) {
 int Forge::get_monster_prototype(int query_id, TMonsterPrototype* prototype) {
   int response;
   sqlite3_stmt* statement;
-  response = sqlite3_prepare(_database, "select id, name_id, faction_id, hp, damage, defense, loot_list_id, decrement, initiative from 'Monsters' where id=?", -1, &statement, 0);
+  response = sqlite3_prepare(_database, "select id, name_id, faction_id, hp, damage, distance, defense, loot_list_id, decrement, initiative from 'Monsters' where id=?", -1, &statement, 0);
   sqlite3_bind_int(statement, 1, query_id);
   sqlite3_step(statement);
   TMonsterPrototype preset;
@@ -432,10 +432,11 @@ int Forge::get_monster_prototype(int query_id, TMonsterPrototype* prototype) {
   preset._faction_id = sqlite3_column_int(statement, 2);
   preset._hp = sqlite3_column_int(statement, 3);
   preset._damage = sqlite3_column_int(statement, 4);
-  preset._defense = sqlite3_column_int(statement, 5);
-  preset._loot_list_id = sqlite3_column_int(statement, 6);
-  preset._decrement = sqlite3_column_int(statement,7);
-  preset._initiative = sqlite3_column_int(statement, 8);
+  preset._distance = sqlite3_column_int(statement, 5);
+  preset._defense = sqlite3_column_int(statement, 6);
+  preset._loot_list_id = sqlite3_column_int(statement, 7);
+  preset._decrement = sqlite3_column_int(statement, 8);
+  preset._initiative = sqlite3_column_int(statement, 9);
   prototype->_name_id = preset._name_id;
   prototype->_faction_id = preset._faction_id;
   prototype->_hp = preset._hp;

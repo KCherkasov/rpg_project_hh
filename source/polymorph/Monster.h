@@ -15,10 +15,9 @@
 
 class Monster : public AliveGameObject {
   public:
-    Monster(): AliveGameObject() { _damage = new int[PAIR_ARR_SIZE]; }
-	virtual ~Monster() { delete[] _damage; }
+    Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
+	virtual ~Monster();
     virtual int decision() = 0;
-    int get_cash() { return _cash; }
     int get_morale() { return _morale; }
     int get_in_pack_id() { return _in_pack_id; }
     int* get_damage();
@@ -29,13 +28,15 @@ class Monster : public AliveGameObject {
     int generate_loot(Stash* stash); 
   protected:
   	int* _damage;
+  	int _distance;
   	int _defense;
-    int _cash;
     int _morale;
     int _in_pack_id;
     int _loot_list;
     bool _is_leader;
     bool _is_mass_leader;
+    unsigned char* _faction;
+    unsigned char* _role;
     
     int where_am_i(LocalMap* &map, int &my_x, int &my_y);
     int look_around(LocalMap* &map, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords);

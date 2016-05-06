@@ -16,14 +16,11 @@
       int* get_health();
       int set_health(int change);
       int* get_exp();
-      int get_stat(int index, int &result);
-      int* get_stats();
       int get_initiative();
       
     protected:
       int* _health;
       int* _exp;
-      int* _stats;
       int _initiative;
   };
 

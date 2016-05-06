@@ -5,7 +5,7 @@
 
 class DamagerMonster: public Monster {
   public:
-  	DamagerMonster(TMonsterPrototype &prototype, int level);
+  	DamagerMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
   	virtual ~DamagerMonster();
     int decision();
   protected:

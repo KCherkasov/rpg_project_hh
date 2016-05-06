@@ -18,11 +18,14 @@ class Equipped: public Inventory {
     int swap_items(int from_slot, Inventory* &to_bag, int to_slot);
     int swap_items(int from_index, int to_index);
     int use_item(int index, AliveGameObject* &user);
-    int get_size(int &result)
+    int get_size(int &result);
+    int get_stat_bonus(int* &result);
+    int get_stat_bonus(int &result, int stat_index);
     void render() {}
+    
+    Item** _content;
   protected:
     int _size;
-    Item** _content;
 };
 
 #endif

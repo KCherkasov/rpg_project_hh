@@ -29,8 +29,20 @@ namespace prototypes {
   const double COST_LEVEL_MODIFIER = 1.03;
   const double STATS_LEVEL_MODIFIER = 1.0625;
   
+  const int STAT_RAISE_PER_LEVEL = 1;
+  const int DAMDEF_RAISE_PER_LEVEL = 5;
+  const int HP_RAISE_PER_LEVEL = 8;
+  const int COST_RAISE_PER_LEVEL = 5;
+  
   const double CASH_RAISE = 1.10;
   const double EXP_RAISE = 1.10;
+  
+  const int BASE_TRASH_CHANCE = 30;
+  const int BASE_COMMON_CHANCE = 80;
+  const int BASE_GOOD_CHANCE = 25;
+  const int BASE_RARE_CHANCE = 12;
+  const int BASE_EPIC_CHANCE = 8;
+  const int BASE_LEGENDARY_CHANCE = 3;
   
   const int BASE_NONDEF_PROB = 40;
   const int BASE_TANK_PROB = 20;
@@ -146,6 +158,7 @@ namespace prototypes {
     int _faction_id; // set -1 if generated in-situ
     int _hp;
     int _damage;
+    int _distance;
     int _defense;
     int _loot_list_id;
     int _decrement;

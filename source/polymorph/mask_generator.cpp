@@ -8,7 +8,7 @@ int main() {
   for(size_t i = 0; i < 26; ++i) {
     for (size_t j = 0; j < 8; ++j) {
       int rnd = rand() % 65;
-      printf("%d ", rnd);
+      printf("%02d ", rnd);
 	}
 	printf("\n");
   }

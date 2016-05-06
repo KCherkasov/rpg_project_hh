@@ -5,7 +5,7 @@
 
 class QuestMonster: public Monster {
   public:
-  	QuestMonster(TMonsterPrototype &prototype, int level, int quest_id);
+  	QuestMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level, int quest_id);
   	virtual ~QuestMonster();
     int decision();
   protected:

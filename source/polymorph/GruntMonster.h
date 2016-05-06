@@ -5,7 +5,7 @@
 
 class GruntMonster: public Monster {
   public:
-  	GruntMonster(TMonsterPrototype &prototype, int level);
+  	GruntMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
   	virtual ~GruntMonster();
     int decision();
   protected:

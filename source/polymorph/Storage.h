@@ -19,9 +19,11 @@ class Storage: public Inventory {
     int use_item(int index, AliveGameObject* &user);
     int get_size(int &result)
     void render() {}
+    
+    Item** _content;
+    
   protected:
     int _size;
-    Item** _content;
 };
 
 #endif

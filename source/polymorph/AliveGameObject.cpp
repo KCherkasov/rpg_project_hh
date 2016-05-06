@@ -1,15 +1,13 @@
 #include "AliveGameObject.h"
 
 AliveGameObject::AliveGameObject(): GameObject() {
-  _health = new int[PAIR_ARR_SIZE];
-  _exp = new int[PAIR_ARR_SIZE];
-  _stats = new int [CS_SIZE];
+  _health = new int[PAIR_ARR_SIZE] {0};
+  _exp = new int[PAIR_ARR_SIZE] {0};
 }
 
 AliveGameObject::~AliveGameObject() {
   delete[] _health;
   delete[] _exp;
-  delete[] _stats;
 }
 
 int* AliveGameObject::get_health() {
@@ -40,18 +38,3 @@ int* AliveGameObject::get_exp() {
   return result;
 }
 
-int AliveGameObject::get_stat(int index, int &result) {
-  if (index < 0 || index >= CS_SIZE) {
-    return 0;
-  }
-  result = _stats[index];
-  return 0;
-}
-
-int* get_stats() {
-  int* result = new int[CS_SIZE];
-  for (size_t i = 0; i < CS_SIZE; ++i) {
-    result[i] = _stats[i];
-  }
-  return result;
-}

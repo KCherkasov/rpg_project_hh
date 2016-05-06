@@ -5,7 +5,7 @@
 
 class SupportMonster: public Monster {
   public:
-  	SupportMonster(TMonsterPrototype &prototype, int level);
+  	SupportMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
   	virtual SupportMonster();
     int decision();
   protected:

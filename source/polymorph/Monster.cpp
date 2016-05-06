@@ -1,5 +1,36 @@
 #include "Monster.h"
 
+Monster::Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level)::AliveGameObject() {
+  _damage = new int[PAIR_ARR_SIZE] {0};
+  _faction = new unsigned char[NAMESTRING_SIZE] {};
+  _role = new unsigned char[NAMESTRING_SIZE] {};
+  for (size_t i = 0; i < NAMESTRING_SIZE; ++i ) {
+    _name[i] = name[i];
+    _faction[i] = faction[i];
+  }
+  _damage[CURRENT_VALUE_INDEX] = prototype._damage;
+  {
+  	double tmp_dmg = _damage[CURRENT_VALUE_INDEX];
+  	tmp_dmg *= ITEM_DAMAGE_MINMAX_RATIO;
+  	_damage[MAXIMAL_VALUE_INDEX] = round(tmp_dmg);
+  }
+  _health[MAXIMAL_VALUE_INDEX] = prototype._hp;
+  _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
+  _defense = prototype._defense;
+  _loot_list = prototype._loot_list_id;
+  _initiative = prototype._initiative;
+  _if_leader = false;
+  _is_mass_leader = false;
+  _morale = MAX_MORALE_VALUE;
+  _in_pack_id = FREE_INDEX;
+}
+
+Monster::~Monster() {
+  delete[] _damage;
+  delete[] _faction;
+  delete[] _role;
+}
+
 int Monster::get_damage() {
   int* result = new int[PAIR_ARR_SIZE];
   for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {

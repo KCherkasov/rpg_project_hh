@@ -116,3 +116,34 @@ int Equipped::get_size(int &result) {
   return 0;
 }
 
+int Equipped::get_stat_bonus(int* &result) {
+  delete[] result;
+  result = new int[CS_SIZE] {0};
+  for (size_t i = 0; i < ES_SIZE; ++i) {
+    if (_content[i] != NULL) {
+      int* tmp_bonus = NULL;
+      tmp_bonus = _content[i]->get_stat_bons();
+      for(size_t j = 0; j < CS_SIZE; ++j) {
+      	result[j] += tmp_bonus[i];
+	  }
+	  delete[] tmp_bonus;
+	}
+  }
+  return 0;
+}
+
+int Equipped::get_stat_bonus(int &result, int stat_index) {
+  result = 0;
+  if (stat_index > FREE_INDEX && stat_index < CS_SIZE) {
+    for (size_t i = 0; i < ES_SIZE; ++i) {
+      if (_content[i] != NULL) {
+        int* tmp_bonus = NULL;
+        tmp_bonus = _content[i]->get_stat_bonus();
+        result += tmp_bonus[stat_index];
+        delete[] tmp_bonus;
+	  }
+	}
+  }
+  return 0;
+}
+

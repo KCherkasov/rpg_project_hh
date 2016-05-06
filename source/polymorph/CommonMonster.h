@@ -5,7 +5,7 @@
 
 class CommonMonster: public Monster {
   public:
-  	CommonMonster(TMonsterPrototype &prototype, int level);
+  	CommonMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
   	virtual ~CommonMonster();
     int decision();
   protected:
