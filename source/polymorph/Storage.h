@@ -5,7 +5,10 @@
 
 class Storage: public Inventory {
   public:
-    Storage(int storage_size): _size(storage_size) { new Item*[_size] {NULL}; }
+  	
+    Item** _content;
+  	
+    Storage(int storage_size): _size(storage_size) { _content = new Item*[storage_size] {NULL}; }
 	virtual ~Storage();
     int first_free_slot(int &result);
     int count_free_slots(int &result);	
@@ -17,10 +20,8 @@ class Storage: public Inventory {
     int swap_items(int from_slot, Inventory* &to_bag, int to_slot);
     int swap_items(int from_index, int to_index);
     int use_item(int index, AliveGameObject* &user);
-    int get_size(int &result)
+    int get_size(int &result);
     void render() {}
-    
-    Item** _content;
     
   protected:
     int _size;

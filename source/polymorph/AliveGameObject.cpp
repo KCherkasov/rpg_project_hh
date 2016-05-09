@@ -19,12 +19,12 @@ int* AliveGameObject::get_health() {
 }
 
 int AliveGameObject::set_health(int change) {
-  _hp[CURRENT_VALUE_INDEX] += change;
-  if (_hp[CURRENT_VALUE_INDEX] < 0) {
-    _hp[CURRENT_VALUE_INDEX] = 0;
+  _health[CURRENT_VALUE_INDEX] += change;
+  if (_health[CURRENT_VALUE_INDEX] < 0) {
+    _health[CURRENT_VALUE_INDEX] = 0;
   } else {
-    if (_hp[CURRENT_VALUE_INDEX] > _hp[MAXIMAL_VALUE_INDEX]) {
-      _hp[CURRENT_VALUE_INDEX] = _hp[MAXIMAL_VALUE_INDEX]
+    if (_health[CURRENT_VALUE_INDEX] > _health[MAXIMAL_VALUE_INDEX]) {
+      _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
 	}
   }
   return 0;

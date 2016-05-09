@@ -147,3 +147,10 @@ int Equipped::get_stat_bonus(int &result, int stat_index) {
   return 0;
 }
 
+int Equipped::get_defense() {
+  int result = 0;
+  for (size_t i = ES_HEAD; i < ES_WEAPON1; ++i) {
+    result += _content[i]->get_defense();
+  }
+  return result;
+}

@@ -6,7 +6,10 @@
 
 class Equipped: public Inventory {
   public:
-    Equipped(): _size(ES_SIZE) { new Item*[ES_SIZE] {NULL}; }
+  	
+    Item** _content;
+    
+    Equipped(): _size(ES_SIZE) { _content = new Item*[ES_SIZE] {NULL}; }
 	virtual ~Equipped();
     int first_free_slot(int &result);
     int count_free_slots(int &result);	
@@ -21,9 +24,9 @@ class Equipped: public Inventory {
     int get_size(int &result);
     int get_stat_bonus(int* &result);
     int get_stat_bonus(int &result, int stat_index);
+    int get_defense();
     void render() {}
     
-    Item** _content;
   protected:
     int _size;
 };

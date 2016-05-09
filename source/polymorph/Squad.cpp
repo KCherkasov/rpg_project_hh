@@ -3,18 +3,37 @@
 Squad::Squad() {
   _members.clear();
   _pack_id = FREE_INDEX;
+  _alive_count = 0;
 }
 
-Squad::Squad(int pack_id) {
-	_members.clear();
+Squad::Squad(int pack_id, int squad_size) {
+	_members = new AliveGameObject*[squad_size] {NULL};
 	_pack_id = pack_id;
+	_max_size = squad_size;
+	_alive_count = 0;
 }
 
 Squad::~Squad() {
   for (size_t i = 0; i < _members.size(); ++i) {
   	delete _members[i];
   }
-  _members.clear();
+  delete[] _members;
+}
+int Squad::count_alive(int &result) {
+  result = 0;
+  count_alive();
+  result = _alive_count;
+  return 0;
+}
+
+int Squad::count_alive() {
+  _alive_count = 0;
+  for(size_t i = 0; i < _max_size; ++i) {
+    if (_members[i] != NULL) {
+      ++_alive_count;
+	}
+  }
+  return 0;
 }
 
 int Squad::get_member_address(AliveGameObject* &result, int to_find) {

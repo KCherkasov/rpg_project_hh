@@ -12,6 +12,19 @@ namespace prototypes {
   const int PAIR_ARR_SIZE = 2;
   const int STATS_COUNT = 8;
   
+  const int MERC_PRESETS_COUNT = 3;
+  
+  const int STAT_PRESETS_COUNT = 10;
+  const int MERC_NAMES_COUNT = 10;
+  const int EQUIPMENT_PRESETS_COUNT = 10;
+  
+  const int LOCATION_PRESETS_COUNT = 3;
+  const int PACK_INFO_COUNT = 3;
+  const int PACK_QUERY_IDS_COUNT =3;
+  const int TRADER_CHANCES_COUNT = 3;
+  
+  const int NPC_PRESETS_COUNT = 4;
+  
   const int CONSUMABLES_COUNT = 6;
   
   const int BACKPACK_SIZE = 36;
@@ -45,9 +58,9 @@ namespace prototypes {
   const int BASE_LEGENDARY_CHANCE = 3;
   
   const int BASE_NONDEF_PROB = 40;
-  const int BASE_TANK_PROB = 20;
+  const int BASE_GRUNT_PROB = 30;
   const int BASE_SUPPORT_PROB = 20;
-  const int BASE_DAMAGER_PROB = 20;
+  const int BASE_DAMAGER_PROB = 50;
 
   const int BASE_LEADER_PROB = 10;
   const int BASE_MASS_LEADER_PROB = 20;
@@ -165,6 +178,21 @@ namespace prototypes {
     int _initiative;
   };
 
+  struct TPartyMemberPrototype {
+    unsigned char* _name;
+    bool _gender;
+    int _salary;
+    int _health;
+    int _initiative;
+    int* _stats;
+    int* _equipment;
+  };
+  
+  struct TActionQueueData {
+    int _action_id;
+    int _sender_coords[PAIR_ARR_SIZE];
+    int _target_coords[PAIR_ARR_SIZE];
+  };
 }
 
 #endif

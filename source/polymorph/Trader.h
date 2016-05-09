@@ -11,9 +11,12 @@ class Trader: public NPC {
     Trader(): NPC() {}
     virtual ~Trader() {}
 
+    int get_charge() { return _charge; }
+    int what(std::string &out) { return 0; }
+    int speak(unsigned char* &out) { return 0; }
   protected:
     int _charge;
-    virtual int form_asortment(TNPCPrototype &prototype, int level) = 0;
+    virtual int form_assortment(TNPCPrototype &prototype, int level) = 0;
 };
 
 #endif

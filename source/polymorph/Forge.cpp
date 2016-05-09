@@ -107,6 +107,131 @@ int Forge::get_stat_bons(int query_id, int* &bons) {
   return response;
 }
 
+int Forge::get_stats(int query_id, int* &stats) {
+  delete[] stats;
+  stats = new int[CS_SIZE] {0};
+  srand(static_cast<unsigned int>(time(0)));
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, stat0, stat1, stat2, stat3, stat4, stat5, stat6, stat7 from 'merc_stats' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  int* tmp_stats = new int[CS_SIZE] {0};
+  for (size_t i = 0; i < CS_SIZE; ++i) {
+    tmp_stats[i] = sqlite3_column_int(statement, i + 1);
+    stats[i] = tmp_stats[i];
+  }
+  delete[] tmp_stats;
+  sqlite3_finalize(statement);
+  return response;
+}
+
+int Forge::get_equipment(int query_id, int* &slots) {
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, head, chest, hands, boots, legs, trinket1, trinket2, trinket3, trinket4, weapon1, weapon2 from 'merc_equipment' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  int* tmp_slots = new int[ES_SIZE] {0};
+  delete[] slots;
+  slots = new int[ES_SIZE] {0};
+  for (size_t i = 0; i < ES_SIZE; ++i) {
+    tmp_slots[i] = sqlite3_column_int(statement, i + 1);
+    slots[i] = tmp_slots[i];
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_slots;
+  return response;
+}
+
+int Forge::get_merc_first_name(int query_id, bool gender, unsigned char* &name) {
+  int response;
+  delete[] name;
+  name = new unsigned char[NAMESTRING_SIZE / 3];
+  const unsigned char* tmp_name;
+  sqlite3_stmt* statement;
+  if (gender) {
+    response = sqlite3_prepare(_database, "select id, first_name from 'merc_names_male' where id=?", -1, &statement, 0);
+  } else {
+    response = sqlite3_prepare(_database, "select id, first_name from 'merc_names_female' where id=?", -1, &statement, 0);
+  }
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  tmp_name = sqlite3_column_text(statement, 1);
+  for (size_t i = 0; i < (NAMESTRING_SIZE / 3) && tmp_name[i] != '\0'; ++i) {
+    name[i] = tmp_name[i];
+  }
+  delete[] tmp_name;
+  return response;
+}
+
+int Forge::get_merc_last_name(int query_id, bool gender, unsigned char* &name) {
+  int response;
+  delete[] name;
+  name = new unsigned char[NAMESTRING_SIZE / 3];
+  const unsigned char* tmp_name;
+  sqlite3_stmt* statement;
+  if (gender) {
+    response = sqlite3_prepare(_database, "select id, last_name from 'merc_surnames_male' where id=?", -1, &statement, 0);
+  } else {
+    response = sqlite3_prepare(_database, "select id, last_name from 'merc_surnames_female' where id=?", -1, &statement, 0);
+  }
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  tmp_name = sqlite3_column_text(statement, 1);
+  for (size_t i = 0; i < (NAMESTRING_SIZE / 3) && tmp_name[i] != '\0'; ++i) {
+    name[i] = tmp_name[i];
+  }
+  delete[] tmp_name;
+  return response;
+}
+
+int Forge::get_merc_nickname(int query_id, unsigned char* &nick) {
+  int response;
+  delete[] nick;
+  nick = new unsigned char[NAMESTRING_SIZE / 3];
+  const unsigned char* tmp_name;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, nickname from 'merc_nicknames' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  tmp_name = sqlite3_column_text(statement, 1);
+  for (size_t i = 0; i < (NAMESTRING_SIZE / 3) && tmp_name[i] != '\0'; ++i) {
+    nick[i] = tmp_name[i];
+  }
+  delete[] tmp_name;
+  return response;
+}
+
+int Forge::form_merc_name(unsigned char* &result, unsigned char* firstname, unsigned char* lastname, unsigned char* nick) {
+  int response;
+  delete[] result;
+  result = new unsigned char[NAMESTRING_SIZE];
+  unsigned char* tmp_result = new unsigned char[NAMESTRING_SIZE] {};
+  size_t i = 0;
+  for(size_t j = 0; j < (NAMESTRING_SIZE / 3) && firstname[j] != '\0'; ++j) {
+    tmp_result[i++] = firstname[j];
+  }
+  tmp_result[i++] = ' ';
+  tmp_result[i++] = '\"';
+  for(size_t j = 0; j < (NAMESTRING_SIZE / 3) && nick[j] != '\0'; ++j) {
+    tmp_result[i++] = nick[j];
+  }
+  tmp_result[i++] = '\"';
+  tmp_result[i++] = ' ';
+  for (size_t j = 0; j < (NAMESTRING_SIZE / 3) && lastname[j] != '\0'; ++j) {
+    tmp_result[i++] = lastname[j];
+    if (i >= NAMESTRING_SIZE) {
+      break;
+	}
+  }
+  for (size_t j = 0; j < NAMESTRING_SIZE; ++j) {
+    result[j] = tmp_result[j];
+  }
+  delete[] tmp_result;
+  return response;
+}
+
 int Forge::get_manufacturer_data(int query_id, int kind, unsigned char* &manufacturer_name, double* bonus) {
   sqlite3_stmt *statement;
   delete[] manufacturer_name;
@@ -159,6 +284,45 @@ int Forge::get_item_name(int query_id, int item_kind, unsigned char* &item_name)
   }
   if (response != SQLITE_OK) {
     printf("Error: %s\n", sqlite3_errmsg(_database));
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_name;
+  return response;
+}
+
+int Forge::get_monster_name(int query_id, unsigned char* &name) {
+  int response;
+  delete[] name;
+  name = new unsigned char[NAMESTRING_SIZE];
+  sqlite3_stmt* statement;
+  response  = sqlite3_prepare(_database, "select id, monster_name from 'monster_names' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  const unsigned char* tmp_name;
+  tmp_name = sqlite3_column_text(statement, 1);
+  for (size_t i = 0; i < NAMESTRING_SIZE && tmp_name[i] != '\0'; ++i) {
+  	name[i] = tmp_name[i];
+  }
+  if (response != SQLITE_OK) {
+  	printf("Error: %s\n", sqlite3_errmsg(_database));
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_name;
+  return response;
+}
+
+int Forge::get_faction_name(int query_id, unsigned char* &faction) {
+  int response;
+  const unsigned char* tmp_name;
+  delete[] faction;
+  faction = new unsigned char[NAMESTRING_SIZE];
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, faction_name from 'factions' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  tmp_name = sqlite3_column_text(statement, 1);
+  for(size_t i = 0; i < NAMESTRING_SIZE && tmp_name[i] != '\0'; ++i) {
+  	faction[i] = tmp_name[i];
   }
   sqlite3_finalize(statement);
   delete[] tmp_name;
@@ -374,7 +538,7 @@ int Forge::get_tile_prototype(int query_id, TTilePrototype* prototype) {
 int Forge::get_loot(int query_id, TLoot* loot) {
   int response;
   sqlite3_stmt* statement;
-  response = sqlite3_prepare(_database, "select id, max_quant, chance, id from 'Loots' where id=?", -1, &statement, 0);
+  response = sqlite3_prepare(_database, "select id, max_quant, chance, item_id from 'Loots' where id=?", -1, &statement, 0);
   sqlite3_bind_int(statement, 1, query_id);
   sqlite3_step(statement);
   TLoot tmp;
@@ -449,6 +613,156 @@ int Forge::get_monster_prototype(int query_id, TMonsterPrototype* prototype) {
   return response;
 }
 
+int Forge::get_party_member_prototype(int query_id, TPartyMemberPrototype* prototype) {
+  srand(static_cast<unsigned int>(time(0)));
+  int response;
+  TPartyMemberPrototype preset;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, salary, health, initiative from 'merc_data' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  preset._salary = sqlite3_column_int(statement, 1);
+  preset._health = sqlite3_column_int(statement, 2);
+  preset._initiative = sqlite3_column_int(statement, 3);
+  sqlite3_finalize(statement);
+  int* tmp_stats = NULL;
+  preset._stats = new int[CS_SIZE] {0};
+  get_stats(rand() % STAT_PRESETS_COUNT + 1, tmp_stats);
+  for (size_t i = 0; i < CS_SIZE; ++i) {
+    preset._stats[i] = tmp_stats[i];
+  }
+  delete[] tmp_stats;
+  int* tmp_equipment = NULL;
+  preset._equipment = new int[ES_SIZE] {0};
+  get_equipment(rand() % EQUIPMENT_PRESETS_COUNT + 1, tmp_equipment);
+  for(size_t i = 0; i < ES_SIZE; ++i) {
+    preset._equipment[i] = tmp_equipment[i];
+  }
+  delete[] tmp_equipment;
+  int rnd = rand() % PERCENT_MOD_CAP;
+  preset._gender = (rnd <= 70);
+  unsigned char* tmp_firstname = NULL;
+  get_merc_first_name(rand() % NAMES_COUNT + 1, preset._gender, tmp_firstname);
+  unsigned char* tmp_nickname = NULL;
+  get_merc_nickname(rand() % NAMES_COUNT + 1, tmp_nickname);
+  unsigned char* tmp_lastname = NULL;
+  get_merc_last_name(rand() % NAMES_COUNT + 1, preset._gender, tmp_lastname);
+  unsigned char* tmp_full_name = NULL;
+  form_merc_name(tmp_full_name, tmp_firstname, tmp_lastname, tmp_nickname);
+  delete[] tmp_firstname;
+  delete[] tmp_lastname;
+  delete[] tmp_nickname;
+  for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
+    preset._name[i] = tmp_full_name[i];
+  }
+  delete[] tmp_full_name;
+  prototype->_gender = preset._gender;
+  prototype->_health = preset._health;
+  prototype->_initiative = preset._initiative;
+  prototype->_salary = preset._salary;
+  for (size_t i = 0; i < CS_SIZE; ++i) {
+    prototype->_stats[i] = preset._stats[i];
+  }
+  for (size_t i = 0; i < ES_SIZE; ++i) {
+    prototype->_equipment[i] = preset._equipment[i];
+  }
+  for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
+    prototype->_name[i] = preset._name[i];
+  }
+  delete[] preset._equipment;
+  delete[] preset._stats;
+  delete[] preset._name;
+  return response;
+}
+
+int Forge::get_pack_ids(int query_id, int* &data) {
+  int response;
+  int* tmp_data = new int[MAX_MONSTER_SQUADS];
+  delete[] data;
+  data = new int[MAX_MONSTER_SQUADS];
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, query_id1, query_id2, query_id3, query_id4, query_id5 from 'pack_query_ids' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  for (size_t i = 0; i < MAX_MONSTER_SQUADS; ++i) {
+    tmp_data[i] = sqlite3_column_int(statement, i + 1);
+    data[i] = tmp_data[i];
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_data;
+  return response;
+}
+
+int Forge::get_pack_info(int query_id, int* &data) {
+  delete[] data;
+  data = new int[PAIR_ARR_SIZE];
+  int* tmp_data = new int[PAIR_ARR_SIZE];
+  int response;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, pack_id, pack_chance from 'pack_infos' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
+    tmp_data[i] = sqlite3_column_int(statement, i + 1);
+    data[i] = tmp_data[i];
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_data;
+  return response;
+}
+
+int Forge::get_trader_chances(int query_id, int* &data) {
+  int response;
+  delete[] data;
+  data = new int[TRADERS_COUNT];
+  int* tmp_data = new int[TRADERS_COUNT];
+  sqlite3_stmt* statement;
+  sqlite3_prepare(_database, "select id, weapons, armour, munitions, black_market from 'trader_chances' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  for (size_t i = 0; i < TRADERS_COUNT; ++i) {
+    tmp_data[i] = sqlite3_column_int(statement, i+1);
+    data[i] = tmp_data[i];
+  }
+  sqlite3_finalize(statement);
+  delete[] tmp_data;
+  return response;
+}
+
+int Forge::get_location_prototype(int query_id, TLocationPrototype* prototype) {
+  int response;
+  srand(static_cast<unsigned int>(time(0)));
+  TLocationPrototype tmp;
+  sqlite3_stmt* statement;
+  response = sqlite3_prepare(_database, "select id, fight_chance, pack_set_id, traders_set_id from 'Locations' where id=?", -1, &statement, 0);
+  sqlite3_bind_int(statement, 1, query_id);
+  sqlite3_step(statement);
+  tmp._fight_chance = sqlite3_column_int(statement, 1);
+  int pack_set_query = sqlite3_column_int(statement, 2);
+  int traders_set_query = sqlite3_column_int(statement, 3);
+  sqlite3_finalize(statement);
+  if (traders_set_query > FREE_INDEX && traders_set_query < TRADER_CHANCES_COUNT) {
+    response = get_trader_chances(traders_set_query, tmp._trader_chances);
+  } else {
+    response = get_trader_chances(rand() % TRADER_CHANCES_COUNT + 1, tmp._trader_chances);
+  }
+  int* pack_info_query_ids = NULL;
+  if (pack_set_query > FREE_INDEX && pack_set_query < PACK_QUERY_IIDS_COUNT) {
+    response = get_pack_ids(pack_set_query, pack_info_query_ids);
+  } else {
+    response = get_pack_ids(rand() % PACK_QUERY_IDS_COUNT + 1, pack_info_query_ids);
+  }
+  //to-do: read pack infos and delete extra data then write MakeLocation()
+  for (size_t i = 0; i < MAX_MONSTER_SQUADS; ++i) {
+    if () {
+      response = get_pack_info(pack_info_query_ids[i], tmp._packs[i]);
+	}
+  }
+  delete[] pack_info_query_ids;
+  *prototype = tmp;
+  return response;
+}
+
 int Forge::MakeEquipableItem(int query_id, int level, EquipableItem** spawned) {
   TEquipablePrototype prototype;
   int return_code = get_equipable_prototype(query_id, &prototype);
@@ -501,6 +815,7 @@ int Forge::MakeTile(int query_id, LocalMapObject** spawned) {
   *spawned = tile;
   delete[] prototype._name;
   delete[] prototype._description;
+  tile = NULL;
   return response;
 }
 
@@ -574,11 +889,89 @@ int Forge::MakeMask(int query_id, bool is_local, int** &spawned) {
 }
 
 int Forge::MakeMonster(int query_id, int level, AliveGameObject** spawned) {
+  srand(static_cast<unsigned int>(time(0)));
   int response;
-  sqlite3_stmt* statement;
-  response = sqlite3_prepare(_database, "", -1, &statement, 0);
-  sqlite3_bind_int(statement, 1, query_id);
-  sqlite3_step(statement);  
+  TMonsterPrototype prototype;
+  response = get_monster_prototype(query_id, &prototype);
+  unsigned char* tmp_monster_name = NULL;
+  unsigned char* tmp_monster_faction = NULL;
+  if (prototype._name_id == FREE_INDEX) {
+    response = get_monster_name(rand() % 10 + 1, tmp_monster_name);
+  } else {
+    response = get_monster_name(prototype._name_id, tmp_monster_name);
+  }
+  if (prototype._faction_id == FREE_INDEX) {
+    response = get_faction_name(rand() % 5 + 1, tmp_monster_faction);
+  } else {
+    response = get_faction_name(prototype._faction_id, tmp_monster_faction);
+  }
+  Monster* tmp_monster;
+  int rnd = rand() % PERCENT_MOD_CAP;
+  if (rnd <= BASE_SUPPORT_PROB) {
+    tmp_monster = new SupportMonster(prototype, tmp_monster_name, tmp_monster_faction, level);
+  } else {
+    if (rnd <= BASE_GRUNT_PROB) {
+      tmp_monster = new GruntMonster(prototype, tmp_monster_name, tmp_monster_faction, level)
+	} else {
+      if (rnd <= BASE_DAMAGER_PROB) {
+        tmp_monster = new DamagerMonster(prototype, tmp_monster_name, tmp_monster_faction, level);
+	  } else {
+        tmp_monster = new CommonMonster(prototype, tmp_monster_name, tmp_monster_faction, level);
+	  }
+	}
+  }
+  *spawned = tmp_monster;
+  tmp_monster = NULL;
+  delete[] tmp_monster_name;
+  delete[] tmp_monster_faction;
+  return response;
+}
+
+int Forge::MakeMonster(int query_id, int level, int quest_id, AliveGameObject** spawned) {
+  srand(static_cast<unsigned int>(time(0)));
+  int response;
+  unsigned char* tmp_monster_name = NULL;
+  unsigned char* tmp_monster_faction = NULL;
+  TMonsterPrototype prototype;
+  response = get_monster_prototype(query_id, &prototype);
+  if (prototype._name_id == FREE_INDEX) {
+    response = get_monster_name(rand() % 10 + 1, tmp_monster_name);
+  } else {
+    response = get_monster_name(prototype._name_id, tmp_monster_name);
+  }
+  if (prototype._faction_id == FREE_INDEX) {
+    response = get_faction_name(rand() % 5 + 1, tmp_monster_faction);
+  } else {
+    response = get_faction_name(prototype._faction_id, tmp_monster_faction);
+  }
+  Monster* tmp_monster;
+  tmp_monster = new QuestMonster(prototype, tmp_monster_name, tmp_monster_faction, level, quest_id);
+  *spawned = tmp_monster;
+  tmp_monster = NULL;
+  delete[] tmp_monster_name;
+  delete[] tmp_monster_faction;
+  return response;
+}
+
+int Forge::MakeMercenary(int query_id, int level, AliveGameObject** spawned) {
+  int response;
+  TPartyMemberPrototype prototype;
+  prototype._equipment = NULL;
+  prototype._stats = NULL;
+  prototype._name = NULL;
+  response = get_party_member_prototype(query_id, &prototype);
+  AliveGameObject* tmp_mercenary = new PartyMember(prototype, prototype._name, level);
+  delete[] prototype._equipment;
+  delete[] prototype._name;
+  delete[] prototype._stats;
+  for (size_t i = 0; i < ES_SIZE; ++i) {
+    Item* tmp_item = NULL;
+    response = MakeItem(prototype._equipment[i], level, &tmp_item);
+    tmp_mercenary->_equipped[i] = tmp_item;
+    tmp_item = NULL;
+  }
+  *spawned = tmp_mercenary;
+  tmp_mercenary = NULL;
   return response;
 }
 
@@ -614,4 +1007,13 @@ int Forge::MakeLootList(int query_id, TLootList* prototype) {
   return response;
 }
 
-
+int Forge::MakeLocation(int query_id, int level, Location** spawned) {
+  int response;
+  Location* tmp_location = NULL;
+  TLocationPrototype prototype;
+  response = get_location_prototype(query_id, &prototype);
+  tmp_location = new Location(prototype, level);
+  *spawned = tmp_location;
+  tmp_location = NULL;
+  return response;
+}

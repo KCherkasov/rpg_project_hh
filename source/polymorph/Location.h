@@ -1,4 +1,11 @@
+#ifndef LOCATION_H
+#define LOCATION_H
+
 #include "StaticGameObject.h"
+
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 class Location: StaticGameObject {
   public:
@@ -9,6 +16,9 @@ class Location: StaticGameObject {
     int get_fight_chance() { return _fight_chance; }
     int get_low_level_cap() { return _low_level_cap; }
     int get_high_level_cap() { return _high_level_cap; }
+    int get_pack_info(int* &result, int index);
+    int count_fact_level(int &result);
+    int what(std::string &out) { return 0; }
   protected:
     int _fight_chance;
     int** _packs;
@@ -16,3 +26,4 @@ class Location: StaticGameObject {
     int _high_level_cap;
 };
 
+#endif

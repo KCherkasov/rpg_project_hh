@@ -20,12 +20,15 @@ class Monster : public AliveGameObject {
     virtual int decision() = 0;
     int get_morale() { return _morale; }
     int get_in_pack_id() { return _in_pack_id; }
+    void set_in_pack_id(int value) { _in_pack_id = value; }
     int* get_damage();
+    int get_range() { return _distance; }
     int get_defense() { return _defense; }
     int get_loot_list() { return _loot_list; }
     bool get_is_leader() { return _is_leader; }
     bool get_is_mass_leader() { return _is_mass_leader; }
-    int generate_loot(Stash* stash); 
+    int generate_loot(Stash* &stash);
+	int what(std::string &out); 
   protected:
   	int* _damage;
   	int _distance;
@@ -43,7 +46,7 @@ class Monster : public AliveGameObject {
     int get_closest(int* &result_coords, int* &my_coords, int** &coords, int count_in_sight);
     int get_weakest(LocalMap* &map, int* &result_coords, int** &coords, int count_in_sight);
     virtual int evaluate(int to_x, int to_y, int &points) = 0;
-    int get_distance(int my_x, in  my_y, int to_x, int to_y, int &result);
+    int get_distance(int my_x, int  my_y, int to_x, int to_y, int &result);
 };
 
 #endif

@@ -26,3 +26,22 @@ Location::~Location() {
   }
   delete[] _packs;
 }
+
+int Location::get_pack_info(int* &result, int index) {
+  delete[] result;
+  if (index > FREE_INDEX && index < MAX_MONSTER_SQUADS) {
+    result = new int[PAIR_ARR_SIZE] {0};
+    for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
+      result[i] = _packs[index][i];
+	}
+  }
+  return 0;
+}
+
+int Location::count_fact_level(int &result) {
+  result = FREE_INDEX;
+  srand(static_cast<unsigned int>(time(0)));
+  int rnd = rand() % (_high_level_cap - _low_level_cap) + _low_level_cap + 1;
+  result = rnd;
+  return 0;
+}

@@ -23,6 +23,7 @@
 #include "SupportMonster.h"
 #include "CommonMonster.h"
 #include "QuestMonster.h"
+#include "PartyMember.h"
 
 #include <wchar.h>
 #include <cstdlib>
@@ -45,7 +46,10 @@ class Forge {
   	int MakeNPC(int query_id, int level, NPC** spawned);
   	int MakeMask(int query_id, bool is_local, int** &spawned);
   	int MakeMonster(int query_id, int level, AliveGameObject** spawned);
+  	int MakeMonster(int query_id, int level, int quest_id, AliveGameObject** spawned);
+  	int MakeMercenary(int query_id, int level, AliveGameObject** spawned);
   	int MakeLootList(int query_id, TLootList* prototype); 
+  	int MakeLocation(int query_id, int level, Location** spawned);
   private:
   	sqlite3* _database;
   	
@@ -53,8 +57,19 @@ class Forge {
   	int get_stat_reqs(int query_id, int* &reqs);
   	int get_stat_bons(int query_id, int* &bons);
   	
+  	int get_stats(int query_id, int* &stats);
+  	int get_equipment(int query_id, int* &slots);
+  	
+  	int get_merc_first_name(int query_id, bool gender, unsigned char* &name);
+  	int get_merc_last_name(int query_id, bool gender, unsigned char* &name);
+  	int get_merc_nickname(int query_id, unsigned char* &nick);
+  	int form_merc_name(unsigned char* &result, unsigned char* firstname, unsigned char* lastname, unsigned char* nick);
+  	
   	int get_manufacturer_data(int query_id, int kind, unsigned char* &manufacturer_name, double* bonus);
   	int get_item_name(int query_id, int item_kind, unsigned char* &item_name);
+  	
+  	int get_monster_name(int query_id, unsigned char* &name);
+  	int get_faction_name(int query_id, unsigned char* &faction);
   	
   	int get_equipable_prototype(int query_id, TEquipablePrototype* prototype);
   	//int get_collectable_prototype(int query_id, TCollectablePrototype* prototype); //in development
@@ -69,8 +84,11 @@ class Forge {
   	
   	int get_npc_prototype(int query_id, TNPCPrototype* prototype);
   	int get_monster_prototype(int query_id, TMonsterPrototype* prototype);
-  	
+    int get_party_member_prototype(int query_id, TPartyMemberPrototype* prototype);
+
+    int get_pack_ids(int query_id, int* &data);  	
   	int get_pack_info(int query_id, int* &data);
+  	int get_trader_chances(int query_id, int* &data);
   	int get_location_prototype(int query_id, TLocationPrototype* prototype);
   	
     int MakeEquipableItem(int query_id, int level, EquipableItem** spawned);

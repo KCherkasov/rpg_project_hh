@@ -33,6 +33,7 @@ int LocalMapObject::what(std::string &out) {
   str.append((char*)_name);
   str.append("\n--\n");
   if (_defense > 0) {
+  	str.append("defense: ");
     str.append(itoa(_defense, digit, 10));
     str.append("\n");
   }

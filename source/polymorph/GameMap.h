@@ -5,8 +5,8 @@
 
 class GameMap {
   public:
-    Map() {}
-    virtual ~Map() {}
+    GameMap() {}
+    virtual ~GameMap() {}
     virtual int get_textures(int** &texture_map) = 0;
     virtual int what(int x_coord, int y_coord, std::string &out) = 0;
   protected:

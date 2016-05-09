@@ -13,9 +13,6 @@ using namespace prototypes;
       RangedWeapon();
       RangedWeapon(TEquipablePrototype &prototype, unsigned char*name, unsigned char* manufacturer, int level);
       virtual ~RangedWeapon();
-      int get_distance();
-    protected:
-      int _distance;
   };
   
 #endif

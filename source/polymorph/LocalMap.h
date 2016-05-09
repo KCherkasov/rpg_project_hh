@@ -4,6 +4,14 @@
 #include "Forge.h"
 #include "GameMap.h"
 #include "LocalMapObject.h"
+#include "PartyMember.h"
+#include "GruntMonster.h"
+#include "DamagerMonster.h"
+#include "SupportMonster.h"
+#include "CommonMonster.h"
+#include "QuestMonster.h"
+#include "Attack.h"
+#include "Move.h"
 #include "prototypes.h"
 
 class LocalMap: public GameMap {

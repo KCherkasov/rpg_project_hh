@@ -39,7 +39,7 @@ int Monster::get_damage() {
   return result;
 }
 
-int Monster::generate_loot(Stash* stash) {
+int Monster::generate_loot(Stash* &stash) {
   int response;
   int range = 2 * LEVEL_RANGE;
   srand(static_cast<unsigned int>(time(0)));
@@ -202,6 +202,44 @@ int Monster::get_distance(int my_x, int my_y, int to_x, int to_y, int &result) {
     y_distance = to_y - my_y;
   }
   result = x_distance + y_distance;
+  return 0;
+}
+
+int Monster::what(std::string &out) {
+  char* digit = new char[NAMESTRING_SIZE / 2];
+  out.clear();
+  std::string str;
+  str.clear();
+  str.append((char*) _name);
+  str.append("\t");
+  str.append((char*) _role);
+  str.append("\t level: ");
+  str.append(itoa(_level, digit, 10));
+  str.append("\n--\n");
+  if(_is_leader) {
+    str.append("pack leader\n");
+  }
+  if (_is_mass_leader) {
+    str.append("group leader\n");
+  }
+  str.append("faction: ");
+  str.append((char*) _faction);
+  str.append("\n");
+  str.append("health: ");
+  str.append(itoa(_health[CURRENT_VALUE_INDEX], digit, 10));
+  str.append(" / ");
+  str.append(itoa(_health[MAXIMAL_VALUE_INDEX], digit, 10));
+  str.append("\n");
+  str.append("damage: ");
+  str.append(itoa(_damage[CURRENT_VALUE_INDEX], digit, 10));
+  str.append(" - ");
+  str.append(itoa(_defense[MAXIMAL_VALUE_INDEX], digit, 10));
+  str.append("\n");
+  str.append("defense: ");
+  str.append(itoa(_defense, digit, 10));
+  str.append("\n");
+  out += str;
+  delete[] digit;
   return 0;
 }
 
