@@ -74,6 +74,9 @@ namespace generic_consts {
   const int BASE_CRITICAL_HIT_CHANCE = 30;
   const int CRITICAL_DAMAGE_MODIFIER = 2;
   
+  const int ONE_SHOOT_MODIFIER = 20;
+  const int ONE_STEP_MODIFIER = 15;
+  
   const int PERCENT_CAP = 100;
   const int PERCENT_MOD_CAP = 100;
   

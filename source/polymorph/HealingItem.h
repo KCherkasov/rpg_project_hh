@@ -5,7 +5,8 @@
       HealingItem(TConsumablePrototype &prototype, int level);
       virtual ~HealingItem();
       int* get_hp_restore();
-      int use();
+      int use(AliveGameObject* user);
+      int what(std::string &out);
     protected:
       int* _hp_restore;
   };

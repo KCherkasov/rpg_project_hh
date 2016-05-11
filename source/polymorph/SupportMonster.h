@@ -7,9 +7,9 @@ class SupportMonster: public Monster {
   public:
   	SupportMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
   	virtual ~SupportMonster();
-    int decision();
+    int decision(Battlefield* &battlefield);
   protected:
-    int evaluate(int to_x, int to_y, int &points);
+    int evaluate(Battlefield* &battlefield, int &to_x, int &to_y, int &points);
 };
 
 #endif

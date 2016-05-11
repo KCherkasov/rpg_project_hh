@@ -116,4 +116,11 @@ int Storage::get_size(int &result) {
   return 0;
 }
 
-
+int Storage::render() {
+  for (size_t i = 0; i < _size; ++i) {
+    if (_content[i]->get_to_delete()) {
+      delete _content[i];
+	}
+  }
+  return 0;
+}

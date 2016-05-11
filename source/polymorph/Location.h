@@ -7,7 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 
-class Location: StaticGameObject {
+class Location: public StaticGameObject {
   public:
     Location();
     Location(TLocationPrototype &prototype, int level);
@@ -19,6 +19,7 @@ class Location: StaticGameObject {
     int get_pack_info(int* &result, int index);
     int count_fact_level(int &result);
     int what(std::string &out) { return 0; }
+    int if_fight();
   protected:
     int _fight_chance;
     int** _packs;

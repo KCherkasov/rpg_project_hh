@@ -120,6 +120,9 @@
 	str.append("-");
 	str.append(itoa(_damage[1], digit, 10));
 	str.append("\n");
+	str += dist;
+	str.append(itoa(_distance, digit,10));
+	str.append("\n");
     str += cost;
 	str.append(itoa(_cost, digit, 10));
 	str.append("\n");

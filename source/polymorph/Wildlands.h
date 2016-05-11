@@ -9,9 +9,7 @@ class Wildlands: public Location {
   	Wildlands() {}
   	virtual ~Wildlands() {}
   	
-  	int entrance() { return 0; };
-  	int generate_battlefield() { return 0; } 	
-  	int** _enemies;
+  	int entrance() { return if_fight(); };
 	CollectableItem** _loot;
 };
 

@@ -62,9 +62,11 @@ int Player::payday() {
     if (_squad->_members[i] != NULL) {
       if (_cash >= _squad->_members[i]->get_salary()) {
         _cash -= _squad->_members[i]->get_salary();
+        _squad->_members[i]->reset_unpaid_count();
 	  }
 	} else {
-      //unpaid disturbance code there (in development)
+      _squad->_members[i]->increase_unpaid_count();
+      //TO-DO: if _unpaid_count reaches critical value (look for this const at in_game_objects.h) merc should leave party.
 	}
   }
   return 0;

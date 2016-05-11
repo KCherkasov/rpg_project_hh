@@ -10,7 +10,8 @@
       Food(prototypes::TConsumablePrototype &prototype, int level);
       virtual ~Food() {}
       int get_nutricity();
-      int use() { return 0; }
+      int use(AliveGameObject* user);
+      int what(std::string &out);
     protected:
       int _nutricity;
   };

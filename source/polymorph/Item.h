@@ -15,10 +15,13 @@ using namespace prototypes;
       virtual ~Item();
       int get_cost();
       bool get_in_bag();
+      bool get_to_delete() { return _to_delete; }
+      void set_to_delete(bool value);
       virtual int use(AliveGameObject* user) { return 0; }
     protected:
       int _cost;
       bool _in_bag;
+      bool _to_delete;
   };
 
 #endif

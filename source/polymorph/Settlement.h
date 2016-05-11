@@ -13,7 +13,7 @@
 #include <ctime>
 #include <cstdlib>
 
-class Settlement: Location {
+class Settlement: public Location {
   public:
   	Settlement(TLocationPrototype prototype, int level);
   	virtual ~Settlement();

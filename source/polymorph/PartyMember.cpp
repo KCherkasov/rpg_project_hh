@@ -20,6 +20,8 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
     _stats[i] = prototype._stats[i];
   }
   _equipped = new Equipped();
+  _unpaid_count = 0;
+  _gender = prototype._gender;
 }
 
 PartyMember::~PartyMember() {
@@ -126,6 +128,26 @@ int PartyMember::what(std::string &out) {
   str.append(itoa(_money_earned));
   str.append("\n");
   out += str;
+  delete[] digit;
+  return 0;
+}
+
+int PartyMember::get_pic_name(std::string &out) {
+  out.clear();
+  std::string male_pic_prefix;
+  std::string female_pic_prefix;
+  std::string exec;
+  male_pic_prefix = "face_male_";
+  female_pic_prefix = "face_female_";
+  exec = ".png";
+  char* digit = new char[NAMESTRING_SIZE / 3];
+  if (_gender) {
+    out += male_pic_prefix;
+  } else {
+    out += female_pic_prefix;
+  }
+  out.append(itoa(_pic_id, digit, 10));
+  out += exec;
   delete[] digit;
   return 0;
 }

@@ -69,7 +69,7 @@ int Equipped::remove_item(int to_delete) {
   if (to_delete < 0 || to_delete >= _size) {
     return 0;
   }
-  delete _content[to_delete];
+  _content[to_delete]->set_to_delete(true);
   return 0;
 }
 
@@ -153,4 +153,13 @@ int Equipped::get_defense() {
     result += _content[i]->get_defense();
   }
   return result;
+}
+
+int Equipped::render() {
+  for (size_t i = 0; i < _size; ++i) {
+    if (_content[i]->get_to_delete()) {
+      delete _content[i];
+	}
+  }
+  return 0;
 }

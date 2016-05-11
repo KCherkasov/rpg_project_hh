@@ -92,6 +92,26 @@ namespace prototypes {
   const double MASS_LEADER_DEF_MODIFIER = 1.25;
   const double MASS_LEADER_EXP_MODIFIER = 1.25;
   const double MASS_LEADER_CASH_MODIFIER = 1.25;
+  
+  const double NONDEF_MOVE_COST = 1.0;
+  const double NONDEF_COVER_COST = 1.0;
+  const double NONDEF_FLEE_COST = 1.0;
+  const double NONDEF_ATTACK_COST = 1.0;
+  
+  const double GRUNT_MOVE_COST = 1.0;
+  const double GRUNT_COVER_COST = 1.10;
+  const double GRUNT_FLEE_COST = 0.25;
+  const double GRUNT_ATTACK_COST = 1.25;
+  
+  const double DAMAGER_MOVE_COST = 1.0;
+  const double DAMAGER_COVER_COST = 1.25;
+  const double DAMAGER_FLEE_COST = 0.75;
+  const double DAMAGER_ATTACK_COST = 1.75;
+  
+  const double SUPPORT_MOVE_COST = 1.0;
+  const double SUPPORT_COVER_COST = 1.5;
+  const double SUPPORT_FLEE_COST = 1.10;
+  const double SUPPORT_ATTACK_COST = 0.8; 
 
 //  const double MANUFACTURER_BONUS = 1.13;
 

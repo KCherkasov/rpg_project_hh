@@ -1,27 +1,27 @@
-#include "DamagerMonster.h"
+#include "CommonMonster.h"
 
-DamagerMonster::DamagerMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level): Monster(prototype, name, faction, level) {
-  const unsigned char* role = "Damager\0";
+CommonMonster::CommonMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level): Monster(prototype, name, faction, level) {
+  const unsigned char* role = "Common\0";
   for (size_t i = 0; i < NAMESTRING_SIZE && role[i] != '\0'; ++i) {
     _role[i] = role[i];
   }
   double tmp;
   for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
     tmp = _damage[i];
-    tmp *= DAMAGER_DMG_MODIFIER;
+    tmp *= NONDEF_DMG_MODIFIER;
     _damage[i] = round(tmp);
     tmp = _health[i];
-    tmp *= DAMAGER_HP_MODIFIER;
+    tmp *= NONDEF_HP_MODIFIER;
     _health[i] = round(tmp);
   }
   tmp = _defense;
-  tmp *= DAMAGER_DEF_MODIFIER;
+  tmp *= NONDEF_DEF_MODIFIER;
   _defense = round(tmp);
   delete[] role;
 }
 
-int DamagerMonster::decision(Battlefield* &battlefield) {
-    int my_coords = new int[PAIR_ARR_SIZE];
+int CommonMonster::decision(Battlefield* &battlefield) {
+  int my_coords = new int[PAIR_ARR_SIZE];
   where_am_i(battlefield->_map, my_coords[0], my_coords[1]);
   int to_x = FREE_INDEX;
   int to_y = FREE_INDEX;
@@ -62,11 +62,11 @@ int DamagerMonster::decision(Battlefield* &battlefield) {
   // currently in development - logic of monsters interaction with each other
   // evaluate(battlefield, closest_ally_coords[0], closest_ally_coords[1], closest_ally_points);
   // evaluate(battlefield, weakest_ally_coords[0], weakest_ally_coords[1], weakest_ally_points);
-      
-  closest_enemy_points *= DAMAGER_ATTACK_COST;
-  weakest_enemy_points *= DAMAGER_ATTACK_COST;
-  closest_cover_points *= DAMAGER_COVER_COST;
-  biggest_cover_points *= DAMAGER_COVER_COST;
+  
+  closest_enemy_points *= NONDEF_ATTACK_COST;
+  weakest_enemy_points *= NONDEF_ATTACK_COST;
+  closest_cover_points *= NONDEF_COVER_COST;
+  biggest_cover_points *= NONDEF_COVER_COST;
   
   delete[] closest_cover_coords;
   delete[] biggest_cover_coords;
@@ -90,7 +90,7 @@ int DamagerMonster::decision(Battlefield* &battlefield) {
   return 0;
 }
 
-int DamagerMonster::evaluate(Battlefield* &battlefield, int &to_x, int &to_y, int &points) {
+int CommonMonster::evaluate(Battlefield* &battlefield, int &to_x, int &to_y, int &points) {
   points = 0;
   if (battlefield != NULL) {
     if  (to_x > FREE_INDEX && to_x < LOCAL_MAP_HEIGHT && to_y > FREE_INDEX && to_y < LOCAL_MAP_WIDTH) {
@@ -146,7 +146,7 @@ int DamagerMonster::evaluate(Battlefield* &battlefield, int &to_x, int &to_y, in
               delete[] health;
 			}
 		  } else {
-            //some code for interaction with allies here (don't sure about this part for damagers)
+            //some code for interaction with allies here (don't sure if common monster should act like that anyways)
 		  }
 		}
 	  }

@@ -18,9 +18,11 @@ class GameObject {
       int get_level();
       unsigned char* get_name();
       virtual int what(std::string &out) = 0;
+      virtual int get_pic_name(std::string &out) = 0;
 
     protected:
       int _own_id;
+      int _pic_id;
       int _level;
       unsigned char* _name;
 };

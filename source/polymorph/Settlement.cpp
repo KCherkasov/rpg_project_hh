@@ -26,12 +26,7 @@ Settlement::~Settlement() {
 
 int Settlement::entrance() {
   generate_mercenaries();
-  srand(static_cast<unsigned int>(time(0)));
-  if (rand() % PERCENT_MOD_CAP < _fight_chance) {
-    return BATTLE_CODE;
-  } else {
-    return SILENT_CODE;
-  }
+  return if_fight();
 }
 
 int Settlement::generate_mercenaries() {

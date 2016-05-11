@@ -33,3 +33,16 @@
     return return_code;
   }
 
+int ConsumableItem::get_pic_name(std::string &out) {
+  out.clear();
+  std::string consumable_prefix;
+  std::string exec;
+  char* digit = new char[NAMESTRING_SIZE / 3];
+  consumable_prefix = "consumable_item_";
+  exec = ".png";
+  out += consumable_prefix;
+  out.append(itoa(_pic_id, digit, 10));
+  out += exec;
+  delete[] digit;
+  return 0;
+}

@@ -19,7 +19,9 @@ int NextLocationCommand::execute() {
 	delete _world->_current_location;
 	Forge* forge = new Forge("classic2.db");
 	int response = forge->MakeLocation(rand() % LOCATION_PRESETS_COUNT + 1,_world->_player->get_average_level(), &(_world->_current_location));
-	_world->_current_location->entrance();
+	if(_world->_current_location->entrance() == BATTLE_CODE) {
+      _world->_battlefield = new Battlefield(_world->_current_location, _world->_player);
+	}
 	delete forge;
   }
   return 0;

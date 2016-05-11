@@ -93,11 +93,11 @@ int Monster::where_am_i(LocalMap* &map, int &my_x, int &my_y) {
   return 0;
 }
 
-int Monster::look_around(LocalMap* &map, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords) {
+int Monster::look_around(Battlefield* &battlefield, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords) {
   enemies_count = 0;
   allies_count = 0;
   enemies_coords = new int*[PLAYER_SQUAD_SIZE] {NULL};
-  allies_coords = new int*[MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1];
+  allies_coords = new int*[MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1] {NULL};
   for (size_t i = 0; i < PLAYER_SQUAD_SIZE; ++ i) {
     enemies_coords[i] = new int[PAIR_ARR_SIZE] {FREE_INDEX, FREE_INDEX};
   }
@@ -114,38 +114,167 @@ int Monster::look_around(LocalMap* &map, int &enemies_count, int** &enemies_coor
   } else {
     distance_to_closest_cover = LOCAL_MAP_WIDTH;
   }
-  int biggest_cover_defense = map->_map[i][j]->get_defense();
+  int biggest_cover_defense = battlefield->_map->_map[i][j]->get_defense();
   int* my_coords = new int[PAIR_ARR_SIZE];
-  int response = where_am_i(my_coords[0], my_coords[1]);
+  int response = where_am_i(battlefield->_map, my_coords[0], my_coords[1]);
   for (size_t i = my_coords[0]; (i < LOCAL_MAP_HEIGHT) && (BASIC_SIGHT_DISTANCE >= i - my_coords[0]); ++i) {
     for (size_t j = my_coords[1]; (j < LOCAL_MAP_WIDTH) && (BASIC_SIGHT_DISTANCE >= (i + j - my_coords[0] - my_coords[1])); ++j) {
-      if (map->_map[i][j]->_on_tile == NULL) {
-        int current_defense = map->_map[i][j]->get_defense();
+      if (battlefield->_map->_map[i][j]->_on_tile == NULL) {
+        int current_defense = battlefield->_map->_map[i][j]->get_defense();
         if (current_defense > biggest_cover_defense) {
           biggest_cover_defense = current_defense;
           biggest_cover_coords[0] = i;
           biggest_cover_coords[1] = j;
 		}
 		int current_cover_distance = get_distance(my_coords[0], my_coords[1], i , j);
-		if (current_cover_distance < distance_to_closest_cover && current_defense < map->_map[i][j]->get_defense()) {
+		if (current_cover_distance < distance_to_closest_cover && current_defense < battlefield->_map->_map[i][j]->get_defense()) {
 		  distance_to_closest_cover = current_cover_distance;
 		  closest_cover_coords[0] = i;
 		  closest_cover_coords[1] = j;
 		}
 	  } else {
-        
+	  	int is_mercenary;
+		battlefield->_player->_squad->get_member_index(this, is_mercenary);
+        if (is_mercenary != FREE_INDEX) {
+          for (size_t k = 0; k < PLAYER_SQUAD_SIZE; ++k) {
+            if (enemies_coords[k][0] == FREE_INDEX && enemies_coords[k][1] == FREE_INDEX) {
+              enemies_coords[k][0] = i;
+              enemies_coords[k][1] = j;
+			  break;
+			}
+		  }
+		  ++enemies_count;
+		} else {
+          ++allies_count;
+          for (size_t k = 0; k < MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1; ++k) {
+            if (allies_coords[k][0] == FREE_INDEX && allies_coords[k][1] == FREE_INDEX) {
+              allies_coords[k][0] = i;
+              allies_coords[k][1] = j;
+              break;
+			}
+		  }
+		  ++allies_count;
+		}
 	  }
 	}
 	for (size_t j = my_coords[1] - 1; (j >= 0) && (BASIC_SIGHT_DISTANCE >= (i + my_coords[1] - j - my_coords[0])); --j) {
-      
+      if (battlefield->_map->_map[i][j]->_on_tile == NULL) {
+        int current_defense = battlefield->_map->_map[i][j]->get_defense();
+        if (current_defense > biggest_cover_defense) {
+          biggest_cover_defense = current_defense;
+          biggest_cover_coords[0] = i;
+          biggest_cover_coords[1] = j;
+		}
+		int current_cover_distance = get_distance(my_coords[0], my_coords[1], i , j);
+		if (current_cover_distance < distance_to_closest_cover && current_defense < battlefield->_map->_map[i][j]->get_defense()) {
+		  distance_to_closest_cover = current_cover_distance;
+		  closest_cover_coords[0] = i;
+		  closest_cover_coords[1] = j;
+		}
+	  } else {
+	  	int is_mercenary;
+		battlefield->_player->_squad->get_member_index(this, is_mercenary);
+        if (is_mercenary != FREE_INDEX) {
+          for (size_t k = 0; k < PLAYER_SQUAD_SIZE; ++k) {
+            if (enemies_coords[k][0] == FREE_INDEX && enemies_coords[k][1] == FREE_INDEX) {
+              enemies_coords[k][0] = i;
+              enemies_coords[k][1] = j;
+			  break;
+			}
+		  }
+		  ++enemies_count;
+		} else {
+          ++allies_count;
+          for (size_t k = 0; k < MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1; ++k) {
+            if (allies_coords[k][0] == FREE_INDEX && allies_coords[k][1] == FREE_INDEX) {
+              allies_coords[k][0] = i;
+              allies_coords[k][1] = j;
+              break;
+			}
+		  }
+		  ++allies_count;
+		}
+	  }
 	}
   }
   for (size_t i = my_coords[0] - 1; (i >= 0) && (BASIC_SIGHT_DISTANCE >= my_coords[0] - i); --i) {
     for (size_t j = my_coords[1]; (j < LOCAL_MAP_WIDTH) && (BASIC_SIGHT_DISTANCE >= (i + j - my_coords[0] - my_coords[1])); ++j) {
-      
+      if (battlefield->_map->_map[i][j]->_on_tile == NULL) {
+        int current_defense = battlefield->_map->_map[i][j]->get_defense();
+        if (current_defense > biggest_cover_defense) {
+          biggest_cover_defense = current_defense;
+          biggest_cover_coords[0] = i;
+          biggest_cover_coords[1] = j;
+		}
+		int current_cover_distance = get_distance(my_coords[0], my_coords[1], i , j);
+		if (current_cover_distance < distance_to_closest_cover && current_defense < battlefield->_map->_map[i][j]->get_defense()) {
+		  distance_to_closest_cover = current_cover_distance;
+		  closest_cover_coords[0] = i;
+		  closest_cover_coords[1] = j;
+		}
+	  } else {
+	  	int is_mercenary;
+		battlefield->_player->_squad->get_member_index(this, is_mercenary);
+        if (is_mercenary != FREE_INDEX) {
+          for (size_t k = 0; k < PLAYER_SQUAD_SIZE; ++k) {
+            if (enemies_coords[k][0] == FREE_INDEX && enemies_coords[k][1] == FREE_INDEX) {
+              enemies_coords[k][0] = i;
+              enemies_coords[k][1] = j;
+			  break;
+			}
+		  }
+		  ++enemies_count;
+		} else {
+          ++allies_count;
+          for (size_t k = 0; k < MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1; ++k) {
+            if (allies_coords[k][0] == FREE_INDEX && allies_coords[k][1] == FREE_INDEX) {
+              allies_coords[k][0] = i;
+              allies_coords[k][1] = j;
+              break;
+			}
+		  }
+		  ++allies_count;
+		}
+	  }
 	}
 	for (size_t j = my_coords[1] - 1; (j >= 0) && (BASIC_SIGHT_DISTANCE >= (i + my_coords[1] - j - my_coords[0])); --j) {
-      
+      if (battlefield->_map->_map[i][j]->_on_tile == NULL) {
+        int current_defense = battlefield->_map->_map[i][j]->get_defense();
+        if (current_defense > biggest_cover_defense) {
+          biggest_cover_defense = current_defense;
+          biggest_cover_coords[0] = i;
+          biggest_cover_coords[1] = j;
+		}
+		int current_cover_distance = get_distance(my_coords[0], my_coords[1], i , j);
+		if (current_cover_distance < distance_to_closest_cover && current_defense < battlefield->_map->_map[i][j]->get_defense()) {
+		  distance_to_closest_cover = current_cover_distance;
+		  closest_cover_coords[0] = i;
+		  closest_cover_coords[1] = j;
+		}
+	  } else {
+	  	int is_mercenary;
+		battlefield->_player->_squad->get_member_index(this, is_mercenary);
+        if (is_mercenary != FREE_INDEX) {
+          for (size_t k = 0; k < PLAYER_SQUAD_SIZE; ++k) {
+            if (enemies_coords[k][0] == FREE_INDEX && enemies_coords[k][1] == FREE_INDEX) {
+              enemies_coords[k][0] = i;
+              enemies_coords[k][1] = j;
+			  break;
+			}
+		  }
+		  ++enemies_count;
+		} else {
+          ++allies_count;
+          for (size_t k = 0; k < MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE - 1; ++k) {
+            if (allies_coords[k][0] == FREE_INDEX && allies_coords[k][1] == FREE_INDEX) {
+              allies_coords[k][0] = i;
+              allies_coords[k][1] = j;
+              break;
+			}
+		  }
+		  ++allies_count;
+		}
+	  }
 	}
   }
   delete[] my_coords;
@@ -242,4 +371,3 @@ int Monster::what(std::string &out) {
   delete[] digit;
   return 0;
 }
-

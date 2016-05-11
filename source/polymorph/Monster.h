@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Forge.h"
 #include "Stash.h"
+#include "Battlefield.h"
 #include "prototypes.h"
 
 #include <vector>
@@ -17,7 +18,7 @@ class Monster : public AliveGameObject {
   public:
     Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
 	virtual ~Monster();
-    virtual int decision() = 0;
+    virtual int decision(Battlefield* &battlefield) = 0;
     int get_morale() { return _morale; }
     int get_in_pack_id() { return _in_pack_id; }
     void set_in_pack_id(int value) { _in_pack_id = value; }
@@ -42,10 +43,10 @@ class Monster : public AliveGameObject {
     unsigned char* _role;
     
     int where_am_i(LocalMap* &map, int &my_x, int &my_y);
-    int look_around(LocalMap* &map, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords);
+    int look_around(Battlefield* &battlefield, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords);
     int get_closest(int* &result_coords, int* &my_coords, int** &coords, int count_in_sight);
     int get_weakest(LocalMap* &map, int* &result_coords, int** &coords, int count_in_sight);
-    virtual int evaluate(int to_x, int to_y, int &points) = 0;
+    virtual int evaluate(Battlefield* &battlefield, int &to_x, int &to_y, int &points) = 0;
     int get_distance(int my_x, int  my_y, int to_x, int to_y, int &result);
 };
 

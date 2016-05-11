@@ -19,8 +19,12 @@ class PartyMember: public AliveGameObject {
     int get_killed_count() { return _killed_count; }
     int change_killed_count();
     int get_skill_points() { return _skill_points; }
+    int get_unpaid_count() { return _unpaid_count; }
+    int increase_unpaid_count() { return ++_unpaid_count; }
+    int reset_unpaid_count() { _unpaid_count = 0; return 0; }
     int level_up();
     int what(std::string &out);
+    int get_pic_name(std::string &out);
 
     Inventory* _equipped;
   	
@@ -30,6 +34,8 @@ class PartyMember: public AliveGameObject {
     int _money_earned;
     int _salary;
     int _skill_points;
+    int _unpaid_count;
+    bool _gender;
 };
 
 #endif

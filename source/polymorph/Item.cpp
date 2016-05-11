@@ -16,3 +16,8 @@
   bool Item::get_in_bag() {
     return _in_bag;
   }
+  
+  void set_to_delete(bool value) {
+    _to_delete = value;
+  }
+  

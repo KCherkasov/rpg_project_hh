@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
-  GameObject::GameObject() : _own_id(0), _level(START_LEVEL), _name(NULL) {}
+  GameObject::GameObject() : _own_id(0), _pic_id(FREE_INDEX), _level(START_LEVEL), _name(NULL) {}
 
-  GameObject::GameObject(int inp_level): _own_id(0), _level(inp_level), _name(NULL) {}
+  GameObject::GameObject(int inp_level): _own_id(0), _pic_id(FREE_INDEX), _level(inp_level), _name(NULL) {}
   
   GameObject::~GameObject() {
     delete[] _name;

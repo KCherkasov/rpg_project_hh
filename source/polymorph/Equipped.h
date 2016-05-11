@@ -25,7 +25,7 @@ class Equipped: public Inventory {
     int get_stat_bonus(int* &result);
     int get_stat_bonus(int &result, int stat_index);
     int get_defense();
-    void render() {}
+    void render();
     
   protected:
     int _size;
