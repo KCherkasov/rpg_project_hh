@@ -13,7 +13,7 @@ Player::Player() {
   int response;
   for(size_t i = 0; i < initial_mercs_count; ++i) {
     AliveGameObject* tmp_mercenary = NULL;
-    response = MakeMercenary(rand() % MERCS_PROTOTYPES_COUNT + 1, START_LEVEL, &tmp_mercenary);
+    response = MakeMercenary(rand() % MERCS_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
     for (size_t i = 0; i < _squad->get_max_size(); ++i) {
       if (_squad->_members[i] == NULL) {
         _squad->_members[i] = tmp_mercenary;

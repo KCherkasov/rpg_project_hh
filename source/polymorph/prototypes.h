@@ -13,6 +13,10 @@ namespace prototypes {
   const int STATS_COUNT = 8;
   
   const int MERC_PRESETS_COUNT = 3;
+  const int MONSTER_PRESETS_COUNT = 10;
+  
+  const int LOOT_LISTS_COUNT = 11;
+  const int LOOTS_COUNT = 24;
   
   const int STAT_PRESETS_COUNT = 10;
   const int MERC_NAMES_COUNT = 10;
@@ -24,6 +28,9 @@ namespace prototypes {
   const int TRADER_CHANCES_COUNT = 3;
   
   const int NPC_PRESETS_COUNT = 4;
+  
+  const int MANUFACTURERS_COUNT = 10;
+  const int NAMES_COUNT = 10;
   
   const int CONSUMABLES_COUNT = 6;
   

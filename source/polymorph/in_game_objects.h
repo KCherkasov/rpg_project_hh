@@ -66,8 +66,6 @@ namespace generic_consts {
   const int DESCRSTRING_SIZE = 301;
   
   const double MANUFACTURER_BONUS = 1.15;
-  const int MANUFACTURERS_COUNT = 10;
-  const int NAMES_COUNT = 10;
   
   const int FACTIONS_COUNT = 5;
   
