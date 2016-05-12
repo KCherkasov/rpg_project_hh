@@ -12,6 +12,7 @@
       int get_nutricity();
       int use(AliveGameObject* user);
       int what(std::string &out);
+      int get_pic_name(std::string &out);
     protected:
       int _nutricity;
   };

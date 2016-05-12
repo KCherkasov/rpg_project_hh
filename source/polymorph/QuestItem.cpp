@@ -19,3 +19,17 @@
   int QuestItem::get_quest_id() {
     return _quest_id;
   }
+  
+  int QuestItem::get_pic_name(std::string &out) {
+    out.clear();
+    std::string prefix;
+    std::string exec;
+    char* digit = new char[NAMESTRING_SIZE / 2];
+    prefix = "quest_item_";
+    exec = " .png";
+    out += prefix;
+    out.append(itoa(_pic_id, digit, 10));
+    out += exec;
+    delete[] digit;
+	return 0;
+  }

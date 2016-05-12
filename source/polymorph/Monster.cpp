@@ -9,13 +9,7 @@ Monster::Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned cha
     _faction[i] = faction[i];
   }
   _damage[CURRENT_VALUE_INDEX] = prototype._damage;
-  {
-  	double tmp_dmg = _damage[CURRENT_VALUE_INDEX];
-  	tmp_dmg *= ITEM_DAMAGE_MINMAX_RATIO;
-  	_damage[MAXIMAL_VALUE_INDEX] = round(tmp_dmg);
-  }
   _health[MAXIMAL_VALUE_INDEX] = prototype._hp;
-  _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
   _defense = prototype._defense;
   _loot_list = prototype._loot_list_id;
   _initiative = prototype._initiative;
@@ -23,6 +17,15 @@ Monster::Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned cha
   _is_mass_leader = false;
   _morale = MAX_MORALE_VALUE;
   _in_pack_id = FREE_INDEX;
+  if (_level > START_LEVEL) {
+    // damage and defense up code here
+  }
+  _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
+  {
+  	double tmp_dmg = _damage[CURRENT_VALUE_INDEX];
+  	tmp_dmg *= ITEM_DAMAGE_MINMAX_RATIO;
+  	_damage[MAXIMAL_VALUE_INDEX] = round(tmp_dmg);
+  }
 }
 
 Monster::~Monster() {
@@ -69,6 +72,22 @@ int Monster::generate_loot(Stash* &stash) {
     tmp = list._exp;
     tmp *= EXP_RAISE;
     list._exp = round(tmp);
+  }
+  if (_is_leader) {
+    double tmp = list._cash;
+    tmp *= LEADER_CASH_MODIFIER;
+    list._cash = round(tmp);
+    tmp = list._exp;
+    tmp *= LEADER_EXP_MODIFIER;
+    list._exp = round(tmp);
+    if (_is_mass_leader) {
+      tmp = list._cash;
+      tmp *= MASS_LEADER_CASH_MODIFIER;
+      list._cash = round(tmp);
+      tmp = list._exp;
+      tmp *= MASS_LEADER_EXP_MODIFIER;
+      list._exp = round(tmp);
+	}
   }
   stash->add_cash(list._cash);
   stash->add_exp(list._exp);
@@ -362,12 +381,29 @@ int Monster::what(std::string &out) {
   str.append("damage: ");
   str.append(itoa(_damage[CURRENT_VALUE_INDEX], digit, 10));
   str.append(" - ");
-  str.append(itoa(_defense[MAXIMAL_VALUE_INDEX], digit, 10));
+  str.append(itoa(_damage[MAXIMAL_VALUE_INDEX], digit, 10));
+  str.append("\n");
+  str.append("distance: ");
+  str.append(itoa(_distance, digit, 10));
   str.append("\n");
   str.append("defense: ");
   str.append(itoa(_defense, digit, 10));
   str.append("\n");
   out += str;
+  delete[] digit;
+  return 0;
+}
+
+int Monster::get_pic_name(std::string &out) {
+  out.clear();
+  std::string prefix;
+  std::string exec;
+  prefix = "monster_face_";
+  exec = ".png";
+  char* digit = new char[NAMESTRING_SIZE];
+  out += prefix;
+  out.append(itoa(_pic_id, digit, 10));
+  out += exec;
   delete[] digit;
   return 0;
 }

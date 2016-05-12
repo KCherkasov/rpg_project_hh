@@ -52,11 +52,16 @@
   
   bool EquipableItem::meets_stat_reqs(AliveGameObject* &user){
     int* stats = NULL;
-    bool result = true;
+    int* bonus = NULL;
+	bool result = true;
     stats = user->get_stats();
+    user->_equipped->get_stat_bonus(bonus);
     for (size_t i = 0; i < CS_SIZE; ++i) {
+      stats[i] += bonus[i];
       result = result && (_stat_reqs[i] <= stats[i]);
 	}
+	delete[] stats;
+	delete[] bonus;
 	return result;
   }
   

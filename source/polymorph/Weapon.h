@@ -22,6 +22,7 @@ using namespace prototypes;
       bool get_one_handed();
       TEquipmentKind get_kind();
       int what(std::string &out);
+      int get_pic_name(std::string &out);
     protected:
     	int* _damage;
     	int _distance;

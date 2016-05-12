@@ -1,6 +1,7 @@
 #include "PartyMember.h"
 
 PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, int level): AliveGameObject() {
+  srand(static_cast<unsigned int>(time(0)));
   for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
     _name[i] = name[i];
   }
@@ -22,6 +23,23 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
   _equipped = new Equipped();
   _unpaid_count = 0;
   _gender = prototype._gender;
+  if (_level > START_LEVEL) {
+    for (size_t  i = 0; i < _level; ++i) {
+      for(size_t j = 0; j < CS_SIZE; ++j) {
+        _stats[i] += STAT_UP_PER_LEVEL;
+        _skill_points += POINTS_PER_LEVEL;
+	  }
+	  double tmp = _exp[MAXIMAL_VALUE_INDEX];
+	  tmp *= EXP_RAISE;
+	  _exp[CURRENT_VALUE_INDEX] = _exp[MAXIMAL_VALUE_INDEX];
+	  _exp[MAXIMAL_VALUE_INDEX] = round(tmp);
+	}
+	while(_skill_points > 0) {
+      int rnd_index = rand() % CS_SIZE;
+      ++_stats[rnd_index];
+      --_skill_points;
+	}
+  }
 }
 
 PartyMember::~PartyMember() {
@@ -76,6 +94,9 @@ int PartyMember::change_killed_count() {
 int PartyMember::level_up() {
   if (_exp[CURRENT_VALUE_INDEX] >= _exp[MAXIMAL_VALUE_INDEX]) {
   	++_level;
+  	double tmp = _exp[MAXIMAL_VALUE_INDEX];
+  	tmp *= EXP_RAISE;
+  	_exp[MAXIMAL_VALUE_INDEX] = round(tmp);
     _skill_point += POINTS_PER_LEVEL;
     for (size_t i = 0; i < CS_SIZE; ++i) {
       _stats[i] += STAT_UP_PER_LEVEL;

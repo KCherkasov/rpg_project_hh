@@ -30,6 +30,7 @@ class Monster : public AliveGameObject {
     bool get_is_mass_leader() { return _is_mass_leader; }
     int generate_loot(Stash* &stash);
 	int what(std::string &out); 
+	int get_pic_name(std::string &out);
   protected:
   	int* _damage;
   	int _distance;
