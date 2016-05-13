@@ -16,13 +16,13 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
   _exp[MAXIMAL_VALUE_INDEX] = FIRST_LEVELUP_CAP;
   _level = START_LEVEL;
   _health[MAXIMAL_VALUE_INDEX] = prototype._health;
-  _health[CURRENT_VALUE_INDEX] = _health[MAXIMMAL_VALUE_INDEX];
   for (size_t i = 0; i < CS_SIZE; ++i) {
     _stats[i] = prototype._stats[i];
   }
   _equipped = new Equipped();
   _unpaid_count = 0;
   _gender = prototype._gender;
+  _pic_id = rand() % MERC_FACES_COUNT;
   if (_level > START_LEVEL) {
     for (size_t  i = 0; i < _level; ++i) {
       for(size_t j = 0; j < CS_SIZE; ++j) {
@@ -33,6 +33,7 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
 	  tmp *= EXP_RAISE;
 	  _exp[CURRENT_VALUE_INDEX] = _exp[MAXIMAL_VALUE_INDEX];
 	  _exp[MAXIMAL_VALUE_INDEX] = round(tmp);
+	  _health[MAXIMAL_VALUE_INDEX] += HEALTH_RAISE_PER_LEVEL;
 	}
 	while(_skill_points > 0) {
       int rnd_index = rand() % CS_SIZE;
@@ -40,6 +41,7 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
       --_skill_points;
 	}
   }
+  _health[CURRENT_VALUE_INDEX] = _health[MAXIMMAL_VALUE_INDEX];
 }
 
 PartyMember::~PartyMember() {

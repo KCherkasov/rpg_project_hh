@@ -5,7 +5,8 @@
   }
 
   Weapon::Weapon(TEquipablePrototype &prototype, unsigned char* name, unsigned char* manufacturer, int level): EquipableItem() {
-    _damage = new int[PAIR_ARR_SIZE];
+    srand(static_cast<unsigned int>(time(0)));
+	_damage = new int[PAIR_ARR_SIZE];
     _damage[0] = prototype._damdef;
     _damage[1] = _damage[0] * ITEM_DAMAGE_MINMAX_RATIO;
     delete[] _name;
@@ -28,6 +29,7 @@
 	_kind = TEquipmentKind(prototype.kind);
 	_level = level;
 	_cost = prototype._cost;
+	_pic_id = rand() % ITEM_PIC_VARIANTS_COUNT;
 	//weapon rarity setting code here
 	if (_level > START_LEVEL) {
       //weapon stats increasement code here
@@ -160,7 +162,28 @@ int Weapon::get_pic_name(std::string &out) {
   std::string prefix;
   std::string exec;
   char* digit = new char[NAMESTRING_SIZE];
-  prefix = "weapon_";
+  switch (_kind) {
+    case EK_PISTOL: {
+      prefix = "pistol_";
+      break;
+    }
+    case EK_SMG: {
+      prefix = "smg_";
+      break;
+	}
+	case EK_ASSAULT_RIFLE: {
+      prefix = "assault_rifle_";
+      break;
+	}
+	case EK_SNIPER_RIFLE: {
+      prefix = "sniper_rifle_";
+      break;
+	}
+	case EK_MELEE: {
+      prefix = "melee_weapon_";
+      break;
+	}
+  }
   exec = ".png";
   out += prefix;
   out.append(itoa(_pic_id, digit, 10));

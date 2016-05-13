@@ -5,6 +5,10 @@
 #include "Forge.h"
 #include "prototypes.h"
 
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+
 class PartyMember: public AliveGameObject {
   public:
     PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, int level);

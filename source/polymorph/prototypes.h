@@ -22,6 +22,10 @@ namespace prototypes {
   const int MERC_NAMES_COUNT = 10;
   const int EQUIPMENT_PRESETS_COUNT = 10;
   
+  const int MERC_FACES_COUNT = 10;
+  const int MONSTER_FACES_COUNT = 10;
+  const int ITEM_PIC_VARIANTS_COUNT = 3;
+  
   const int LOCATION_PRESETS_COUNT = 3;
   const int PACK_INFO_COUNT = 3;
   const int PACK_QUERY_IDS_COUNT =3;
@@ -213,12 +217,6 @@ namespace prototypes {
     int _initiative;
     int* _stats;
     int* _equipment;
-  };
-  
-  struct TActionQueueData {
-    int _action_id;
-    int _sender_coords[PAIR_ARR_SIZE];
-    int _target_coords[PAIR_ARR_SIZE];
   };
 }
 

@@ -4,7 +4,8 @@
   }
   
   Armour::Armour(TEquipablePrototype &prototype, unsigned char*name, unsigned char* manufacturer, int level): EquipableItem() {
-    _defense = prototype._damdef;
+    srand(static_cast<unsigned int>(time(0)));
+	_defense = prototype._damdef;
     delete[] _name;
     delete[] _manufacturer_id;
     _name = new unsigned char[NAMESTRING_SIZE];
@@ -25,6 +26,7 @@
 	_kind = TEquipmentKind(prototype.kind);
 	_level = level;
 	_cost = prototype._cost;
+	_pic_id = rand() % ITEM_PIC_VARIANTS_COUNT;
 	//armour rarity setting code here
 	if (_level > START_LEVEL) {
       //armour stats increasement code here

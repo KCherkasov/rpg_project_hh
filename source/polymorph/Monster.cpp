@@ -1,6 +1,7 @@
 #include "Monster.h"
 
 Monster::Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level)::AliveGameObject() {
+  srand(static_cast<unsigned int>(time(0)));
   _damage = new int[PAIR_ARR_SIZE] {0};
   _faction = new unsigned char[NAMESTRING_SIZE] {};
   _role = new unsigned char[NAMESTRING_SIZE] {};
@@ -17,8 +18,17 @@ Monster::Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned cha
   _is_mass_leader = false;
   _morale = MAX_MORALE_VALUE;
   _in_pack_id = FREE_INDEX;
+  _pick_id =  rand() % MONSTER_FACES_COUNT;
   if (_level > START_LEVEL) {
-    // damage and defense up code here
+    for (size_t i = 0; i < _level; ++ i) {
+      double tmp = _defense;
+      tmp *= DAMDEF_LEVEL_MODIFIER;
+      _defense = round(tmp);
+      tmp = _damage[CURRENT_VALUE_INDEX];
+      tmp *= DAMDEF_LEVEL_MODIFIER;
+      _damage[CURRENT_VALUE_INDEX] = round(tmp);
+      _health[MAXIMAL_VALUE_INDEX] += HP_RAISE_PER_LEVEL;
+	}
   }
   _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
   {

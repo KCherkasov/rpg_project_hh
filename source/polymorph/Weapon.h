@@ -4,8 +4,10 @@
 #define WEAPON_H
 
 #include "EquipableItem.h"
+
 #include <string>
 #include <ctime>
+#include <cmath>
 #include <cstdlib>
 
 using namespace generic_consts;

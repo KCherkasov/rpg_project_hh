@@ -759,7 +759,20 @@ int Forge::get_location_prototype(int query_id, TLocationPrototype* prototype) {
 	}
   }
   delete[] pack_info_query_ids;
-  *prototype = tmp;
+  prototype->_fight_chance = tmp._fight_chance;
+  prototype->_packs = new int*[MAX_MONSTER_SQUADS];
+  for(size_t i = 0;i < MAX_MONSTER_SQUADS; ++i) {
+    prototype->_packs[i] = new int[PAIR_ARR_SIZE];
+	for (size_t j = 0; j < PAIR_ARR_SIZE; ++j) {
+      prototype->_packs[i][j] = tmp._packs[i][j];
+	}
+    delete[] tmp._packs[i];
+  }
+  delete[] tmp._packs;
+  for (size_t i = 0; i < TRADERS_COUNT; ++i) {
+    prototype->_trader_chances[i] = tmp._trader_chances[i];
+  }
+  delete[] tmp._trader_chances;
   return response;
 }
 
@@ -892,16 +905,20 @@ int Forge::MakeMonster(int query_id, int level, AliveGameObject** spawned) {
   srand(static_cast<unsigned int>(time(0)));
   int response;
   TMonsterPrototype prototype;
-  response = get_monster_prototype(query_id, &prototype);
+  if(query_id != FREE_INDEX) {
+    response = get_monster_prototype(query_id, &prototype);
+  } else {
+    response = get_monster_prototype(rand() % MONSTER_PRESETS_COUNT, &prototype);
+  }
   unsigned char* tmp_monster_name = NULL;
   unsigned char* tmp_monster_faction = NULL;
   if (prototype._name_id == FREE_INDEX) {
-    response = get_monster_name(rand() % 10 + 1, tmp_monster_name);
+    response = get_monster_name(rand() % NAMES_COUNT + 1, tmp_monster_name);
   } else {
     response = get_monster_name(prototype._name_id, tmp_monster_name);
   }
   if (prototype._faction_id == FREE_INDEX) {
-    response = get_faction_name(rand() % 5 + 1, tmp_monster_faction);
+    response = get_faction_name(rand() % FACTIONS_COUNT + 1, tmp_monster_faction);
   } else {
     response = get_faction_name(prototype._faction_id, tmp_monster_faction);
   }
@@ -933,14 +950,18 @@ int Forge::MakeMonster(int query_id, int level, int quest_id, AliveGameObject** 
   unsigned char* tmp_monster_name = NULL;
   unsigned char* tmp_monster_faction = NULL;
   TMonsterPrototype prototype;
-  response = get_monster_prototype(query_id, &prototype);
+  if(query_id != FREE_INDEX) {
+    response = get_monster_prototype(query_id, &prototype);
+  } else {
+    response = get_monster_prototype(rand() % MONSTER_PRESETS_COUNT, &prototype);
+  }
   if (prototype._name_id == FREE_INDEX) {
-    response = get_monster_name(rand() % 10 + 1, tmp_monster_name);
+    response = get_monster_name(rand() % NAMES_COUNT + 1, tmp_monster_name);
   } else {
     response = get_monster_name(prototype._name_id, tmp_monster_name);
   }
   if (prototype._faction_id == FREE_INDEX) {
-    response = get_faction_name(rand() % 5 + 1, tmp_monster_faction);
+    response = get_faction_name(rand() % FACTIONS_COUNT + 1, tmp_monster_faction);
   } else {
     response = get_faction_name(prototype._faction_id, tmp_monster_faction);
   }
@@ -965,10 +986,12 @@ int Forge::MakeMercenary(int query_id, int level, AliveGameObject** spawned) {
   delete[] prototype._name;
   delete[] prototype._stats;
   for (size_t i = 0; i < ES_SIZE; ++i) {
-    Item* tmp_item = NULL;
-    response = MakeItem(prototype._equipment[i], level, &tmp_item);
-    tmp_mercenary->_equipped[i] = tmp_item;
-    tmp_item = NULL;
+    if (prototype._equipment[i] != FREE_INDEX) {
+      Item* tmp_item = NULL;
+      response = MakeItem(prototype._equipment[i], level, &tmp_item);
+      tmp_mercenary->_equipped->_content[i] = tmp_item;
+      tmp_item = NULL;
+    }
   }
   *spawned = tmp_mercenary;
   tmp_mercenary = NULL;

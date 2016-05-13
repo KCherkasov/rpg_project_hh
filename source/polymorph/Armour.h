@@ -3,7 +3,9 @@
 #ifndef ARMOUR_H
 #define ARMOUR_H
 
-#include "EquipableItem.h" 
+#include "EquipableItem.h"
+
+#include <cmath> 
 #include <string>
 #include <ctime>
 #include <cstdlib>

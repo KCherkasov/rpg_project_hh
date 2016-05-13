@@ -4,7 +4,21 @@ int Boots::get_pic_name(std::string &out) {
   out.clear();
   std::string prefix;
   std::string exec;
-  prefix = "boots_";
+  switch (_kind) {
+    case EK_LIGHT: {
+      prefix = "light_";
+      break;
+	}
+	case EK_MEDIUM: {
+      prefix = "medium_";
+	  break;
+	}
+	case EK_HEAVY: {
+      prefix = "heavy_";
+      break;
+	}
+  }
+  prefix += "boots_";
   exec = ".png";
   char* digit = new char[NAMESTRING_SIZE / 2];
   out += prefix;

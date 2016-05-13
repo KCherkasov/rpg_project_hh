@@ -18,19 +18,38 @@ World::~World {
       delete _backend_query[i];
 	}
   }
-  /*for (size_t i = 0; i < _backend_query.size(); ++i) {
+  /* for (size_t i = 0; i < _backend_query.size(); ++i) {
     if (_input_query[i] != NULL) {
       delete _input_query[i];
 	}
-  }*/
-  /*for (size_t i = 0; i < _backend_query.size(); ++i) {
+  } */
+  /* for (size_t i = 0; i < _backend_query.size(); ++i) {
     if (_output_query[i] != NULL) {
       delete _input_query[i];
 	}
-  }*/
+  } */
 }
 
 int World::render() {
-  // add some 
+  // code for frontend user input query
+  /* for (size_t i = 0; i < _input_query.size(); ++i) {
+    if (_input_query[i] != NULL) {
+      _input_query[i]->execute();
+      delete _input_query[i];
+    }
+  } */
+  for (size_t i = 0; i < _backend_query.size(); ++i) {
+    if (_backend_query[i] != NULL) {
+      _backend_query[i]->execute();
+      delete _backend_query[i];
+	}
+  }
+  // code for frontend graphics output query 
+  /* for (size_t i = 0; i < _output_query.size(); ++i) {
+    if (_output_query[i] != NULL) {
+      _output_query[i]->execute();
+      delete _output_query[i];
+	}
+  } */
   return 0;
 }
