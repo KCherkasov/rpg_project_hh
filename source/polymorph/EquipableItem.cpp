@@ -60,6 +60,7 @@
       stats[i] += bonus[i];
       result = result && (_stat_reqs[i] <= stats[i]);
 	}
+	result = result && (_level <= user->get_level());
 	delete[] stats;
 	delete[] bonus;
 	return result;

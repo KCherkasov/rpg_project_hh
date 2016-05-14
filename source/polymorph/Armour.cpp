@@ -27,7 +27,6 @@
 	_level = level;
 	_cost = prototype._cost;
 	_pic_id = rand() % ITEM_PIC_VARIANTS_COUNT;
-	//armour rarity setting code here
 	if (_level > START_LEVEL) {
       //armour stats increasement code here
       for (size_t i = 0; i < _level; ++i) {
@@ -63,6 +62,43 @@
 		}
 	  }
 	}
+	//armour rarity setting code here
+	int rarity_dice = rand() % PERCENT_MOD_CAP;
+	double quality_modifier = 1.0;
+	if (rarity_dice <= BASE_LEGENDARY_CHANCE) {
+      _rarity = IR_LEGENDARY;
+	} else {
+      if (rarity_dice <= BASE_EPIC_CHANCE) {
+        _rarity = IR_EPIC;
+	  } else {
+        if (rarity_dice <= BASE_RARE_PROB) {
+          _rarity = IR_RARE;
+		} else {
+          if (rarity_dice <= BASE_GOOD_PROB) {
+            _rarity = IR_GOOD;
+		  } else {
+            if (rarity_dice <= BASE_COMMON_PROB) {
+              _rarity = IR_COMMON;
+			} else {
+              _rarity = IR_TRASH;
+			}
+		  }
+		}
+	  }
+	}
+	quality_modifier += (ITEM_RARITY_MODIFIER * (_rarity - 1));
+	double tmp_value;
+	for (size_t i = 0; i < CS_SIZE; ++i) {
+      tmp_value = _stat_bons[i];
+      tmp_value *= quality_modifier;
+      _stat_bons[i] = round(tmp_value);
+	}
+	tmp_value = _defense;
+	tmp_value *= quality_modifier;
+	_defense = round(tmp_value);
+	tmp_value = _cost;
+	tmp_value *= quality_modifier;
+	_cost = round(tmp_value);
   }
   
   Armour::~Armour() {}
