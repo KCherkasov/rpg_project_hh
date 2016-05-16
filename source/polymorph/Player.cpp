@@ -2,6 +2,39 @@
 
 Player::Player() {
   Forge* forge = new Forge("classic2.db");
+  _company_name = NULL;
+  _bag = new Storage(BACKPACK_SIZE);
+  _storage = new Storage(STORAGE_SIZE);
+  _bank = new Storage(BANK_SIZE);
+  _squad = new Squad(PLAYER_SQUAD_ID, PLAYER_SQUAD_SIZE);
+  srand(static_cast<unsigned int>(time(0)));
+  _cash = START_CASH;
+  _total_earned = 0;
+  int initial_mercs_count = rand() % 2 + 1;
+  int response;
+  for(size_t i = 0; i < initial_mercs_count; ++i) {
+    AliveGameObject* tmp_mercenary = NULL;
+    response = MakeMercenary(rand() % MERCS_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
+    for (size_t i = 0; i < _squad->get_max_size(); ++i) {
+      if (_squad->_members[i] == NULL) {
+        _squad->_members[i] = tmp_mercenary;
+	  }
+	}
+	_squad->count_alive();
+    tmp_mercenary = NULL;
+  }
+  delete forge;
+}
+
+Player::Player(char* name) {
+  Forge* forge = new Forge("classic2.db");
+  _company_name = new char[NAMESTRING_SIZE];
+  if (name != NULL) {
+    for (size_t i = 0; i < NAMESTRING_SIZE && name[i] != '\0'; ++i) {
+      _company_name[i] = name[i];
+	}
+  }
+  delete[] name;
   _bag = new Storage(BACKPACK_SIZE);
   _storage = new Storage(STORAGE_SIZE);
   _bank = new Storage(BANK_SIZE);

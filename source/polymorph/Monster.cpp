@@ -59,7 +59,11 @@ int Monster::generate_loot(Stash* &stash) {
   Forge* forge = new Forge("classic2.db");
   TLootList list;
   list._loot = NULL;
-  response = forge->MakeLootList(_loot_list, &list);
+  if (_loot_list != FREE_INDEX) {
+  	response = forge->MakeLootList(_loot_list, &list);
+  } else {
+    response = forge->MakeLootList(rand() % LOOT_LISTS_COUNT + 1, &list);	
+  }
   for (size_t i = 0; i < LOOT_LIST_SIZE; ++i) {
     if (list._loot[i]._id != FREE_INDEX) {
       for (size_t i = 0; i < list._loot[i]._max_quant; ++i) {

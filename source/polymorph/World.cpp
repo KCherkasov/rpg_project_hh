@@ -1,7 +1,7 @@
 #include "World.h"
 
-World::World() {
-  _player = new Player();
+World::World(char* name) {
+  _player = new Player(name);
   _battlefield = NULL;
   _location = NULL;
   _backend_query.clear();

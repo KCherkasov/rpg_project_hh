@@ -21,6 +21,7 @@
 class Player {
   public:
     Player();
+    Player(char* name);
     virtual ~Player();
     
     int hire(AliveGameObject* new_party_member);
@@ -41,6 +42,7 @@ class Player {
   protected:
     int _cash;
     int _total_earned;
+    char* _company_name;
 };
 
 #endif

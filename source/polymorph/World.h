@@ -4,9 +4,18 @@
 #include "Battlefield.h"
 #include "Location.h"
 #include "prototypes.h"
+
 #include "BackendCommand.h"
 #include "LocalMapCommand.h"
+#include "NextLocationCommand.h"
+#include "BuySellCommand.h"
 #include "FightEndTurnCommand.h"
+
+#include "DemoNextLocationCommand.h"
+
+// #include "FrontendCommand.h"
+// list of other frontend commands here
+
 #include "Player.h"
 #include "Forge.h"
 
@@ -14,7 +23,7 @@
 
 class World {
   public:
-    World();
+    World(char* name);
     virtual ~World();
     int render();
     
