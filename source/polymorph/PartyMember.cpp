@@ -68,6 +68,50 @@ int* PartyMember::get_stats() {
   return result;
 }
 
+int PartyMember::count_damage() {
+  srand(static_cast<unsigned int>(time(0)));
+  if (_equipped->_content[ES_WEAPON1] != NULL) {
+    int* main_hand_damage = _equipped->_content[ES_WEAPON1]->get_damage();
+    int damage = rand() % (main_hand_damage[1] - main_hand_damage[0]) + main_hand_damage[0];
+    delete[] main_hand_damage;
+    if (_equipped->_content[ES_WEAPON2] != NULL) {
+      if (_equipped->_content[ES_WEAPON2]->get_distance() >= _equipped->_content[ES_WEAPON1]->get_distance()) {
+        int* offhand_damage = _equipped->_content[ES_WEAPON2]->get_damage();
+        int bonus_damage = rand() % (offhand_damage[1] - offhand_damage[0]) + offhand_damage[0];
+        delete[] offhand_damage;
+        damage += bonus_damage;
+	  }
+	}
+	return damage;
+  } else {
+    return 0;
+  }
+}
+
+int PartyMember::get_range() {
+  if (_equipped->_content[ES_WEAPON1] != NULL) {
+    return _equipped->_content[ES_WEAPON1]->get_distance();
+  } else {
+    return 0;
+  }
+}
+
+bool PartyMember::make_hit_roll(int distance) {
+  srand(static_cast<unsigned int>(time(0)));
+  bool if_hit = false;
+  int hit_roll = rand() % PERCENT_MOD_CAP;
+  int accuracy = _stats[CS_ACCURACY];
+  int hit_chance = PERCENT_MOD_CAP + accuracy / 5 - distance;
+  if (hit_chance > PERCENT_MOD_CAP) {
+    hit_chance = PERCENT_MOD_CAP;
+  }
+  if (hit_chance < 0) {
+    hit_chance = 1;
+  }
+  if_hit = hit_roll <= hit_chance;
+  return if_hit;
+}
+
 int PartyMember::change_stat(int index, int value) {
   if (_skill_points > 0) {
     if (index > FREE_INDEX && index < CS_SIZE) {

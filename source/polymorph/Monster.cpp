@@ -44,6 +44,63 @@ Monster::~Monster() {
   delete[] _role;
 }
 
+int Monster::try_make_leader() {
+  srand(static_cast<unsigned int>(time(0)));
+  int dice_roll = rand() % PERCENT_MOD_CAP;
+  if (dice_roll <= BASE_LEADER_PROB) {
+    for (size_t i = 0 ; i < PAIR_ARR_SIZE; ++i) {
+      double tmp = _damage[i];
+      tmp *= LEADER_DMG_MODIFIER;
+      _damage[i] = round(tmp);
+	}
+	double tmp = _health[MAXIMAL_VALUE_INDEX];
+	tmp *= LEADER_HP_MODIFIER;
+	_health[MAXIMAL_VALUE_INDEX] = round(tmp);
+	_health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
+	tmp = _defense;
+	tmp *= LEADER_DEF_MODIFIER;
+	_defense =round(tmp);
+	_is_leader = true;
+  }
+  return 0;
+}
+
+int Monster::try_make_mass_leader() {
+  srand(static_cast<unsigned int>(time(0)));
+  int dice_roll = rand() % PERCENT_MOD_CAP;
+  if (dice_roll <= BASE_MASS_LEADER_PROB && is_leader) {
+    for (size_t i = 0 ; i < PAIR_ARR_SIZE; ++i) {
+      double tmp = _damage[i];
+      tmp *= MASS_LEADER_DMG_MODIFIER;
+      _damage[i] = round(tmp);
+	}
+	double tmp = _health[MAXIMAL_VALUE_INDEX];
+	tmp *= MASS_LEADER_HP_MODIFIER;
+	_health[MAXIMAL_VALUE_INDEX] = round(tmp);
+	_health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
+	tmp = _defense;
+	tmp *= MASS_LEADER_DEF_MODIFIER;
+	_defense =round(tmp);
+	_is_mass_leader = true;
+  }
+  return 0;
+}
+
+int Monster::count_damage() {
+  srand(static_cast<unsigned int>(time(0)));
+  int damage = rand() % (_damage[1] - _damage[0]) + _damage[0];
+  return damage;
+}
+
+bool Monster::make_hit_roll(int distance) {
+	srand(static_cast<unsigned int>(time(0)));
+	bool if_hit = false;
+	int hit_roll = rand() % PERCENT_MOD_CAP;
+    int hit_chance = PERCENT_MOD_CAP / 2 - distance + rand() % (PERCENT_MOD_CAP / 5);
+    if_hit = hit_roll <= hit_chance;
+	return if_hit;  
+}
+
 int Monster::get_damage() {
   int* result = new int[PAIR_ARR_SIZE];
   for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {

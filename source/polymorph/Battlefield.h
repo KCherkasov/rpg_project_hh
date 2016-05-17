@@ -34,7 +34,11 @@ class Battlefield {
     
   protected:
   	int spawn_new_pack(int monster_id, bool target_there, int level, int squad_id);
-  	int place_units_on_map();
+  	int pack_set_leader(int pack_id);
+  	int set_mass_leader();
+  	int pack_has_leader(int pack_id, int &result_index);
+  	int mass_leader_is_spawned(bool &result);
+	int place_units_on_map();
   	int clear_dead();
   	int sort_turn_queue();
   	

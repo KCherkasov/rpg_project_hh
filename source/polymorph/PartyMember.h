@@ -16,6 +16,10 @@ class PartyMember: public AliveGameObject {
     int get_stat(int index, int &result);
     int change_stat(int index, int value);
     int* get_stats();
+    int get_defense() { return _equipped->get_defense(); }
+    int count_damage();
+    int get_range();
+    bool make_hit_roll(int distance);
     int get_salary() { return _salary; }
     int change_exp(int value);
     int get_money_earned() { return _money_earned; }

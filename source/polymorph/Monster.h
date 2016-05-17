@@ -19,12 +19,16 @@ class Monster : public AliveGameObject {
     Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
 	virtual ~Monster();
     virtual int decision(Battlefield* &battlefield) = 0;
+    int try_make_leader();
+    int try_make_mass_leader();
     int get_morale() { return _morale; }
     int get_in_pack_id() { return _in_pack_id; }
     void set_in_pack_id(int value) { _in_pack_id = value; }
     int* get_damage();
     int get_range() { return _distance; }
     int get_defense() { return _defense; }
+    int count_damage();
+    bool make_hit_roll(int distance);
     int get_loot_list() { return _loot_list; }
     bool get_is_leader() { return _is_leader; }
     bool get_is_mass_leader() { return _is_mass_leader; }

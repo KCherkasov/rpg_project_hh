@@ -76,6 +76,74 @@ int Battlefield::spawn_new_pack(int monster_id, bool target_there, int level, in
   return response;
 }
 
+int Battlefield::pack_set_leader(int pack_id) {
+  if (pack_id > FREE_INDEX && pack_id < MAX_MONSTER_SQUADS) {
+    if (_squads[pack_id] != NULL) {
+      for (size_t i = 0; i < MONSTER_SQUAD_SIZE; ++i) {
+        if (_squads[pack_id]->_members[i] != NULL && !_squads[pack_id]->_members[i]->get_is_leader()) {
+          _squads[pack_id]->_members[i]->try_make_leader();
+		}
+	  }
+	}
+  }
+  return 0;
+}
+
+int Battlefield::set_mass_leader() {
+  for (size_t i = 0; i < MAX_MONSTER_SQUADS; ++i) {
+  	bool already_spawned;
+  	mass_leader_is_spawned(already_spawned);
+  	if (already_spawned) {
+      break;
+    }
+    if (_squads[i] != NULL) {
+      int leader_index;
+      pack_has_leader(i, leader_index);
+      if (leader_index > FREE_INDEX) {
+        _squads[i]->_members[leader_index]->try_make_mass_leader();
+	  }
+	}
+  }
+  return 0;
+}
+
+int Battlefield::pack_has_leader(int pack_id, int &result_index) {
+  result_index = FREE_INDEX;
+  if (pack_id > FREE_INDEX && pack_id < MAX_MONSTER_SQUADS) {
+    if (_squads[pack_id] != NULL) {
+      for (size_t i = 0; i < MONSTER_SQUAD_SIZE; ++i) {
+        if (_squads[pack_id]->_members[i] != NULL) {
+          if (_squads[pack_id]->_members[i]->get_is_leader()) {
+            result_index = i;
+            break;
+		  }
+		}
+	  }
+	}
+  }
+  return 0;
+}
+
+int Battlefield::mass_leader_is_spawned(bool &result) {
+  result = false;
+  for (size_t i = 0; i < MAX_MONSTER_SQUADS; ++i) {
+    if (_squads[i] != NULL) {
+      for (size_t j = 0; j < MONSTER_SQUAD_SIZE; ++j) {
+        if (_squads[i]->_members[j] != NULL) {
+          result = _squads[i]->_members[j]->get_is_mass_leader();
+		}
+		if (result) {
+          break;
+		}
+	  }
+	  if (result) {
+        break;
+	  }
+	}
+  }
+  return 0;
+}
+
 int Battlefield::place_units_on_map() {
   for (size_t i = 0; i < PLAYER_SQUAD_SIZE; ++i) {
     if (_player->_squad->_members[i] != NULL) {
