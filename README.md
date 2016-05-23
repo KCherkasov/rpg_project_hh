@@ -1,5 +1,5 @@
-# rpg_project_hh
-current name: Merc Days; genre: RPG/TBS
+# Merc Days project 
+genre: RPG/TBS
 --
 Player takes a role of a mercenary company's coordinator. 
 Player should pick mercenaries for his squad, provide them with equipment and coordinate their actions during missions. 
