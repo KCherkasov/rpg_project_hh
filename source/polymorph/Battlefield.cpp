@@ -150,8 +150,10 @@ int Battlefield::place_units_on_map() {
       while (true) {
         int x_coord = rand() % LOCAL_MAP_HEIGHT;
         int y_coord = rand() % (LOCAL_MAP_WIDTH / 8);
-        if (_map->_map[x_coord][y_coord]->_on_tile == NULL) {
+        if (_map->_map[x_coord][y_coord]->_on_tile == NULL && _map->_map[x_coord][y_coord]->get_is_passable()) {
           _map->_map[x_coord][y_coord]->_on_tile = _player->_squad->_members[i];
+          _player->_squad->_members[i]->set_coord(x_coord, 0);
+          _player->_squad->_members[i]->set_coord(y_coord, 1);
           break;
 		}
 	  }
@@ -164,8 +166,11 @@ int Battlefield::place_units_on_map() {
           while (true) {
             int x_coord = rand() % LOCAL_MAP_HEIGHT;
             int y_coord = LOCAL_MAP_WIDTH / 8 * 7 + rand() % (LOCAL_MAP_WIDTH / 8);
-            if (_map->_map[x_coord][y_coord]->_on_tile == NULL) {
+            if (_map->_map[x_coord][y_coord]->_on_tile == NULL && _map->_map[x_coord][y_coord]->get_is_passable()) {
               _map->_map[x_coord][y_coord]->_on_tile = _squads[i]->_members[j];
+              _squads[i]->_members[j]->set_coord(x_coord, 0);
+              _squads[i]->_members[j]->set_coord(y_coord, 1);
+              break;
 			}
 		  }
 		}
