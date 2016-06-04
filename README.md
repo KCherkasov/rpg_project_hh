@@ -11,10 +11,10 @@ Main activity the squad would be after are contracts given by some people in set
 
 Technical part 
 --
--procedurally generated world: items, monsters, mercenaries, quests, locations.
+-procedurally generated world: items, monsters, mercenaries, quests, locations.\n
 -graphics on Irrlicht engine.
 
 Current state:
 --
--realized backend part (in-game logic, content generation, monsters AI)
+-realized backend part (in-game logic, content generation, monsters AI)\n
 -realized backend commands (reactions on user input)
