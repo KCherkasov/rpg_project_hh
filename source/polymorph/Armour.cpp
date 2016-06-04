@@ -129,9 +129,15 @@
     bon = "bonuses: ";
 	std::string str;
 	char* digit = new char[NAMESTRING_SIZE / 2];
-    str.append((char*)_name); 
+	str.append(NAME_TAG);
+    str.append((char*)_name);
+    str.append("\n");
+	str.append((char*)_manufacturer_id); 
+    str.append(NAME_TAG);
     str.append("\t");
+    str.append(KIND_TAG);
 	str += kind_names[_kind];
+	str.append(KIND_TAG);
 	str.append("\n--\n");
     for (size_t i = 0; i < ES_SIZE; ++i) {
       if (_slots[i] > 0) {
@@ -140,16 +146,22 @@
       	break;
 	  }
 	}
-    str.append((char*)_manufacturer_id);
+	str.append(LEVEL_TAG);
     str += lvl;
 	str.append(itoa(_level, digit, 10));
+	str.append(LEVEL_TAG);
 	str.append("\n");
+	str.append(DAMDEF_TAG);
     str += def;
 	str.append(itoa(_defense, digit, 10));
+	str.append(DAMDEF_TAG);
 	str.append("\n");
+	str.append(COST_TAG);
     str += cost;
 	str.append(itoa(_cost, digit, 10));
+	str.append(COST_TAG);
 	str.append("\n");
+	str.append(REQS_TAG);
     str += req; 
 	str.append("\n");
     for (size_t i = 0; i < CS_SIZE; ++i) {
@@ -159,6 +171,8 @@
         str.append("\n");
 	  }
 	}
+	str.append(REQS_TAG);
+	str.append(BONS_TAG);
 	str += bon;
 	str.append("\n");
     for (size_t i = 0; i < CS_SIZE; ++i) {
@@ -168,10 +182,13 @@
         str.append("\n");
 	  }
 	}
+	str.append(BONS_TAG);
 	str.append("\n");
+	str.append(DESCR_TEXT_TAG);
 	str.append("''");
 	str.append((char*) _description);
 	str.append("''");
+	str.append(DESCR_TEXT_TAG);
 	str.append("\n\n");
 	delete[] digit;
 	out.clear();

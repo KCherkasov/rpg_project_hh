@@ -79,6 +79,19 @@ namespace generic_consts {
   const int PERCENT_MOD_CAP = 100;
   
   const int SPAWN_CHANCE_DECREMENT = 10;
+  
+  const char* NAME_TAG = "$N";
+  const char* STATS_TAG = "$S";
+  const char* REQS_TAG = "$R";
+  const char* BONS_TAG = "$B";
+  const char* DAMDEF_TAG = "$D";
+  const char* LEVEL_TAG = "$L";
+  const char* COST_TAG = "$C";
+  const char* DESCR_TEXT_TAG = "$T";
+  const char* QUALITY_TAG = "$Q";
+  const char* HEALTH_TAG = "$H";
+  const char* OTHER_TAG = "$O";
+  const char* KIND_TAG = "$K";
 
   enum TCharStats { CS_ACCURACY, CS_REACTION, CS_STRENGTH, CS_TOUGHNESS, CS_AWARENESS, CS_INTELLIGENCE, CS_PERSUASION, CS_SPEED, CS_SIZE };
   enum TEquipmentSlot { ES_HEAD, ES_CHEST, ES_HANDS, ES_BOOTS, ES_LEGS, ES_TRINKET1, ES_TRINKET2, ES_TRINKET3, ES_TRINKET4, ES_WEAPON1, ES_WEAPON2, ES_SIZE };

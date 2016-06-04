@@ -24,6 +24,9 @@
 #include "CommonMonster.h"
 #include "QuestMonster.h"
 #include "PartyMember.h"
+#include "Location.h"
+#include "Settlement.h"
+#include "Wildlands.h"
 
 #include <wchar.h>
 #include <cstdlib>
