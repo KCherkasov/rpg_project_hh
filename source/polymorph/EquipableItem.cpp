@@ -66,12 +66,12 @@
 	return result;
   }
   
-  int EquipableItem::use(AliveGameObject* &user) {
+  int EquipableItem::use(AliveGameObject* user) {
     if (_in_bag) {
       if (meets_stat_reqs(user)) {
       	int equipped_slot = FREE_INDEX;
       	for (size_t i = 0; i < ES_SIZE; ++i) {
-      	  if (_slots[i] == 1 && equipped[i] == NULL) {
+      	  if (_slots[i] == 1 && user->_equipped[i] == NULL) {
       	    equipped_slot = i;
       	    break;
 		  }

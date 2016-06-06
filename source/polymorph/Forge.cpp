@@ -747,7 +747,7 @@ int Forge::get_location_prototype(int query_id, TLocationPrototype* prototype) {
     response = get_trader_chances(rand() % TRADER_CHANCES_COUNT + 1, tmp._trader_chances);
   }
   int* pack_info_query_ids = NULL;
-  if (pack_set_query > FREE_INDEX && pack_set_query < PACK_QUERY_IIDS_COUNT) {
+  if (pack_set_query > FREE_INDEX && pack_set_query < PACK_QUERY_IDS_COUNT) {
     response = get_pack_ids(pack_set_query, pack_info_query_ids);
   } else {
     response = get_pack_ids(rand() % PACK_QUERY_IDS_COUNT + 1, pack_info_query_ids);
@@ -928,7 +928,7 @@ int Forge::MakeMonster(int query_id, int level, AliveGameObject** spawned) {
     tmp_monster = new SupportMonster(prototype, tmp_monster_name, tmp_monster_faction, level);
   } else {
     if (rnd <= BASE_GRUNT_PROB) {
-      tmp_monster = new GruntMonster(prototype, tmp_monster_name, tmp_monster_faction, level)
+		tmp_monster = new GruntMonster(prototype, tmp_monster_name, tmp_monster_faction, level);
 	} else {
       if (rnd <= BASE_DAMAGER_PROB) {
         tmp_monster = new DamagerMonster(prototype, tmp_monster_name, tmp_monster_faction, level);

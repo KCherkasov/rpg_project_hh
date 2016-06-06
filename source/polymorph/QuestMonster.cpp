@@ -2,7 +2,7 @@
 
 QuestMonster::QuestMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level, int quest_id): Monster(prototype, name, faction, level) {
   _quest_id = quest_id;
-  const unsigned char* role = "Quest target\0";
+  const unsigned char* role = (const unsigned char*)("Quest target\0");
   for (size_t i = 0; i < NAMESTRING_SIZE && role[i] != '\0'; ++i) {
     _role[i] = role[i];
   }
@@ -22,7 +22,7 @@ QuestMonster::QuestMonster(TMonsterPrototype &prototype, unsigned char* name, un
 }
 
 int QuestMonster::decision(Battlefield* &battlefield) {
-    int my_coords = new int[PAIR_ARR_SIZE];
+  int* my_coords = new int[PAIR_ARR_SIZE];
   where_am_i(battlefield->_map, my_coords[0], my_coords[1]);
   int to_x = FREE_INDEX;
   int to_y = FREE_INDEX;

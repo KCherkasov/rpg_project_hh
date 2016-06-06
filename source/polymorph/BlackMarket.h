@@ -1,3 +1,6 @@
+#ifndef BLACK_MARKET_H
+#define BLACK_MARKET_H
+
 #include "Trader.h"
 #include "Forge.h"
 #include "Item.h"
@@ -17,3 +20,5 @@ class BlackMarket: public Trader {
   protected:
     int form_assortment(TNPCPrototype &prototype, int level);
 };
+
+#endif

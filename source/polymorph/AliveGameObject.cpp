@@ -49,7 +49,7 @@ int* AliveGameObject::get_coords() {
   }
 }
 
-int AliveGameObject::get_coords(int index) {
+int AliveGameObject::get_coord(int index) {
   if (index > FREE_INDEX && index < PAIR_ARR_SIZE) {
     return _coords[index];
   } else {
@@ -109,13 +109,13 @@ int AliveGameObject::reset_coords() {
   return 0;
 }
 
-int AliveGameObject::get_extra_damage(int basic_damage) {
+int AliveGameObject::count_extra_damage(int basic_damage) {
   srand(static_cast<unsigned int>(time(0)));
   int full_damage = basic_damage;
   int dice_roll = rand() % PERCENT_MOD_CAP;
   if (dice_roll < BASE_CRITICAL_HIT_CHANCE) {
     double tmp = full_damage;
-    tmp *= CRITICAL_HIT_MODIFIER;
+    tmp *= CRITICAL_DAMAGE_MODIFIER;
     full_damage = round(tmp);
   }
   return full_damage;

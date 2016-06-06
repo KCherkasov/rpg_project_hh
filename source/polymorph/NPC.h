@@ -7,13 +7,13 @@
 
 class NPC: public StaticGameObject {
   public:
-    NPC(): StaticGameObject() { speech = NULL; }
-    virtual ~NPC() { delete[] speech; }
+    NPC(): StaticGameObject() { _speech = NULL; }
+    virtual ~NPC() { delete[] _speech; }
   	
     virtual int speak(unsigned char* &out) = 0;
   	
   protected:
-    unsigned char* speech;
+    unsigned char* _speech;
 };
 
 #endif

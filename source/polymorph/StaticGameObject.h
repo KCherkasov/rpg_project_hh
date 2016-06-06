@@ -13,6 +13,7 @@ class StaticGameObject: public GameObject {
     StaticGameObject();
 	virtual ~StaticGameObject();
 	unsigned char* get_description();
+	int get_pic_name(std::string &out) { return 0; }
   protected:    
     unsigned char* _description;
 };

@@ -101,7 +101,7 @@ bool Monster::make_hit_roll(int distance) {
 	return if_hit;  
 }
 
-int Monster::get_damage() {
+int* Monster::get_damage() {
   int* result = new int[PAIR_ARR_SIZE];
   for (size_t i = 0; i < PAIR_ARR_SIZE; ++i) {
     result[i] = _damage[i];
@@ -205,8 +205,8 @@ int Monster::look_around(Battlefield* &battlefield, int &enemies_count, int** &e
     distance_to_closest_cover = LOCAL_MAP_WIDTH;
   }
   int biggest_cover_defense = battlefield->_map->_map[i][j]->get_defense();
-  int* my_coords = new int[PAIR_ARR_SIZE];
-  int response = where_am_i(battlefield->_map, my_coords[0], my_coords[1]);
+  int* my_coords = new int[PAIR_ARR_SIZE] {_coords[0], _coords[1]};
+  int response;
   for (size_t i = my_coords[0]; (i < LOCAL_MAP_HEIGHT) && (BASIC_SIGHT_DISTANCE >= i - my_coords[0]); ++i) {
     for (size_t j = my_coords[1]; (j < LOCAL_MAP_WIDTH) && (BASIC_SIGHT_DISTANCE >= (i + j - my_coords[0] - my_coords[1])); ++j) {
       if (battlefield->_map->_map[i][j]->_on_tile == NULL) {

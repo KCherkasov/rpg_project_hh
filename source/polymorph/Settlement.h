@@ -20,8 +20,8 @@ class Settlement: public Location {
   	
   	int entrance();
   	
-  	Trader** _traders;
-  	PartyMember** _mercs;
+  	NPC** _traders;
+  	AliveGameObject** _mercs;
   	
   protected:
     int generate_traders();

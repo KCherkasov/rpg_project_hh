@@ -1,6 +1,8 @@
 #ifndef ALIVEGAMEOBJECT_H
 #define ALIVEGAMEOBJECT_H
 
+#include <ctime>
+
 #include "GameObject.h"
 #include "Inventory.h"
 #include "Storage.h"

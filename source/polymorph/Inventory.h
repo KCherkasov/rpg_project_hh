@@ -8,8 +8,8 @@
     public:
       Inventory() {}
       virtual ~Inventory() {}
-      virtual int first_free_slot() = 0;
-      virtual int count_free_slots() = 0;
+      virtual int first_free_slot(int &result) = 0;
+      virtual int count_free_slots(int &result) = 0;
       virtual int add_item(Item* &new_item) = 0;
       virtual int add_item(Item* &new_item, int index) = 0;
       virtual int get_item(int index, Item* &result) = 0;

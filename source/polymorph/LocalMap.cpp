@@ -26,7 +26,7 @@ LocalMap::LocalMap(int* texture_ids, int* masks) {
   Forge* forge = new Forge("classic2.db");
   _map = new LocalMapObject**[LOCAL_MAP_HEIGHT];
   for(size_t i = 0; i < LOCAL_MAP_HEIGHT; ++i) {
-  	_map[i] = new LocalMapObject[LOCAL_MAP_WIDTH];
+  	_map[i] = new LocalMapObject*[LOCAL_MAP_WIDTH];
     for(size_t j = 0; j < LOCAL_MAP_WIDTH; ++j) {
       LocalMapObject* preset = NULL;
 	  int response = forge->MakeTile(merged_mask[i][j], &preset);

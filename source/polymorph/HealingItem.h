@@ -1,4 +1,8 @@
+#ifndef HEALING_ITEM_H
+#define HEALING_ITEM_H
+
 #include "ConsumableItem.h"
+#include <ctime>
 
   class HealingItem: public ConsumableItem {
     public:
@@ -11,3 +15,5 @@
     protected:
       int* _hp_restore;
   };
+
+#endif

@@ -155,11 +155,10 @@ int Equipped::get_defense() {
   return result;
 }
 
-int Equipped::render() {
+void Equipped::render() {
   for (size_t i = 0; i < _size; ++i) {
     if (_content[i]->get_to_delete()) {
       delete _content[i];
 	}
   }
-  return 0;
 }

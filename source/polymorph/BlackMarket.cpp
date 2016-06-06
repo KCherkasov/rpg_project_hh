@@ -8,15 +8,15 @@ BlackMarket::BlackMarket(TNPCPrototype &prototype, int level): Trader() {
   delete[] _name;
   delete[] _description;
   delete[] _speech;
-  _name = new unsigned char[NAMESTRING_SIZE] = {};
+  _name = new unsigned char[NAMESTRING_SIZE] {};
   for (size_t i = 0; i < NAMESTRING_SIZE; ++i) {
   	_name[i] = prototype._name[i];
   }
-  _description = new unsigned char [DESCRSTRING_SIZE] = {};
+  _description = new unsigned char [DESCRSTRING_SIZE] {};
   for (size_t i = 0; i < DESCRSTRING_SIZE; ++i) {
     _description[i] = prototype._description[i];
   }
-  _speech = new unsigned char [DESCRSTRING_SIZE] = {};
+  _speech = new unsigned char [DESCRSTRING_SIZE] {};
   for (size_t i = 0; i < DESCRSTRING_SIZE; ++i) {
     _speech[i] = prototype._speech[i];
   }

@@ -11,7 +11,7 @@ Move::~Move() {
   delete[] _target;
 }
 
-int* Move::get_sender() {
+int* Move::get_sender_coords() {
   if (_sender != NULL) {
     int* result = new int[PAIR_ARR_SIZE] {_sender[0], _sender[1]};
     return result;
@@ -36,7 +36,7 @@ void  Move::set_sender(int* value) {
   }
 }
 
-int* Move::get_target() {
+int* Move::get_target_coords() {
   if (_target != NULL) {
     int* result = new int[PAIR_ARR_SIZE] {_target[0], _target[1]};
     return result;

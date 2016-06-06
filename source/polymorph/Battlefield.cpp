@@ -182,7 +182,7 @@ int Battlefield::place_units_on_map() {
 
 int Battlefield::make_turn() {
   ++_turn_no;
-  sort_turn_queue;
+  sort_turn_queue();
   for (size_t i = 0; i < (ACTIONS_PER_TURN * (PLAYER_SQUAD_SIZE + MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE)); ++i) {
     _turn_queue[i]->implement();
     delete _turn_queue[i];
@@ -221,7 +221,7 @@ int Battlefield::clear_dead() {
     if (_player->_squad->_members[i] != NULL) {
       int* health = _player->_squad->_members[i]->get_health();
       if (health[CURRENT_VALUE_INDEX] <= 0) {
-        _player->change_cash(FREE_INDEX * CRITICAL_HIT_MODIFIER * _player->_squad->_members[i]->get_salary());
+        _player->change_cash(FREE_INDEX * CRITICAL_DAMAGE_MODIFIER * _player->_squad->_members[i]->get_salary());
         for (size_t j = 0; j < ES_SIZE; ++i) {
           _stash->_stash.push_back(_player->_squad->_members[i]->_equipped->_content[j]);
 	    }

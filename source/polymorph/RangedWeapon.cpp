@@ -9,7 +9,3 @@
 
   RangedWeapon::~RangedWeapon() {
   }
-
-  int RangedWeapon::get_distance() {
-    return _distance;
-  }

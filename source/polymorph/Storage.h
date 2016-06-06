@@ -2,6 +2,7 @@
 #define STORAGE_H
 
 #include "Inventory.h"
+#include "Item.h"
 
 class Storage: public Inventory {
   public:

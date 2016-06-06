@@ -20,7 +20,7 @@ class LocalMapCommand: public BackendCommand {
     virtual ~LocalMapCommand();
     int add_into_queue();
     int add_frontend_callback(/*place here code to transfer frontend command into query*/);
-    int execute
+	int execute();
   protected:
     int* _sender;
 	int* _target;

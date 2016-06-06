@@ -71,13 +71,13 @@
       if (rarity_dice <= BASE_EPIC_CHANCE) {
         _rarity = IR_EPIC;
 	  } else {
-        if (rarity_dice <= BASE_RARE_PROB) {
+        if (rarity_dice <= BASE_RARE_CHANCE) {
           _rarity = IR_RARE;
 		} else {
-          if (rarity_dice <= BASE_GOOD_PROB) {
+          if (rarity_dice <= BASE_GOOD_CHANCE) {
             _rarity = IR_GOOD;
 		  } else {
-            if (rarity_dice <= BASE_COMMON_PROB) {
+            if (rarity_dice <= BASE_COMMON_CHANCE) {
               _rarity = IR_COMMON;
 			} else {
               _rarity = IR_TRASH;

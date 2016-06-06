@@ -1,6 +1,6 @@
 #include "LocalMapCommand.h"
 
-LocalMapCommand::LocalMapCommand(Battlefield* battlefield, int sender_x_coord, int sender_y_coord, int target_x_coord,int target_y_coords): BackendCommand() {
+LocalMapCommand::LocalMapCommand(Battlefield* battlefield, int sender_x_coord, int sender_y_coord, int target_x_coord,int target_y_coord): BackendCommand() {
   _sender = new int[PAIR_ARR_SIZE] {sender_x_coord, sender_y_coord};
   _target = new int[PAIR_ARR_SIZE] {target_x_coord, target_y_coord};
   _battlefield = battlefield;

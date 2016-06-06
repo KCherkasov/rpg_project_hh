@@ -25,7 +25,7 @@ class Player {
     virtual ~Player();
     
     int hire(AliveGameObject* new_party_member);
-    int fire(int to_fire_id);
+    int fire(int to_fire_id, AliveGameObject* &to_save);
     int payday();
     int buy(NPC* trader, int to_buy_id);
     int sell(NPC* trader, int to_sell_id);

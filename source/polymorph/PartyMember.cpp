@@ -33,7 +33,7 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
 	  tmp *= EXP_RAISE;
 	  _exp[CURRENT_VALUE_INDEX] = _exp[MAXIMAL_VALUE_INDEX];
 	  _exp[MAXIMAL_VALUE_INDEX] = round(tmp);
-	  _health[MAXIMAL_VALUE_INDEX] += HEALTH_RAISE_PER_LEVEL;
+	  _health[MAXIMAL_VALUE_INDEX] += HP_RAISE_PER_LEVEL;
 	}
 	while(_skill_points > 0) {
       int rnd_index = rand() % CS_SIZE;
@@ -41,11 +41,10 @@ PartyMember::PartyMember(TPartyMemberPrototype &prototype, unsigned char* name, 
       --_skill_points;
 	}
   }
-  _health[CURRENT_VALUE_INDEX] = _health[MAXIMMAL_VALUE_INDEX];
+  _health[CURRENT_VALUE_INDEX] = _health[MAXIMAL_VALUE_INDEX];
 }
 
 PartyMember::~PartyMember() {
-  delete[] _damage;
   delete[] _exp;
   delete[] _health;
   delete[] _stats;
@@ -177,7 +176,7 @@ int PartyMember::what(std::string &out) {
   str.append(itoa(_exp[MAXIMAL_VALUE_INDEX], digit, 10));
   str.append("\n");
   str.append("Free skill points: ");
-  str.append(itoa(_skill_points, digits, 10));
+  str.append(itoa(_skill_points, digit, 10));
   str.append("\n");
   str.append("Stats:\n");
   for (size_t i = 0; i <  CS_SIZE; ++i) {

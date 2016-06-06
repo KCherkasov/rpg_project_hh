@@ -3,6 +3,7 @@
 
 #include "Inventory.h"
 #include "prototypes.h"
+#include "Item.h"
 
 class Equipped: public Inventory {
   public:

@@ -1,8 +1,8 @@
 #include "SupportMonster.h"
 
 SupportMonster::SupportMonster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level): Monster(prototype, name, faction, level) {
-  const unsigned char* role = "Support\0";
-  for (size_t i = 0; i < NAMESTRING_SIZE && role[i] = '\0') {
+  const unsigned char* role = (const unsigned char*)("Support\0");
+  for (size_t i = 0; i < NAMESTRING_SIZE && role[i] != '\0'; ++i) {
     _role[i] = role[i];
   }
   double tmp;
@@ -21,7 +21,7 @@ SupportMonster::SupportMonster(TMonsterPrototype &prototype, unsigned char* name
 }
 
 int SupportMonster::decision(Battlefield* &battlefield) {
-    int my_coords = new int[PAIR_ARR_SIZE];
+  int* my_coords = new int[PAIR_ARR_SIZE];
   where_am_i(battlefield->_map, my_coords[0], my_coords[1]);
   int to_x = FREE_INDEX;
   int to_y = FREE_INDEX;

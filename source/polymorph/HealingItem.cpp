@@ -31,9 +31,12 @@ int* HealingItem::get_hp_restore() {
   
 int HealingItem::use(AliveGameObject* user) {
   if (user != NULL) {
-    --_stack;
-    user->set_health(_hp_restore);
-    if (stack <= 0) {
+    srand(static_cast<unsigned int>(time(0)));
+	int rnd = rand() % (_hp_restore[MAXIMAL_VALUE_INDEX] - _hp_restore[CURRENT_VALUE_INDEX]) + _hp_restore[CURRENT_VALUE_INDEX];
+	--_stack;
+
+    user->set_health(rnd);
+    if (_stack <= 0) {
       _to_delete = true;
 	}
   }
@@ -57,7 +60,9 @@ int HealingItem::what(std::string &out) {
   out.append(itoa(_cost, digit, 10));
   out.append("\n");
   out.append("heals: ");
-  out.append(itoa(_hp_restore, digit, 10));
+  out.append(itoa(_hp_restore[CURRENT_VALUE_INDEX], digit, 10));
+  out.append("-");
+  out.append(itoa(_hp_restore[MAXIMAL_VALUE_INDEX], digit, 10));
   out.append(" hp\n");
   out.append((char*) _description);
   delete[] digit;
