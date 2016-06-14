@@ -10,8 +10,6 @@
 #include "SupportMonster.h"
 #include "CommonMonster.h"
 #include "QuestMonster.h"
-#include "Attack.h"
-#include "Move.h"
 #include "prototypes.h"
 
 class LocalMap: public GameMap {

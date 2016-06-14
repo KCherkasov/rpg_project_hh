@@ -4,9 +4,6 @@
 #include <ctime>
 
 #include "GameObject.h"
-#include "Inventory.h"
-#include "Storage.h"
-#include "Equipped.h"
 #include "prototypes.h"
 
 #pragma once

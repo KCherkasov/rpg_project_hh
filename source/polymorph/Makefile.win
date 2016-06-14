@@ -1,18 +1,17 @@
 # Project: dev_test_backend
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
+CPP      = g++.exe
+CC       = gcc.exe
 WINDRES  = windres.exe
-RES      = dev_test_backend_private.res
-OBJ      = sqlite3.o Action.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o AliveGameObject.o GameObject.o StaticGameObject.o $(RES)
-LINKOBJ  = sqlite3.o Action.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o AliveGameObject.o GameObject.o StaticGameObject.o $(RES)
-LIBS     = -L"D:/Dev-Cpp/MinGW64/lib32" -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32 -g3
+OBJ      = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o
+LINKOBJ  = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o
+LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Dev-Cpp/MinGW64/lib" -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -m32 -pg
 INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = dev_test_backend.exe
-CXXFLAGS = $(CXXINCS) -m32 -g3
-CFLAGS   = $(INCS) -m32 -g3
+CXXFLAGS = $(CXXINCS) -m32 -pg
+CFLAGS   = $(INCS) -m32 -pg
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -30,6 +29,9 @@ sqlite3.o: sqlite3.c
 
 Action.o: Action.cpp
 	$(CPP) -c Action.cpp -o Action.o $(CXXFLAGS)
+
+AliveGameObject.o: AliveGameObject.cpp
+	$(CPP) -c AliveGameObject.cpp -o AliveGameObject.o $(CXXFLAGS)
 
 Armour.o: Armour.cpp
 	$(CPP) -c Armour.cpp -o Armour.o $(CXXFLAGS)
@@ -81,6 +83,9 @@ Food.o: Food.cpp
 
 Forge.o: Forge.cpp
 	$(CPP) -c Forge.cpp -o Forge.o $(CXXFLAGS)
+
+GameObject.o: GameObject.cpp
+	$(CPP) -c GameObject.cpp -o GameObject.o $(CXXFLAGS)
 
 GlobalMap.o: GlobalMap.cpp
 	$(CPP) -c GlobalMap.cpp -o GlobalMap.o $(CXXFLAGS)
@@ -166,6 +171,9 @@ Squad.o: Squad.cpp
 Stash.o: Stash.cpp
 	$(CPP) -c Stash.cpp -o Stash.o $(CXXFLAGS)
 
+StaticGameObject.o: StaticGameObject.cpp
+	$(CPP) -c StaticGameObject.cpp -o StaticGameObject.o $(CXXFLAGS)
+
 Storage.o: Storage.cpp
 	$(CPP) -c Storage.cpp -o Storage.o $(CXXFLAGS)
 
@@ -186,16 +194,3 @@ WeaponTrader.o: WeaponTrader.cpp
 
 World.o: World.cpp
 	$(CPP) -c World.cpp -o World.o $(CXXFLAGS)
-
-AliveGameObject.o: AliveGameObject.cpp
-	$(CPP) -c AliveGameObject.cpp -o AliveGameObject.o $(CXXFLAGS)
-
-GameObject.o: GameObject.cpp
-	$(CPP) -c GameObject.cpp -o GameObject.o $(CXXFLAGS)
-
-StaticGameObject.o: StaticGameObject.cpp
-	$(CPP) -c StaticGameObject.cpp -o StaticGameObject.o $(CXXFLAGS)
-
-dev_test_backend_private.res: dev_test_backend_private.rc 
-	$(WINDRES) -i dev_test_backend_private.rc -F pe-i386 --input-format=rc -o dev_test_backend_private.res -O coff 
-

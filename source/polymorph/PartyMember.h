@@ -4,6 +4,8 @@
 #include "AliveGameObject.h"
 #include "Forge.h"
 #include "prototypes.h"
+#include "Storage.h"
+#include "Equipped.h"
 
 #include <cmath>
 #include <ctime>
