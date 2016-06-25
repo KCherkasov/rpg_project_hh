@@ -18,15 +18,15 @@
  
 class Attack: public Action {
   public:
-    Attack(Battlefield* battlefied, int sender_x_coord, int sender_y_coord, int target_x_coord, int target_y_coord);
+    Attack(AliveGameObject* sender, AliveGameObject* target);
     virtual ~Attack();
     int implement();
     AliveGameObject* get_sender();
     AliveGameObject* get_target();
-    void set_sender(int* value);
-    void set_target(int* value);
+    void set_sender(AliveGameObject* value);
+    void set_target(AliveGameObject* value);
   protected:
-  	int count_distance(int x1_coord, int y1_coord, int x2_coord, int y2_coord);
+  	int count_distance(int x1_coord, int x2_coord);
   	AliveGameObject* _sender;
   	AliveGameObject* _target;
   	int _distance;

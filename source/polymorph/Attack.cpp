@@ -1,12 +1,9 @@
 #include "Attack.h"
 
-Attack::Attack(Battlefield* battlefield, int sender_x_coord, int sender_y_coord, int target_x_coord, int target_y_coord): Action(){
-  _battlefield = battlefield;
-  _distance = count_distance(sender_x_coord, sender_y_coord, target_x_coord, target_y_coord);
-  _sender = NULL;
-  _target = NULL;
-  get_object_by_coord(sender_x_coord, sender_y_coord, _sender);
-  get_object_by_coord(target_x_coord, target_y_coord, _target)
+Attack::Attack(AliveGameObject* sender, AliveGameObject* target): Action(){
+  _distance = count_distance(sender->get_coord(0), target->get_coord(0));
+  _sender = sender;
+  _target = target;
 }
 
 Attack::~Attack() {
@@ -51,7 +48,7 @@ void Attack::set_target(AliveGameObject* value) {
   _target = value;
 }
 
-int Attack::count_distance(int x1_coord, int y1_coord, int x2_coord, int y2_coord) {
+int Attack::count_distance(int x1_coord, int x2_coord) {
   int distance = 0;
   if (x1_coord >= x2_coord) {
     distance += x1_coord;
@@ -59,13 +56,6 @@ int Attack::count_distance(int x1_coord, int y1_coord, int x2_coord, int y2_coor
   } else {
     distance += x2_coord;
     distance -= x1_coord;
-  }
-  if (y1_coord >= y2_coord) {
-    distance += y1_coord;
-    distance -= y2_coord;
-  } else {
-    distance += y2_coord;
-    distance -= y1_coord;
   }
   return distance;
 }

@@ -23,8 +23,7 @@ class Battlefield {
     Battlefield(Location* location, Player* &player);
   	virtual ~Battlefield();
   	
-    LocalMap* _map;
-    Squad** _squads;
+    Squad* _squads;
     Action** _turn_queue;
     Stash* _stash;
     Player* _player;
@@ -40,8 +39,7 @@ class Battlefield {
   	int mass_leader_is_spawned(bool &result);
 	int place_units_on_map();
   	int clear_dead();
-  	int sort_turn_queue();
-  	
+  	int sort_turn_queue();	
   	int _turn_no;
 };
 

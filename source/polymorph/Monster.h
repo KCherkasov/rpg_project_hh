@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "Forge.h"
 #include "Stash.h"
-#include "Battlefield.h"
+#include "Squad.h"
 #include "prototypes.h"
 
 #include <vector>
@@ -18,7 +18,7 @@ class Monster : public AliveGameObject {
   public:
     Monster(TMonsterPrototype &prototype, unsigned char* name, unsigned char* faction, int level);
 	virtual ~Monster();
-    virtual int decision(Battlefield* &battlefield) = 0;
+    virtual int decision(Squad* enemies, Action* &turn) = 0;
     int try_make_leader();
     int try_make_mass_leader();
     int get_morale() { return _morale; }
@@ -47,12 +47,11 @@ class Monster : public AliveGameObject {
     unsigned char* _faction;
     unsigned char* _role;
     
-    int where_am_i(LocalMap* &map, int &my_x, int &my_y);
-    int look_around(Battlefield* &battlefield, int &enemies_count, int** &enemies_coords, int &allies_count, int** &allies_coords, int* &closest_cover_coords, int* &biggest_cover_coords);
-    int get_closest(int* &result_coords, int* &my_coords, int** &coords, int count_in_sight);
-    int get_weakest(LocalMap* &map, int* &result_coords, int** &coords, int count_in_sight);
-    virtual int evaluate(Battlefield* &battlefield, int &to_x, int &to_y, int &points) = 0;
-    int get_distance(int my_x, int  my_y, int to_x, int to_y, int &result);
+    int look_around(Squad* enemies, int& closest_enemy_id, int& weakest_enemy_id);
+    int get_closest(int& enemy_id, Squad* enemies);
+    int get_weakest(int& enemy_id, Squad* enemies);
+    virtual int evaluate(int& points, Squad* enemies) = 0;
+    int get_distance(int to_x, int &result);
 };
 
 #endif

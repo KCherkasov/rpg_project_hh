@@ -14,12 +14,9 @@
 
 class Action {
   public:
-  	Action() { _battlefield = NULL; }
-  	virtual ~Action() { _battlefield = NULL; }
+  	Action() {}
+  	virtual ~Action() {}
     virtual int implement() = 0;
-  protected: 
-    int get_object_by_coord(int x_coord, int y_coord, AliveGameObject* &result);
-    Battlefield* _battlefield;
 };
 
 #endif
