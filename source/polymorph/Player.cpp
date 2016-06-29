@@ -14,7 +14,7 @@ Player::Player() {
   int response;
   for(size_t i = 0; i < initial_mercs_count; ++i) {
     AliveGameObject* tmp_mercenary = NULL;
-    response = MakeMercenary(rand() % MERCS_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
+    response = forge->MakeMercenary(rand() % MERC_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
     for (size_t i = 0; i < _squad->get_max_size(); ++i) {
       if (_squad->_members[i] == NULL) {
         _squad->_members[i] = tmp_mercenary;
@@ -46,7 +46,7 @@ Player::Player(char* name) {
   int response;
   for(size_t i = 0; i < initial_mercs_count; ++i) {
     AliveGameObject* tmp_mercenary = NULL;
-    response = MakeMercenary(rand() % MERCS_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
+    response = forge->MakeMercenary(rand() % MERC_PRESETS_COUNT + 1, START_LEVEL, &tmp_mercenary);
     for (size_t i = 0; i < _squad->get_max_size(); ++i) {
       if (_squad->_members[i] == NULL) {
         _squad->_members[i] = tmp_mercenary;
@@ -93,23 +93,25 @@ int Player::fire(int to_fire, AliveGameObject* &to_save) {
 int Player::payday() {
   for (size_t i = 0; i < _squad->get_max_size(); ++i) {
     if (_squad->_members[i] != NULL) {
-      if (_cash >= _squad->_members[i]->get_salary()) {
-        _cash -= _squad->_members[i]->get_salary();
-        _squad->_members[i]->reset_unpaid_count();
-	  }
-	} else {
-      _squad->_members[i]->increase_unpaid_count();
-      //TO-DO: if _unpaid_count reaches critical value (look for this const at in_game_objects.h) merc should leave party.
-	}
+      PartyMember* merc = dynamic_cast<PartyMember*>(_squad->_members[i]);
+      if (_cash >= merc->get_salary()) {
+        _cash -= merc->get_salary();
+        merc->reset_unpaid_count();
+	  } else {
+        merc->increase_unpaid_count();
+        //TO-DO: if _unpaid_count reaches critical value (look for this const at in_game_objects.h) merc should leave party.
+      }
+	} 
   }
   return 0;
 }
 
 int Player::buy(NPC* trader, int to_buy_id) {
   if (to_buy_id > FREE_INDEX && to_buy_id < VENDOR_CAPACITY && trader != NULL) {
-  	int total_count;
-  	double tmp = trader->get_charge() / 100 + 1.0;
-  	tmp *= trader->_assortment[to_buy_id]->get_cost();
+  	int total_count;    
+  	Trader* tdr = dynamic_cast<Trader*>(trader);
+  	double tmp = tdr->get_charge() / 100 + 1.0;
+  	tmp *= tdr->_assortment[to_buy_id]->get_cost();
   	total_count = round(tmp);
     if (_cash >= total_count) {
       int free_space;
@@ -117,9 +119,10 @@ int Player::buy(NPC* trader, int to_buy_id) {
       if (free_space > 0) {
       	 int first_free;
       	 _bag->first_free_slot(first_free);
-        _bag->_content[first_free] = trader->_assortment[to_buy_id];
-        trader->_assortment[to_buy_id] = NULL;
-        _cash -= total_count;
+      	 Storage* bag = dynamic_cast<Storage*>(_bag);
+         bag->_content[first_free] = tdr->_assortment[to_buy_id];
+         tdr->_assortment[to_buy_id] = NULL;
+         _cash -= total_count;
 	  }
 	}
   }
@@ -128,17 +131,19 @@ int Player::buy(NPC* trader, int to_buy_id) {
 
 int Player::sell(NPC* trader, int to_sell_id) {
   if (to_sell_id > FREE_INDEX && to_sell_id < BACKPACK_SIZE && trader != NULL) {
-    double tmp = 1.0 - trader->get_charge() / 100;
-    tmp *= _bag->_content[to_sell_id]->get_cost();
+    Trader* tdr = dynamic_cast<Trader*>(trader);
+    Storage* bag = dynamic_cast<Storage*>(_bag);
+	double tmp = 1.0 - tdr->get_charge() / 100;
+    tmp *= bag->_content[to_sell_id]->get_cost();
     int total_count = round(tmp);
     _cash += total_count;
     for (size_t i = 0; i < VENDOR_CAPACITY; ++i) {
-      if (trader->_assortment[i] == NULL) {
-        trader->_assortment[i] = _bag->_content[to_sell_id];
+      if (tdr->_assortment[i] == NULL) {
+        tdr->_assortment[i] = bag->_content[to_sell_id];
         break;
 	  }
 	}
-	_bag->_content[to_sell_id] = NULL;
+	bag->_content[to_sell_id] = NULL;
   }
   return 0;
 }
@@ -187,7 +192,7 @@ int Player::what(std::string &out) {
   for (size_t i = 0; i < _squad->get_max_size(); ++i) {
     if (_squad->_members[i] != NULL) {
       unsigned char* tmp_name = NULL;
-      tmp_name = _squad->_members[i]->get_name()
+      tmp_name = _squad->_members[i]->get_name();
       str.append((char*) tmp_name);
       str.append("\t level: ");
       int level = _squad->_members[i]->get_level();
@@ -206,7 +211,7 @@ int Player::what(std::string &out) {
   str.append(" credits\nTotal earnings since company\'s establishment: ");
   str.append(itoa(_total_earned, digit, 10));
   str.append(" credits\n--\n");
-  str.append("--\n")
+  str.append("--\n");
   out += str;
   delete[] digit;
   return 0;

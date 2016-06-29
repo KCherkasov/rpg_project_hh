@@ -23,7 +23,13 @@ class Storage: public Inventory {
     int use_item(int index, AliveGameObject* &user);
     int get_size(int &result);
     int get_defense() { return 0; } 
-    void render();
+    void render() {
+      for (size_t i = 0; i < _size; ++i) {
+        if (_content[i]->get_to_delete()) {
+          delete _content[i];
+	    }
+      }
+	}
     
   protected:
     int _size;

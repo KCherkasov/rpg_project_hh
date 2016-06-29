@@ -19,7 +19,7 @@ class LocalMapObject: public StaticGameObject {
   	int get_defense() { return _defense; }
   	bool get_is_passable() { return _is_passable; }
   	int what(std::string &out);
-	int get_pic_name(std::string &out);
+	int get_pic_name(std::string &out) {return 0;}
   	AliveGameObject* _on_tile;
   	
   protected:

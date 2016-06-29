@@ -10,7 +10,7 @@ class Squad {
   public:
     Squad();
     Squad(int pack_id, int squad_size);
-    virtual ~Squad() {}
+    virtual ~Squad();
     int get_pack_id() { return _pack_id; }
     int get_max_size() { return _max_size; }
     void set_pack_id(int value) { _pack_id = value; }

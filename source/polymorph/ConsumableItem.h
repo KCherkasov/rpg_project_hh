@@ -8,11 +8,11 @@
 
   class ConsumableItem: public UsableItem {
     public:
-      ConsumableItem(): UsableItem() {}
-      virtual ~ConsumableItem() {}
-      int get_stack() { return _stack; }
-      int change_stack(int &value, bool increase) { return 0; }
-      int get_pic_name(std::string &out) { return 0; }
+      ConsumableItem();
+      virtual ~ConsumableItem();
+      int get_stack();
+      int change_stack(int &value, bool increase);
+      int get_pic_name(std::string &out);
     protected:
       int _stack;
   };

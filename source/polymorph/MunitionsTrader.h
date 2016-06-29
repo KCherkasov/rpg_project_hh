@@ -14,8 +14,6 @@ class MunitionsTrader: public Trader {
     MunitionsTrader(): Trader() {}
     MunitionsTrader(TNPCPrototype &prototype, int level);
     virtual ~MunitionsTrader();
-    
-    Item** _assortment;
 
   protected:
   	int form_assortment(TNPCPrototype &prototype, int level);

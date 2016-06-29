@@ -7,7 +7,7 @@ World::World(char* name) {
   //_output_query.clear();
 }
 
-World::~World {
+World::~World() {
   delete _playground;
   for (size_t i = 0; i < _backend_query.size(); ++i) {
     if (_backend_query[i] != NULL) {

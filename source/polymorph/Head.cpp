@@ -4,7 +4,7 @@ int Head::get_pic_name(std::string &out) {
   out.clear();
   std::string prefix;
   std::string exec;
-  char* digit = new char[NAMESTRING / 2];
+  char* digit = new char[NAMESTRING_SIZE / 2];
   switch (_kind) {
     case EK_LIGHT: {
       prefix = "light_";

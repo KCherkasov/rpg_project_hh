@@ -48,7 +48,7 @@ class Monster : public AliveGameObject {
     int look_around(Squad* enemies, int& closest_enemy_id, int& weakest_enemy_id);
     int get_closest(int& enemy_id, Squad* enemies);
     int get_weakest(int& enemy_id, Squad* enemies);
-    virtual int evaluate(int& points, Squad* enemies, int id) = 0;
+    virtual int evaluate(int& points, Squad* enemies, int id);
     int get_distance(int to_x, int &result);
 };
 

@@ -36,14 +36,16 @@ class PartyMember: public AliveGameObject {
   	
   	Inventory* _equipped;
   	
+    
   protected:
+  	
     int* _stats;
-    bool _gender;
-    int _unpaid_count;
     int _killed_count;
     int _money_earned;
     int _salary;
     int _skill_points;
+    bool _gender;
+    int _unpaid_count;
 };
 
 #endif

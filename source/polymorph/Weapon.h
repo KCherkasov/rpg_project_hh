@@ -4,6 +4,7 @@
 #define WEAPON_H
 
 #include "EquipableItem.h"
+#include "prototypes.h"
 
 #include <string>
 #include <ctime>

@@ -45,20 +45,20 @@ int SupportMonster::decision(Squad* enemies, Action* &turn) {
 	}
   }
   int distance = 0;
-  get_distance(enemies->_members[max_points_id]->get_coord(0), distance);
+  get_distance(enemies->_members[maximal_points_id]->get_coord(0), distance);
   if (distance > _distance) {
-  	bool forward = enemies->_members[max_points_id]->get_coord(0) > _coords[0];
+  	bool forward = enemies->_members[maximal_points_id]->get_coord(0) > _coords[0];
   	turn = new Move(this, forward);
   	++turn;
   	if (distance - BASIC_SPEED > _distance) {
   	  turn = new Move(this, forward);	
 	} else {
-      turn = new Attack(this, enemies->_members[max_points_id]);
+      turn = new Attack(this, enemies->_members[maximal_points_id]);
 	}
   } else {
-    turn = new Attack(this, enemies->_members[max_points_id]);
+    turn = new Attack(this, enemies->_members[maximal_points_id]);
     ++turn;
-    turn = new Attack(this, enemies->_members[max_points_id]);
+    turn = new Attack(this, enemies->_members[maximal_points_id]);
   }
   delete[] points;
   return 0;

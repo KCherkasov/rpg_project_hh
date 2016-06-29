@@ -2,7 +2,7 @@
 
 WeaponTrader::WeaponTrader(TNPCPrototype &prototype, int level): Trader() {
   _charge = prototype._charge * BASIC_VENDOR_CHARGE;
-  delete[] _name;
+  delete[] 	_name;
   delete[] _description;
   delete[] _speech;
   _name = new unsigned char[NAMESTRING_SIZE] {};
@@ -36,9 +36,9 @@ int WeaponTrader::form_assortment(TNPCPrototype &prototype, int level) {
   int items = rand() % VENDOR_CAPACITY + 1;
   for (size_t i = 0; i < items; ++i) {
     int key = rand() % (EK_MELEE - EK_PISTOL + 1) + prototype._content_id;
-    Item* spawned = null;
+    Item* spawned = NULL;
     forge->MakeItem(key, level, &spawned);
     _assortment[i] = spawned;
-    spawned = null;
+    spawned = NULL;
   }
 }

@@ -7,12 +7,12 @@
 
   class Food: public ConsumableItem {
     public:
-      Food(prototypes::TConsumablePrototype &prototype, int level): ConsumableItem() {}
+      Food(prototypes::TConsumablePrototype &prototype, int level);
       virtual ~Food() {}
-      int get_nutricity() { return _nutricity; }
-      int use(AliveGameObject* user) { return 0; }
-      int what(std::string &out) { return 0; }
-      int get_pic_name(std::string &out) { return 0; }
+      int get_nutricity();
+      int use(AliveGameObject* user);
+      int what(std::string &out);
+      int get_pic_name(std::string &out);
     protected:
       int _nutricity;
   };

@@ -21,6 +21,9 @@ namespace prototypes {
   const int STAT_PRESETS_COUNT = 10;
   const int MERC_NAMES_COUNT = 10;
   const int EQUIPMENT_PRESETS_COUNT = 10;
+  //const int MERC_PRESETS_COUNT = 10;
+  
+  const int START_CASH = 1000;
   
   const int MERC_FACES_COUNT = 10;
   const int MONSTER_FACES_COUNT = 10;

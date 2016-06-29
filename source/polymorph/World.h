@@ -40,7 +40,7 @@
 // #include "FrontendCommand.h"
 // list of other frontend commands here
 
-#include "Player.h"
+#include "Playground.h"
 #include "Forge.h"
 
 #include <vector>
@@ -51,9 +51,7 @@ class World {
     virtual ~World();
     int render();
     
-    Player* _player;
-    Battlefield* _battlefield;
-    Location* _current_location;
+    Playground* _playground;
     
     std::vector<BackendCommand*> _backend_query;
     // std::vector<FrontendCommand*> _input_query;

@@ -15,7 +15,7 @@ class BlackMarket: public Trader {
     BlackMarket(TNPCPrototype &prototype, int level);
     virtual ~BlackMarket();
     
-    Item** _assortment;
+//    Item** _assortment;
     
   protected:
     int form_assortment(TNPCPrototype &prototype, int level);
