@@ -11,14 +11,14 @@ using namespace prototypes;
 
 class GameObject {
     public:
-      GameObject();
-      GameObject(int level);
-      virtual ~GameObject();
-      int get_own_id();
-      int get_level();
-      unsigned char* get_name();
-      virtual int what(std::string &out) = 0;
-      virtual int get_pic_name(std::string &out) = 0;
+      GameObject() { _own_id = 0; _pic_id = 0; _level = START_LEVEL; _name = NULL; }
+      GameObject(int level) { _own_id = 0; _pic_id = 0; _level = level; _name = NULL; }
+      virtual ~GameObject() { delete[] _name; }
+      int get_own_id() { return _own_id; }
+      int get_level() { return _level; }
+      unsigned char* get_name() { return _name; }
+      virtual int what(std::string &out) { return 0; }
+      virtual int get_pic_name(std::string &out) { return 0; }
 
     protected:
       int _own_id;

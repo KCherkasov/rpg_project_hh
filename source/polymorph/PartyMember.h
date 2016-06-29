@@ -2,9 +2,7 @@
 #define PARTYMEMBER_H
 
 #include "AliveGameObject.h"
-#include "Forge.h"
 #include "prototypes.h"
-#include "Storage.h"
 #include "Equipped.h"
 
 #include <cmath>
@@ -35,17 +33,17 @@ class PartyMember: public AliveGameObject {
     int level_up();
     int what(std::string &out);
     int get_pic_name(std::string &out);
-
-    Inventory* _equipped;
+  	
+  	Inventory* _equipped;
   	
   protected:
     int* _stats;
+    bool _gender;
+    int _unpaid_count;
     int _killed_count;
     int _money_earned;
     int _salary;
     int _skill_points;
-    int _unpaid_count;
-    bool _gender;
 };
 
 #endif

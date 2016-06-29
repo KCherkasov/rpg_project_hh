@@ -4,11 +4,12 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o
-LINKOBJ  = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o
-LIBS     = -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -L"D:/Dev-Cpp/MinGW64/lib" -L"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -m32 -pg
-INCS     = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"D:/Dev-Cpp/MinGW64/include" -I"D:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+RES      = dev_test_backend_private.res
+OBJ      = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o $(RES)
+LINKOBJ  = sqlite3.o Action.o AliveGameObject.o Armour.o ArmourTrader.o Attack.o Battlefield.o BlackMarket.o Boots.o BuySellCommand.o Chest.o CollectableItem.o CommonMonster.o ConsumableItem.o DamagerMonster.o DemoNextLocationCommand.o EquipableItem.o Equipped.o Food.o Forge.o GameObject.o GlobalMap.o GruntMonster.o Hands.o Head.o HealingItem.o in_game_objects.o Item.o Legs.o LocalMap.o LocalMapCommand.o LocalMapObject.o Location.o Map.o MeleeWeapon.o Monster.o Move.o MunitionsTrader.o NewGameCommand.o NextLocationCommand.o PartyMember.o Player.o QuestItem.o QuestMonster.o RangedWeapon.o ResourceItem.o Settlement.o Squad.o Stash.o StaticGameObject.o Storage.o SupportMonster.o Trinket.o UsableItem.o Weapon.o WeaponTrader.o World.o $(RES)
+LIBS     = -L"C:/Program Files/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -m32 -pg
+INCS     = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files/Dev-Cpp/MinGW64/include" -I"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = dev_test_backend.exe
 CXXFLAGS = $(CXXINCS) -m32 -pg
 CFLAGS   = $(INCS) -m32 -pg
@@ -194,3 +195,7 @@ WeaponTrader.o: WeaponTrader.cpp
 
 World.o: World.cpp
 	$(CPP) -c World.cpp -o World.o $(CXXFLAGS)
+
+dev_test_backend_private.res: dev_test_backend_private.rc 
+	$(WINDRES) -i dev_test_backend_private.rc -F pe-i386 --input-format=rc -o dev_test_backend_private.res -O coff 
+

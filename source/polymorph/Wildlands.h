@@ -10,7 +10,7 @@ class Wildlands: public Location {
   	virtual ~Wildlands() {}
   	
   	int entrance() { return if_fight(); };
-	CollectableItem** _loot;
+	Item** _loot;
 };
 
 #endif

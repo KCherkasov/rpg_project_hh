@@ -2,11 +2,10 @@
 #define MONSTER_H
 
 #include "AliveGameObject.h"
-#include "LocalMap.h"
 #include "Item.h"
-#include "Forge.h"
 #include "Stash.h"
 #include "Squad.h"
+#include "Action.h"
 #include "prototypes.h"
 
 #include <vector>
@@ -32,7 +31,6 @@ class Monster : public AliveGameObject {
     int get_loot_list() { return _loot_list; }
     bool get_is_leader() { return _is_leader; }
     bool get_is_mass_leader() { return _is_mass_leader; }
-    int generate_loot(Stash* &stash);
 	int what(std::string &out); 
 	int get_pic_name(std::string &out);
   protected:
@@ -50,7 +48,7 @@ class Monster : public AliveGameObject {
     int look_around(Squad* enemies, int& closest_enemy_id, int& weakest_enemy_id);
     int get_closest(int& enemy_id, Squad* enemies);
     int get_weakest(int& enemy_id, Squad* enemies);
-    virtual int evaluate(int& points, Squad* enemies) = 0;
+    virtual int evaluate(int& points, Squad* enemies, int id) = 0;
     int get_distance(int to_x, int &result);
 };
 

@@ -22,6 +22,7 @@ class Storage: public Inventory {
     int swap_items(int from_index, int to_index);
     int use_item(int index, AliveGameObject* &user);
     int get_size(int &result);
+    int get_defense() { return 0; } 
     void render();
     
   protected:

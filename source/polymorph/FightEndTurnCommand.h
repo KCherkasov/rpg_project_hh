@@ -2,15 +2,15 @@
 #define FIGHT_ENDTURN_COMMAND_H
 
 #include "BackendCommand.h"
-#include "Battlefield.h"
+#include "Playground.h"
 
 class FightEndTurnCommand: public BackendCommand {
   public:
-  	FightEndTurnCommand(Battlefield* battlefield): BackendCommand() { _battlefield = battlefield }
-  	virtual ~FightEndTurnCommand() { _battlefield = NULL; }
-  	int execute() { return _battlefield->make_turn(); }
+  	FightEndTurnCommand(Playground* playground): BackendCommand() { _playground = playground; }
+  	virtual ~FightEndTurnCommand() { _playground = NULL; }
+  	int execute() { return _playground->_battlefield->make_turn(); }
   protected:
-    Battlefield* _battlefield;
+    Playground* _playground;
 };
 
 #endif

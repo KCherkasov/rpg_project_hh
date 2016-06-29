@@ -1,18 +1,14 @@
 #include "World.h"
 
 World::World(char* name) {
-  _player = new Player(name);
-  _battlefield = NULL;
-  _location = NULL;
+  _playground = new Playground(name);
   _backend_query.clear();
   //_input_query.clear();
   //_output_query.clear();
 }
 
 World::~World {
-  delete _player;
-  delete _battlefield;
-  delete _location;
+  delete _playground;
   for (size_t i = 0; i < _backend_query.size(); ++i) {
     if (_backend_query[i] != NULL) {
       delete _backend_query[i];

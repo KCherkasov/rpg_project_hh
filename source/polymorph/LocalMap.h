@@ -1,22 +1,15 @@
 #ifndef LOCALMAP_H
 #define LOCALMAP_H
 
-#include "Forge.h"
 #include "GameMap.h"
 #include "LocalMapObject.h"
-#include "PartyMember.h"
-#include "GruntMonster.h"
-#include "DamagerMonster.h"
-#include "SupportMonster.h"
-#include "CommonMonster.h"
-#include "QuestMonster.h"
 #include "prototypes.h"
 
 class LocalMap: public GameMap {
   public:
     LocalMap(int* texture_ids, int* masks);
     virtual ~LocalMap();
-    int get_textures(int** texture_map);
+    int get_textures(int** &texture_map);
     int what(int x_coord, int y_coord, std::string &out);
   
     LocalMapObject*** _map;

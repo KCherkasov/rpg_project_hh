@@ -2,8 +2,7 @@
 #define LOCAL_MAP_COMMAND_H
 
 #include "BackendCommand.h"
-#include "LocalMap.h"
-#include "Battlefield.h"
+#include "Playground.h"
 #include "PartyMember.h"
 #include "GruntMonster.h"
 #include "DamagerMonster.h"
@@ -16,15 +15,16 @@
 
 class LocalMapCommand: public BackendCommand {
   public:
-    LocalMapCommand(Battlefield* battlefield, int sender_x_coord, int sender_y_coord, int target_x_coord, int target_y_coord);
+    LocalMapCommand(Playground* playground, AliveGameObject* sender, AliveGameObject* target, bool is_forward);
     virtual ~LocalMapCommand();
     int add_into_queue();
     int add_frontend_callback(/*place here code to transfer frontend command into query*/);
 	int execute();
   protected:
-    int* _sender;
-	int* _target;
-	Battlefield* _battlefield;
+    AliveGameObject* _sender;
+	AliveGameObject* _target;
+	Playground* _playground;
+	bool _is_forward;
 };
 
 #endif

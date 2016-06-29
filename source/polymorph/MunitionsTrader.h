@@ -1,3 +1,6 @@
+#ifndef MUNITIONS_TRADER_H
+#define MUNITIONS_TRADER_H
+
 #include "Trader.h"
 #include "Forge.h"
 #include "Item.h"
@@ -17,3 +20,5 @@ class MunitionsTrader: public Trader {
   protected:
   	int form_assortment(TNPCPrototype &prototype, int level);
 };
+
+#endif

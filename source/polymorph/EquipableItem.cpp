@@ -54,13 +54,15 @@
     int* stats = NULL;
     int* bonus = NULL;
 	bool result = true;
-    stats = user->get_stats();
-    user->_equipped->get_stat_bonus(bonus);
+	PartyMember* usr = dynamic_cast<PartyMember*>(user);
+    stats = usr->get_stats();
+    Equipped* inv = dynamic_cast<Equipped*>(usr->_equipped);
+    inv->get_stat_bonus(bonus);
     for (size_t i = 0; i < CS_SIZE; ++i) {
       stats[i] += bonus[i];
       result = result && (_stat_reqs[i] <= stats[i]);
 	}
-	result = result && (_level <= user->get_level());
+	result = result && (_level <= usr->get_level());
 	delete[] stats;
 	delete[] bonus;
 	return result;
@@ -70,32 +72,19 @@
     if (_in_bag) {
       if (meets_stat_reqs(user)) {
       	int equipped_slot = FREE_INDEX;
+      	PartyMember* usr = dynamic_cast<PartyMember*>(user);
+      	Equipped* inv = dynamic_cast<Equipped*>(usr->_equipped);
       	for (size_t i = 0; i < ES_SIZE; ++i) {
-      	  if (_slots[i] == 1 && user->_equipped[i] == NULL) {
+      	  if (_slots[i] == 1 && inv->_content[i]== NULL) {
       	    equipped_slot = i;
       	    break;
 		  }
 		}
-		if (equipped_slot == FREE_INDEX) {
-          for (size_t i =0; i < ES_SIZE; ++i) {
-            if (_slots[i] == 1) {
-              equipped_slot = i;
-              break;
-			}
-		  }
-		}
-        user->_bag->swap_items(user->_bag->get_index(this), user->_equipped, equipped_slot);
         _in_bag = !_in_bag;
+        inv->_content[equipped_slot] = this;
 	  }
 	} else {
-	  int free_slots;
-	  user->_bag->count_free_slots(free_slots);
-      if (free_slots > 0) {
-      	int first_free = FREE_INDEX;
-      	user->_bag->first_free_slot(first_free);
-        user->_equipped->swap_items(user->_equipped->get_index(this), user->_bag, first_free);
-        _in_bag = !_in_bag;
-	  }
+	  return 0;
 	}
 	return 0;  
   }

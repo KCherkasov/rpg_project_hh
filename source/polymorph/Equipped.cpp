@@ -9,27 +9,6 @@ Equipped::~Equipped() {
   delete[] _content;
 }
 
-int Equipped::count_free_slots(int &result) {
-  result = 0;
-  for (size_t i = 0; i < _size; ++i) {
-    if (_content[i] == NULL) {
-      ++result;
-	}
-  }
-  return 0;
-}
-
-int Equipped::first_free_slot(int &result) {
-  result = -1;
-  for (size_t i = 0; i < _size; ++i) {
-    if (_content[i] == NULL) {
-      result = i;
-      break;
-	}
-  }
-  return 0;
-}
-
 int Equipped::add_item(Item* &new_item) {
   int index;
   int response = first_free_slot(index);
@@ -122,7 +101,8 @@ int Equipped::get_stat_bonus(int* &result) {
   for (size_t i = 0; i < ES_SIZE; ++i) {
     if (_content[i] != NULL) {
       int* tmp_bonus = NULL;
-      tmp_bonus = _content[i]->get_stat_bons();
+      EquipableItem* it = dynamic_cast<EquipableItem*>(_content[i]);
+      tmp_bonus = it->get_stat_bons();
       for(size_t j = 0; j < CS_SIZE; ++j) {
       	result[j] += tmp_bonus[i];
 	  }
@@ -138,7 +118,8 @@ int Equipped::get_stat_bonus(int &result, int stat_index) {
     for (size_t i = 0; i < ES_SIZE; ++i) {
       if (_content[i] != NULL) {
         int* tmp_bonus = NULL;
-        tmp_bonus = _content[i]->get_stat_bonus();
+        EquipableItem* it = dynamic_cast<EquipableItem*>(_content[i]);
+        tmp_bonus = it->get_stat_bons();
         result += tmp_bonus[stat_index];
         delete[] tmp_bonus;
 	  }
@@ -150,7 +131,8 @@ int Equipped::get_stat_bonus(int &result, int stat_index) {
 int Equipped::get_defense() {
   int result = 0;
   for (size_t i = ES_HEAD; i < ES_WEAPON1; ++i) {
-    result += _content[i]->get_defense();
+  	EquipableItem* it = dynamic_cast<EquipableItem*>(_content[i]);
+    result += it->get_defense();
   }
   return result;
 }

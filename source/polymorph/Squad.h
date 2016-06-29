@@ -4,13 +4,6 @@
 #include <vector>
 
 #include "AliveGameObject.h"
-#include "Forge.h"
-#include "Location.h"
-#include "GruntMonster.h"
-#include "DamagerMonster.h"
-#include "SupportMonster.h"
-#include "CommonMonster.h"
-#include "QuestMonster.h"
 #include "prototypes.h"
 
 class Squad {

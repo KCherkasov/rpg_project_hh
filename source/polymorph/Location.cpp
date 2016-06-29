@@ -45,13 +45,3 @@ int Location::count_fact_level(int &result) {
   result = rnd;
   return 0;
 }
-
-int Location::if_fight() {
-  srand(static_cast<unsigned int>(time(0)));
-  int result = SILENT_CODE;
-  int rnd = rand() % PERCENT_MOD_CAP;
-  if (rnd <= _fight_chance) {
-    result = BATTLE_CODE;
-  }
-  return result;
-}

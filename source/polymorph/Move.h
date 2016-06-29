@@ -2,7 +2,12 @@
 #define MOVE_H
 
 #include "Action.h"
-#include "Battlefield.h"
+#include "Squad.h"
+#include "PartyMember.h"
+#include "GruntMonster.h"
+#include "DamagerMonster.h"
+#include "SupportMonster.h"
+#include "CommonMonster.h"
 
 class Move: public Action {
   public:
@@ -10,12 +15,13 @@ class Move: public Action {
     virtual ~Move();
     
 	AliveGameObject* get_sender();
-    void set_sender(AliveGameObject* value);
-    
+    AliveGameObject* get_target() { return 0; }
+	void set_sender(AliveGameObject* value);
+    bool get_is_forward() { return _is_forward; }    
     int implement();
   protected:
   	AliveGameObject* _sender;
-  	bool is_forward;
+  	bool _is_forward;
 };
 
 #endif

@@ -19,7 +19,7 @@ Squad::~Squad() {
   }
   delete[] _members;
 }
-int Squad::count_alive(int &result) {
+int Squad::count_alive(int &result) {/
   result = 0;
   count_alive();
   result = _alive_count;

@@ -19,6 +19,7 @@
       virtual int swap_items(int from_index, int to_index) = 0;
       virtual int use_item(int index, AliveGameObject* &user) = 0;
       virtual int get_size(int &result) = 0;
+      virtual int get_defense() = 0;
       virtual void render() = 0;
   };
   

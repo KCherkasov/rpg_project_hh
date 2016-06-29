@@ -2,8 +2,8 @@
 #define EQUIPPED_H
 
 #include "Inventory.h"
+#include "EquipableItem.h"
 #include "prototypes.h"
-#include "Item.h"
 
 class Equipped: public Inventory {
   public:
@@ -12,8 +12,26 @@ class Equipped: public Inventory {
     
     Equipped(): _size(ES_SIZE) { _content = new Item*[ES_SIZE] {NULL}; }
 	virtual ~Equipped();
-    int first_free_slot(int &result);
-    int count_free_slots(int &result);	
+    int first_free_slot(int &result) {
+      result = -1;
+      for (size_t i = 0; i < _size; ++i) {
+        if (_content[i] == NULL) {
+          result = i;
+          break;
+	    }
+      }
+      return 0;
+    }
+    
+	int count_free_slots(int &result) {
+      result = 0;
+      for (size_t i = 0; i < _size; ++i) {
+        if (_content[i] == NULL) {
+          ++result;
+	    }
+      }
+      return 0;
+    }	
     int add_item(Item* &new_item);
     int add_item(Item* &new_item, int index);
     int get_item(int index, Item* &result);

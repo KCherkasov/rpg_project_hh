@@ -4,7 +4,7 @@
 #define EQUIPABLEITEM_H
 
 #include "UsableItem.h"
-#include "AliveGameObject.h"
+#include "PartyMember.h"
 #include <cstdlib>
 #include <cmath>
 
@@ -20,6 +20,9 @@ using namespace prototypes;
       char* get_manufacturer_id();
       int* get_slots();
       int use(AliveGameObject* user); 
+      virtual int get_distance() { return 0; }
+      virtual int get_defense() { return 0; }
+      virtual int* get_damage() { return NULL; }
       
     protected:
 	

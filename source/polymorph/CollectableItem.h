@@ -1,3 +1,6 @@
+#ifndef COLLECTABLE_ITEM_H
+#define COLLECTABLE_ITEM_H
+
 #include "Item.h"
 #include <cmath>
 
@@ -5,10 +8,18 @@
 
   class CollectableItem: public Item {
     public:
-      CollectableItem();
-      virtual ~CollectableItem();
-      int get_stack();
-      int change_stack(int &value, bool increase);
+      CollectableItem(): Item() {}
+      virtual ~CollectableItem() {}
+      int get_stack() { return _stack; }
+      int change_stack(int &value, bool increase) {
+      	if (increase) {
+           _stack += value;
+		} else {
+		  _stack -= value;
+		}
+	  }
     protected:
       int _stack;
   };
+  
+#endif

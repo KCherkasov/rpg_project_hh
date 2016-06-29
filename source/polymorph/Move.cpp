@@ -25,13 +25,13 @@ int Move::implement() {
     return 0;
   }
   delete[] sender_health;
-  if (is_forward) {
-    _sender->set_coord(_sender->get_coord(0) + BASIC_SPEED, 0);
+  if (_is_forward) {
+    _sender->set_coord((_sender->get_coord(0) + BASIC_SPEED), CURRENT_VALUE_INDEX);
     if (_sender->get_coord(0) >= LOCAL_MAP_WIDTH) {
-      _sender->set_coord(LOCAL_MAP_WIDTH - 1);
+      _sender->set_coord((LOCAL_MAP_WIDTH - 1), 0);
 	}
   } else {
-    _sender->set_coord(_sender->get_coord(0) - BASIC_SPEED, 0);
+    _sender->set_coord(_sender->get_coord(0) - BASIC_SPEED, CURRENT_VALUE_INDEX);
     if (_sender->get_coord(0) < 0) {
       _sender->set_coord(0, 0);
 	}

@@ -2,15 +2,13 @@
 #define ATTACK_H
 
 #include "Action.h"
-#include "Battlefield.h"
-#include "AliveGameObject.h"
+
+#include "Squad.h"
 #include "PartyMember.h"
 #include "GruntMonster.h"
 #include "DamagerMonster.h"
 #include "SupportMonster.h"
 #include "CommonMonster.h"
-#include "QuestMonster.h"
-#include "Monster.h"
 
 #include <ctime>
 #include <cmath>

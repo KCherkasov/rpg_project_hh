@@ -4,6 +4,7 @@ AliveGameObject::AliveGameObject(): GameObject() {
   _health = new int[PAIR_ARR_SIZE] {0};
   _exp = new int[PAIR_ARR_SIZE] {0};
   _coords = new int[PAIR_ARR_SIZE] {FREE_INDEX, FREE_INDEX};
+  //_equipped = NULL;
 }
 
 AliveGameObject::~AliveGameObject() {

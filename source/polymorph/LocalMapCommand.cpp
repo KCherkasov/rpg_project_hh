@@ -1,30 +1,30 @@
 #include "LocalMapCommand.h"
 
-LocalMapCommand::LocalMapCommand(Battlefield* battlefield, int sender_x_coord, int sender_y_coord, int target_x_coord,int target_y_coord): BackendCommand() {
-  _sender = new int[PAIR_ARR_SIZE] {sender_x_coord, sender_y_coord};
-  _target = new int[PAIR_ARR_SIZE] {target_x_coord, target_y_coord};
-  _battlefield = battlefield;
+LocalMapCommand::LocalMapCommand(Playground* playground, AliveGameObject* sender, AliveGameObject* target, bool is_forward): BackendCommand() {
+  _sender = sender;
+  _target = target;
+  _playground = playground;
+  _is_forward = is_forward;
 }
 
 LocalMapCommand::~LocalMapCommand() {
-  delete[] _sender;
-  delete[] _target;
-  _battlefield = NULL;
+  _sender = NULL;
+  _target = NULL;
+  _playground = NULL;
 }
 
 int LocalMapCommand::add_into_queue() {
-  if (_battlefield->_map->_map[_target[0]][_target[1]]->_on_tile == NULL) {
-    for(size_t i = 0; i <  (ACTIONS_PER_TURN * (PLAYER_SQUAD_SIZE + MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE)); ++i) {
-      if (_battlefield->_turn_queue[i] == NULL) {
-        _battlefield->_turn_queue[i] = new Move(_battlefield, _sender[0], _sender[1], _target[0], _target[1]);
-	  }
+  Action* turn;
+  for (size_t i = 0; i < ACTIONS_PER_TURN * (PLAYER_SQUAD_SIZE + MONSTER_SQUAD_SIZE); ++i) {
+    if (_playground->_battlefield->_turn_queue == NULL) {
+      turn = _playground->_battlefield->_turn_queue[i];
+      break;
 	}
+  }
+  if(_target == NULL) {
+    turn = new Move(_sender, _is_forward);  
   } else {
-    for(size_t i = 0; i <  (ACTIONS_PER_TURN * (PLAYER_SQUAD_SIZE + MAX_MONSTER_SQUADS * MONSTER_SQUAD_SIZE)); ++i) {
-      if (_battlefield->_turn_queue[i] == NULL) {
-        _battlefield->_turn_queue[i] = new Attack(_battlefield, _sender[0], _sender[1], _target[0], _target[1]);
-	  }
-	}
+    turn = new Attack(_sender, _target);
   }
   return 0;
 }

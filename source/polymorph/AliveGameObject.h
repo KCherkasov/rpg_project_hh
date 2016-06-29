@@ -2,6 +2,8 @@
 #define ALIVEGAMEOBJECT_H
 
 #include <ctime>
+#include<cstdlib>
+#include<cmath>
 
 #include "GameObject.h"
 #include "prototypes.h"
@@ -23,6 +25,12 @@
       int change_coords(int* value);
       int change_coord(int value, int index);
       int reset_coords();
+      virtual bool get_is_leader() { return false; }
+      virtual bool get_is_mass_leader() { return false; }
+      virtual int try_make_leader() { return 0; }
+      virtual int try_make_mass_leader() { return 0; }
+      virtual int get_salary() { return 0; }
+      virtual int get_loot_list() { return 0; }
       virtual int get_defense() = 0;
       virtual int count_damage() = 0;
       virtual int get_range() = 0;

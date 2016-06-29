@@ -34,13 +34,13 @@ BlackMarket::~BlackMarket() {
 int BlackMarket::form_assortment(TNPCPrototype &prototype, int level) {
   srand(static_cast<unsigned int>(time(0)));
   Forge* forge = new Forge("classic2.db");
-  _assortment = new Armour*[VENDOR_CAPACITY] {NULL};
+  _assortment = new Item*[VENDOR_CAPACITY] {NULL};
   int items = rand() % VENDOR_CAPACITY + 1;
   for (size_t i = 0; i < items; ++i) {
     int key = rand() % (EK_TRINKET + CONSUMABLES_COUNT) + 1 + prototype._content_id;
-    Item* spawned = null;
+    Item* spawned = NULL;
     forge->MakeItem(key, level, &spawned);
     _assortment[i] = spawned;
-    spawned = null;
+    spawned = NULL;
   }
 }

@@ -1,16 +1,16 @@
 #ifndef  DEMO_NEXT_LOCATION_COMMAND_H
 #define DEMO_NEXT_LOCATION_COMMAND_H
 
-#include "World.h"
+#include "Playground.h"
 #include "BackendCommand.h"
 
 class DemoNextLocationCommand: public BackendCommand {
   public:
-    DemoNextLocationCommand(World* &world): BackendCommand() { _world = world; }
-    virtual ~DemoNextLocationCommand() { _world = NULL; }
+    DemoNextLocationCommand(Playground* &playground): BackendCommand() { _playground = playground; }
+    virtual ~DemoNextLocationCommand() { _playground = NULL; }
     int execute();
   protected:
-    World* _world;
+    Playground* _playground;
 };
 
 // Note: this command written only for battle system testing purposes

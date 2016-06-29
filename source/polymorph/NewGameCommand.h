@@ -2,15 +2,15 @@
 #define NEW_GAME_COMMAND_H
 
 #include "BackendCommand.h"
-#include "World.h"
+#include "Playground.h"
 
 class NewGameCommand: public BackendCommand {
   public:
-    NewGameCommand(World* world, char* &name);
-    virtual NewGameCommand();
+    NewGameCommand(Playground* playground, char* &name);
+    virtual ~NewGameCommand();
     int execute();
   protected:
-    World* _world;
+    Playground* _playground;
 	char* _player_squad_name;
     // int _player_pic_id;
 };

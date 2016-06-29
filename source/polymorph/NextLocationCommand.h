@@ -1,10 +1,8 @@
 #ifndef NEXT_LOCATION_COMMAND_H
 #define NEXT_LOCATION_COMMAND_H
 
-#include"Location.h"
-#include"Battlefield.h"
 #include"World.h"
-#inclue"BackendCommand.h"
+#include"BackendCommand.h"
 
 #include <ctime>
 #include <cmath>
@@ -12,11 +10,11 @@
 
 class NextLocationCommand: public BackendCommand {
   public:
-    NextLocationCommand(World* world): BackendCommand() { _world = world; }
-    virtual ~NextLocationCommand() { _world = NULL; }
+    NextLocationCommand(Playground* playground): BackendCommand() { _playground = playground; }
+    virtual ~NextLocationCommand() { _playground = NULL; }
     int execute();
   protected:
-  	World* _world;
+  	Playground* _playground;
 };
 
 #endif

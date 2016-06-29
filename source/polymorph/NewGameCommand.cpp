@@ -1,7 +1,7 @@
 #include "NewGameCommand.h"
 
-NewGameCommand::NewGameCommand(World* world, char* &name): BackendCommand() {
-  _world = world;
+NewGameCommand::NewGameCommand(Playground* playground, char* &name): BackendCommand() {
+  _playground = playground;
   _player_squad_name = new char[NAMESTRING_SIZE] {};
   if (name != NULL) {
     for (size_t i = 0; i < NAMESTRING_SIZE && name[i] != '\0'; ++i) {
@@ -12,13 +12,13 @@ NewGameCommand::NewGameCommand(World* world, char* &name): BackendCommand() {
 }
 
 NewGameCommand::~NewGameCommand() {
-  _world = NULL;
+  _playground = NULL;
   delete[] _player_squad_name;
 }
 
 int NewGameCommand::execute() {
-  if (_world == NULL) {
-    _world = new World(_player_squad_name);
+  if (_playground == NULL) {
+    _playground = new Playground(_player_squad_name);
   }
   return 0;
 }

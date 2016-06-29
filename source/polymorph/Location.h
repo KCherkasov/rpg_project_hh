@@ -18,8 +18,16 @@ class Location: public StaticGameObject {
     int get_high_level_cap() { return _high_level_cap; }
     int get_pack_info(int* &result, int index);
     int count_fact_level(int &result);
+    int if_fight() {
+      srand(static_cast<unsigned int>(time(0)));
+      int result = SILENCE_CODE;
+      int rnd = rand() % PERCENT_MOD_CAP;
+      if (rnd <= _fight_chance) {
+        result = BATTLE_CODE;
+      }
+      return result;
+    }
     int what(std::string &out) { return 0; }
-    int if_fight();
   protected:
     int _fight_chance;
     int** _packs;
