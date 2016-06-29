@@ -31,11 +31,11 @@
       virtual int try_make_mass_leader() { return 0; }
       virtual int get_salary() { return 0; }
       virtual int get_loot_list() { return 0; }
-      virtual int get_defense() = 0;
-      virtual int count_damage() = 0;
-      virtual int get_range() = 0;
+      virtual int get_defense() { return 0; }
+      virtual int count_damage()  { return 0; }
+      virtual int get_range() { return 0; } 
       virtual int count_extra_damage(int basic_damage);
-      virtual bool make_hit_roll(int distance) = 0;
+      virtual bool make_hit_roll(int distance) { return 0; }
     protected:
       int* _health;
       int* _exp;
